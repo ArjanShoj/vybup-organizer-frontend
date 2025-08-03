@@ -1,0 +1,4098 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Vybup Platform API",
+        "description": "A two-sided marketplace connecting performers and event organizers",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8010",
+            "description": "Generated server url"
+        }
+    ],
+    "security": [
+        {
+            "Bearer Authentication": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Organizer Gigs",
+            "description": "Gig management endpoints for organizers"
+        },
+        {
+            "name": "Authentication",
+            "description": "User authentication endpoints"
+        },
+        {
+            "name": "Organizer Profile",
+            "description": "Organizer profile management endpoints"
+        },
+        {
+            "name": "Organizer Onboarding",
+            "description": "Organizer profile setup and onboarding workflow"
+        }
+    ],
+    "paths": {
+        "/api/organizer/profile/visibility": {
+            "put": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Update profile visibility",
+                "description": "Update profile visibility and privacy settings",
+                "operationId": "updateVisibility",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateVisibilityRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/profile/organization-info": {
+            "put": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Update organization info",
+                "description": "Update organization details and event preferences",
+                "operationId": "updateOrganizationInfo",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateOrganizationInfoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/profile/images/{imageId}/primary": {
+            "put": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Set primary image",
+                "description": "Set an image as the primary profile image",
+                "operationId": "setPrimaryImage",
+                "parameters": [
+                    {
+                        "name": "imageId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProfileImageDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/profile/contact-info": {
+            "put": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Update contact info",
+                "description": "Update contact information and preferences",
+                "operationId": "updateContactInfo",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateContactInfoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/profile/business-context": {
+            "put": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Update business context",
+                "description": "Update business registration and context",
+                "operationId": "updateBusinessContext",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessContextRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/profile/bio": {
+            "put": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Update bio",
+                "description": "Update organizer bio and description",
+                "operationId": "updateBio",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBioRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs/{gigId}": {
+            "get": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Get gig details",
+                "description": "Get detailed gig information",
+                "operationId": "getGigDetails",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Update gig",
+                "description": "Update gig details",
+                "operationId": "updateGig",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateGigRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/reviews/{gigId}": {
+            "post": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "createReview",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateReviewRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/profile/images": {
+            "get": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Get profile images",
+                "description": "Get all profile images and logos",
+                "operationId": "getProfileImages",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProfileImageDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Upload profile image",
+                "description": "Upload a new profile or company logo",
+                "operationId": "uploadImage",
+                "parameters": [
+                    {
+                        "name": "isPrimary",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProfileImageDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/payments": {
+            "get": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "getPayments",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PagePaymentDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "createPayment",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePaymentRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/{paymentId}/process": {
+            "post": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "processPayment",
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentIntentDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/{paymentId}/cancel": {
+            "post": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "cancelPayment",
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "reason",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/stripe-account/sync": {
+            "post": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "syncStripeAccount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StripeAccountDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/stripe-account/onboarding": {
+            "post": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "createStripeOnboarding",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StripeOnboardingResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/admin/trigger-payment/{gigId}": {
+            "post": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "triggerPaymentCreation",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/admin/sync-missing": {
+            "post": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "syncMissingPayments",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/onboarding/profile-completion": {
+            "post": {
+                "tags": [
+                    "Organizer Onboarding"
+                ],
+                "summary": "Complete profile step",
+                "description": "Finalize organizer profile",
+                "operationId": "completeProfile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizerProfileCompletionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OnboardingStepResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/onboarding/organization-info": {
+            "post": {
+                "tags": [
+                    "Organizer Onboarding"
+                ],
+                "summary": "Complete organization info step",
+                "description": "Submit organization details and event preferences",
+                "operationId": "completeOrganizationInfo",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationInfoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OnboardingStepResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/onboarding/finalize": {
+            "post": {
+                "tags": [
+                    "Organizer Onboarding"
+                ],
+                "summary": "Finalize onboarding",
+                "description": "Complete the onboarding process and activate profile",
+                "operationId": "finalizeOnboarding",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerOnboardingStatusResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/onboarding/business-context": {
+            "post": {
+                "tags": [
+                    "Organizer Onboarding"
+                ],
+                "summary": "Complete business context step",
+                "description": "Submit business registration and context",
+                "operationId": "completeBusinessContext",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessContextRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OnboardingStepResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs": {
+            "get": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Get organizer gigs",
+                "description": "Get all gigs for the organizer",
+                "operationId": "getOrganizerGigs",
+                "parameters": [
+                    {
+                        "name": "pageable",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Pageable"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageGigResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Create gig",
+                "description": "Create a new gig",
+                "operationId": "createGig",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateGigRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs/{gigId}/publish": {
+            "post": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Publish gig",
+                "description": "Publish gig to make it visible to performers",
+                "operationId": "publishGig",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs/{gigId}/complete": {
+            "post": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Mark gig as completed",
+                "description": "Mark a gig as completed after the event",
+                "operationId": "completeGig",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs/{gigId}/cancel": {
+            "post": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Cancel gig",
+                "description": "Cancel a gig with reason",
+                "operationId": "cancelGig",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CancelGigRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs/{gigId}/applications/{applicationId}/reject": {
+            "post": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Reject application",
+                "description": "Reject a performer's application",
+                "operationId": "rejectApplication",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "applicationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RejectApplicationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigApplicationResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs/{gigId}/applications/{applicationId}/accept": {
+            "post": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Accept application",
+                "description": "Accept a performer's application",
+                "operationId": "acceptApplication",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "applicationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AcceptApplicationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigApplicationResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/chats/{chatId}/read": {
+            "post": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "markMessagesAsRead",
+                "parameters": [
+                    {
+                        "name": "chatId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/chats/{chatId}/messages": {
+            "get": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "getMessages",
+                "parameters": [
+                    {
+                        "name": "chatId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 50
+                        }
+                    },
+                    {
+                        "name": "since",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageMessageDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "sendMessage",
+                "parameters": [
+                    {
+                        "name": "chatId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendMessageRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/chats/{chatId}/archive": {
+            "post": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "archiveChat",
+                "parameters": [
+                    {
+                        "name": "chatId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "reason",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/organizer/sign-up": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Sign up as organizer",
+                "description": "Register a new organizer account",
+                "operationId": "signUpOrganizer",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignUpRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignUpResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/organizer/sign-in": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Sign in as organizer",
+                "description": "Authenticate organizer with email and password",
+                "operationId": "signInOrganizer",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignInRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignInResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/{reviewId}": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "getReview",
+                "parameters": [
+                    {
+                        "name": "reviewId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/summary": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "getReviewSummary",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewSummaryDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/statistics": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "getReviewStatistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewStatisticsDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/received": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "getReviewsReceived",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageReviewDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/received/with-text": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "getReviewsReceivedWithText",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageReviewDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/received/by-rating": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "getReviewsByRating",
+                "parameters": [
+                    {
+                        "name": "minRating",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "maxRating",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageReviewDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/given": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "getReviewsGiven",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageReviewDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/reviews/eligibility/{gigId}": {
+            "get": {
+                "tags": [
+                    "organizer-review-controller"
+                ],
+                "operationId": "checkReviewEligibility",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewEligibilityDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/profile": {
+            "get": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Get organizer profile",
+                "description": "Get current organizer's profile information",
+                "operationId": "getProfile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/profile/{organizerId}": {
+            "get": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Get public organizer profile",
+                "description": "Get public view of organizer profile",
+                "operationId": "getPublicProfile",
+                "parameters": [
+                    {
+                        "name": "organizerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicOrganizerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/profile/statistics": {
+            "get": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Get profile statistics",
+                "description": "Get profile views, gig statistics, etc.",
+                "operationId": "getProfileStatistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerStatisticsDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/payments/{paymentId}": {
+            "get": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "getPayment",
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/summary": {
+            "get": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "getPaymentSummary",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentSummaryDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/stripe-account": {
+            "get": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "getStripeAccount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StripeAccountDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/stripe-account/dashboard": {
+            "get": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "getStripeDashboard",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/payments/by-gig/{gigId}": {
+            "get": {
+                "tags": [
+                    "organizer-payment-controller"
+                ],
+                "operationId": "getPaymentByGig",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/onboarding/steps": {
+            "get": {
+                "tags": [
+                    "Organizer Onboarding"
+                ],
+                "summary": "Get all onboarding steps",
+                "description": "Get complete list of onboarding steps with status",
+                "operationId": "getOnboardingSteps",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizerOnboardingStepResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/onboarding/status": {
+            "get": {
+                "tags": [
+                    "Organizer Onboarding"
+                ],
+                "summary": "Get onboarding status",
+                "description": "Get current onboarding progress and next steps",
+                "operationId": "getOnboardingStatus",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizerOnboardingStatusResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/gigs/{gigId}/applications": {
+            "get": {
+                "tags": [
+                    "Organizer Gigs"
+                ],
+                "summary": "Get gig applications",
+                "description": "Get all applications for a specific gig",
+                "operationId": "getGigApplications",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "pageable",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Pageable"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageGigApplicationResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
+        "/api/organizer/chats": {
+            "get": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "getChats",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageChatSummaryDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/chats/{chatId}": {
+            "get": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "getChat",
+                "parameters": [
+                    {
+                        "name": "chatId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/chats/{chatId}/unread-count": {
+            "get": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "getUnreadCount",
+                "parameters": [
+                    {
+                        "name": "chatId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/chats/unread-count": {
+            "get": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "getTotalUnreadCount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/chats/by-gig/{gigId}": {
+            "get": {
+                "tags": [
+                    "organizer-chat-controller"
+                ],
+                "operationId": "getChatByGig",
+                "parameters": [
+                    {
+                        "name": "gigId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organizer/profile/images/{imageId}": {
+            "delete": {
+                "tags": [
+                    "Organizer Profile"
+                ],
+                "summary": "Delete profile image",
+                "description": "Delete a profile image",
+                "operationId": "deleteImage",
+                "parameters": [
+                    {
+                        "name": "imageId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UpdateVisibilityRequest": {
+                "required": [
+                    "isVisible"
+                ],
+                "type": "object",
+                "properties": {
+                    "isVisible": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "OrganizerProfileDto": {
+                "required": [
+                    "id",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "bio": {
+                        "type": "string"
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "organizerType": {
+                        "type": "string"
+                    },
+                    "companyInfo": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateOrganizationInfoRequest": {
+                "required": [
+                    "bio",
+                    "displayName",
+                    "firstName",
+                    "lastName",
+                    "locationCity"
+                ],
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "bio": {
+                        "type": "string"
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ProfileImageDto": {
+                "required": [
+                    "createdAt",
+                    "fileSizeBytes",
+                    "formattedFileSize",
+                    "id",
+                    "imageUrl",
+                    "isPrimary",
+                    "mimeType",
+                    "orderIndex",
+                    "originalFilename",
+                    "performerId",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "performerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "originalFilename": {
+                        "type": "string"
+                    },
+                    "fileSizeBytes": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "mimeType": {
+                        "type": "string"
+                    },
+                    "orderIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "isPrimary": {
+                        "type": "boolean"
+                    },
+                    "caption": {
+                        "type": "string"
+                    },
+                    "altText": {
+                        "type": "string"
+                    },
+                    "formattedFileSize": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "UpdateContactInfoRequest": {
+                "type": "object",
+                "properties": {
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CompanyInfo": {
+                "required": [
+                    "address",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "vatNumber": {
+                        "$ref": "#/components/schemas/VATNumber"
+                    },
+                    "contactEmail": {
+                        "type": "string"
+                    },
+                    "contactPhone": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateBusinessContextRequest": {
+                "required": [
+                    "organizerType"
+                ],
+                "type": "object",
+                "properties": {
+                    "organizerType": {
+                        "type": "string",
+                        "enum": [
+                            "PRIVATE",
+                            "BUSINESS"
+                        ]
+                    },
+                    "companyInfo": {
+                        "$ref": "#/components/schemas/CompanyInfo"
+                    }
+                }
+            },
+            "VATNumber": {
+                "required": [
+                    "country",
+                    "number"
+                ],
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateBioRequest": {
+                "required": [
+                    "bio"
+                ],
+                "type": "object",
+                "properties": {
+                    "bio": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Money": {
+                "required": [
+                    "amountInCents",
+                    "amountInEuros",
+                    "currency"
+                ],
+                "type": "object",
+                "properties": {
+                    "amountInCents": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "amountInEuros": {
+                        "type": "number"
+                    }
+                }
+            },
+            "UpdateGigRequest": {
+                "required": [
+                    "category",
+                    "eventDate",
+                    "genres",
+                    "isNegotiable",
+                    "priceType",
+                    "pricing",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "genres": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "locationLat": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "locationLon": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "eventDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "applicationDeadline": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "pricing": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "priceType": {
+                        "type": "string",
+                        "enum": [
+                            "FIXED",
+                            "HOURLY",
+                            "NEGOTIABLE"
+                        ]
+                    },
+                    "isNegotiable": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "GigResponse": {
+                "required": [
+                    "applicationsCount",
+                    "canApply",
+                    "category",
+                    "createdAt",
+                    "eventDate",
+                    "genres",
+                    "gigId",
+                    "isNegotiable",
+                    "organizerId",
+                    "paymentMethod",
+                    "priceType",
+                    "pricing",
+                    "publicId",
+                    "status",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "gigId": {
+                        "type": "string"
+                    },
+                    "publicId": {
+                        "type": "string"
+                    },
+                    "organizerId": {
+                        "type": "string"
+                    },
+                    "organizerDisplayName": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "genres": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "eventDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "applicationDeadline": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "pricing": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "priceType": {
+                        "type": "string",
+                        "enum": [
+                            "FIXED",
+                            "HOURLY",
+                            "NEGOTIABLE"
+                        ]
+                    },
+                    "isNegotiable": {
+                        "type": "boolean"
+                    },
+                    "paymentMethod": {
+                        "type": "string",
+                        "enum": [
+                            "CASH",
+                            "STRIPE_CONNECT"
+                        ]
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "applicationsCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "canApply": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "CreateReviewRequest": {
+                "required": [
+                    "rating"
+                ],
+                "type": "object",
+                "properties": {
+                    "rating": {
+                        "maximum": 5,
+                        "minimum": 1,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "reviewText": {
+                        "maxLength": 1000,
+                        "minLength": 0,
+                        "type": "string"
+                    }
+                }
+            },
+            "ReviewDto": {
+                "required": [
+                    "createdAt",
+                    "gigId",
+                    "id",
+                    "rating",
+                    "reviewType",
+                    "revieweeId",
+                    "reviewerId",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "gigId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "reviewerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "revieweeId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "reviewType": {
+                        "type": "string",
+                        "enum": [
+                            "PERFORMER_TO_ORGANIZER",
+                            "ORGANIZER_TO_PERFORMER"
+                        ]
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "reviewText": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "CreatePaymentRequest": {
+                "required": [
+                    "amountInCents",
+                    "currency",
+                    "gigId",
+                    "performerId",
+                    "provider"
+                ],
+                "type": "object",
+                "properties": {
+                    "gigId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "performerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "amountInCents": {
+                        "minimum": 1,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "enum": [
+                            "STRIPE",
+                            "CASH",
+                            "BANK_TRANSFER"
+                        ]
+                    }
+                }
+            },
+            "PaymentDto": {
+                "required": [
+                    "amount",
+                    "createdAt",
+                    "gigId",
+                    "id",
+                    "organizerId",
+                    "performerId",
+                    "performerPayout",
+                    "provider",
+                    "status",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "gigId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "organizerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "performerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "amount": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "enum": [
+                            "STRIPE",
+                            "CASH",
+                            "BANK_TRANSFER"
+                        ]
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "PROCESSING",
+                            "COMPLETED",
+                            "FAILED",
+                            "CANCELLED",
+                            "REFUNDED",
+                            "ON_HOLD"
+                        ]
+                    },
+                    "stripePaymentIntentId": {
+                        "type": "string"
+                    },
+                    "platformFee": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "performerPayout": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "failureReason": {
+                        "type": "string"
+                    },
+                    "processedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cancelledAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cancellationReason": {
+                        "type": "string"
+                    },
+                    "timeoutAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "PaymentIntentDto": {
+                "required": [
+                    "amount",
+                    "clientSecret",
+                    "paymentIntentId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "paymentIntentId": {
+                        "type": "string"
+                    },
+                    "clientSecret": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                }
+            },
+            "StripeAccountDto": {
+                "required": [
+                    "accountType",
+                    "country",
+                    "createdAt",
+                    "currency",
+                    "currentlyDueRequirements",
+                    "eventuallyDueRequirements",
+                    "id",
+                    "isChargesEnabled",
+                    "isDetailsSubmitted",
+                    "isFullyOnboarded",
+                    "isPayoutsEnabled",
+                    "statusDescription",
+                    "stripeAccountId",
+                    "userId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "stripeAccountId": {
+                        "type": "string"
+                    },
+                    "accountType": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "isFullyOnboarded": {
+                        "type": "boolean"
+                    },
+                    "isDetailsSubmitted": {
+                        "type": "boolean"
+                    },
+                    "isChargesEnabled": {
+                        "type": "boolean"
+                    },
+                    "isPayoutsEnabled": {
+                        "type": "boolean"
+                    },
+                    "currentlyDueRequirements": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "eventuallyDueRequirements": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "onboardingUrl": {
+                        "type": "string"
+                    },
+                    "dashboardUrl": {
+                        "type": "string"
+                    },
+                    "statusDescription": {
+                        "type": "string"
+                    },
+                    "lastSyncAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "StripeOnboardingResponse": {
+                "required": [
+                    "onboardingUrl",
+                    "stripeAccountId"
+                ],
+                "type": "object",
+                "properties": {
+                    "stripeAccountId": {
+                        "type": "string"
+                    },
+                    "onboardingUrl": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrganizerProfileCompletionRequest": {
+                "required": [
+                    "acceptsPrivacyPolicy",
+                    "acceptsTerms"
+                ],
+                "type": "object",
+                "properties": {
+                    "acceptsTerms": {
+                        "type": "boolean"
+                    },
+                    "acceptsPrivacyPolicy": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "OnboardingStepResult": {
+                "required": [
+                    "currentStep",
+                    "isCompleted",
+                    "isVerified",
+                    "progressPercentage"
+                ],
+                "type": "object",
+                "properties": {
+                    "currentStep": {
+                        "type": "string",
+                        "enum": [
+                            "BASIC_PROFILE",
+                            "BUSINESS_CONTEXT",
+                            "VERIFICATION"
+                        ]
+                    },
+                    "nextStep": {
+                        "type": "string",
+                        "enum": [
+                            "BASIC_PROFILE",
+                            "BUSINESS_CONTEXT",
+                            "VERIFICATION"
+                        ]
+                    },
+                    "isCompleted": {
+                        "type": "boolean"
+                    },
+                    "isVerified": {
+                        "type": "boolean"
+                    },
+                    "progressPercentage": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrganizationInfoRequest": {
+                "required": [
+                    "bio",
+                    "displayName",
+                    "firstName",
+                    "lastName",
+                    "locationCity"
+                ],
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "bio": {
+                        "type": "string"
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrganizerOnboardingStatusResponse": {
+                "required": [
+                    "completedSteps",
+                    "currentStep",
+                    "isCompleted",
+                    "isVerified",
+                    "organizerId",
+                    "progressPercentage",
+                    "remainingSteps"
+                ],
+                "type": "object",
+                "properties": {
+                    "organizerId": {
+                        "type": "string"
+                    },
+                    "currentStep": {
+                        "type": "string",
+                        "enum": [
+                            "BASIC_PROFILE",
+                            "BUSINESS_CONTEXT",
+                            "VERIFICATION"
+                        ]
+                    },
+                    "completedSteps": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "BASIC_PROFILE",
+                                "BUSINESS_CONTEXT",
+                                "VERIFICATION"
+                            ]
+                        }
+                    },
+                    "isCompleted": {
+                        "type": "boolean"
+                    },
+                    "isVerified": {
+                        "type": "boolean"
+                    },
+                    "progressPercentage": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "remainingSteps": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "BASIC_PROFILE",
+                                "BUSINESS_CONTEXT",
+                                "VERIFICATION"
+                            ]
+                        }
+                    },
+                    "verificationNotes": {
+                        "type": "string"
+                    },
+                    "completedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "verifiedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "BusinessContextRequest": {
+                "required": [
+                    "organizerType"
+                ],
+                "type": "object",
+                "properties": {
+                    "organizerType": {
+                        "type": "string",
+                        "enum": [
+                            "PRIVATE",
+                            "BUSINESS"
+                        ]
+                    },
+                    "companyInfo": {
+                        "$ref": "#/components/schemas/CompanyInfo"
+                    }
+                }
+            },
+            "CreateGigRequest": {
+                "required": [
+                    "category",
+                    "eventDate",
+                    "genres",
+                    "isNegotiable",
+                    "paymentMethod",
+                    "priceType",
+                    "pricing",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "genres": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "locationLat": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "locationLon": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "eventDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "applicationDeadline": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "pricing": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "priceType": {
+                        "type": "string",
+                        "enum": [
+                            "FIXED",
+                            "HOURLY",
+                            "NEGOTIABLE"
+                        ]
+                    },
+                    "isNegotiable": {
+                        "type": "boolean"
+                    },
+                    "paymentMethod": {
+                        "type": "string",
+                        "enum": [
+                            "CASH",
+                            "STRIPE_CONNECT"
+                        ]
+                    }
+                }
+            },
+            "CancelGigRequest": {
+                "required": [
+                    "reason"
+                ],
+                "type": "object",
+                "properties": {
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RejectApplicationRequest": {
+                "required": [
+                    "reason"
+                ],
+                "type": "object",
+                "properties": {
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GigApplicationResponse": {
+                "required": [
+                    "appliedAt",
+                    "gigId",
+                    "gigTitle",
+                    "id",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "gigId": {
+                        "type": "string"
+                    },
+                    "gigTitle": {
+                        "type": "string"
+                    },
+                    "performerId": {
+                        "type": "string"
+                    },
+                    "performerDisplayName": {
+                        "type": "string"
+                    },
+                    "applicationMessage": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "ACCEPTED",
+                            "REJECTED"
+                        ]
+                    },
+                    "appliedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "decisionAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "decisionReason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AcceptApplicationRequest": {
+                "type": "object",
+                "properties": {
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SendMessageRequest": {
+                "required": [
+                    "chatId",
+                    "content"
+                ],
+                "type": "object",
+                "properties": {
+                    "chatId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "content": {
+                        "maxLength": 2000,
+                        "minLength": 0,
+                        "type": "string"
+                    },
+                    "messageType": {
+                        "type": "string",
+                        "enum": [
+                            "TEXT",
+                            "SYSTEM",
+                            "IMAGE",
+                            "FILE"
+                        ]
+                    }
+                }
+            },
+            "MessageDto": {
+                "required": [
+                    "chatId",
+                    "content",
+                    "id",
+                    "isSystemMessage",
+                    "messageType",
+                    "senderId",
+                    "sentAt",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "chatId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "senderId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "messageType": {
+                        "type": "string",
+                        "enum": [
+                            "TEXT",
+                            "SYSTEM",
+                            "IMAGE",
+                            "FILE"
+                        ]
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "SENT",
+                            "DELIVERED",
+                            "READ"
+                        ]
+                    },
+                    "sentAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "readAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "isSystemMessage": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SignUpRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SignUpResponse": {
+                "required": [
+                    "profileId",
+                    "role",
+                    "token",
+                    "userId"
+                ],
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "profileId": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "PERFORMER",
+                            "ORGANIZER"
+                        ]
+                    }
+                }
+            },
+            "SignInRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SignInResponse": {
+                "required": [
+                    "token"
+                ],
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ReviewSummaryDto": {
+                "required": [
+                    "ratingDistribution",
+                    "recentReviews",
+                    "totalReviews"
+                ],
+                "type": "object",
+                "properties": {
+                    "totalReviews": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "averageRating": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "ratingDistribution": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "recentReviews": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReviewDto"
+                        }
+                    }
+                }
+            },
+            "ReviewStatisticsDto": {
+                "required": [
+                    "hasGivenReviews",
+                    "hasReceivedReviews",
+                    "positiveReviewPercentage",
+                    "ratingDistribution",
+                    "totalReviewsGiven",
+                    "totalReviewsReceived",
+                    "userId"
+                ],
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "totalReviewsReceived": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalReviewsGiven": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "averageRatingReceived": {
+                        "type": "number"
+                    },
+                    "ratingDistribution": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "positiveReviewPercentage": {
+                        "type": "number"
+                    },
+                    "mostCommonRating": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "lastReviewReceivedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastReviewGivenAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "hasReceivedReviews": {
+                        "type": "boolean"
+                    },
+                    "hasGivenReviews": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageReviewDto": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReviewDto"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageableObject": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "paged": {
+                        "type": "boolean"
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "unpaged": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SortObject": {
+                "type": "object",
+                "properties": {
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "sorted": {
+                        "type": "boolean"
+                    },
+                    "unsorted": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ReviewEligibilityDto": {
+                "required": [
+                    "canReview",
+                    "gigCompleted",
+                    "hasExistingReview"
+                ],
+                "type": "object",
+                "properties": {
+                    "canReview": {
+                        "type": "boolean"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "gigCompleted": {
+                        "type": "boolean"
+                    },
+                    "hasExistingReview": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PublicOrganizerProfileDto": {
+                "required": [
+                    "id",
+                    "totalGigsOrganized",
+                    "totalReviews"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "bio": {
+                        "type": "string"
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "organizerType": {
+                        "type": "string"
+                    },
+                    "averageRating": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "totalReviews": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalGigsOrganized": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "OrganizerStatisticsDto": {
+                "required": [
+                    "totalAmountPaid",
+                    "totalApplicationsReceived",
+                    "totalGigsCompleted",
+                    "totalGigsCreated",
+                    "totalReviews"
+                ],
+                "type": "object",
+                "properties": {
+                    "totalGigsCreated": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalGigsCompleted": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalApplicationsReceived": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "averageRating": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "totalReviews": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalAmountPaid": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            },
+            "PagePaymentDto": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PaymentDto"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PaymentSummaryDto": {
+                "required": [
+                    "completedPayments",
+                    "failedPayments",
+                    "totalAmountProcessed",
+                    "totalPayments",
+                    "totalPlatformFees"
+                ],
+                "type": "object",
+                "properties": {
+                    "totalPayments": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "completedPayments": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "failedPayments": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalAmountProcessed": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "totalPlatformFees": {
+                        "$ref": "#/components/schemas/Money"
+                    }
+                }
+            },
+            "OrganizerOnboardingStepResponse": {
+                "required": [
+                    "currentStep",
+                    "isCompleted",
+                    "isVerified",
+                    "progressPercentage"
+                ],
+                "type": "object",
+                "properties": {
+                    "currentStep": {
+                        "type": "string",
+                        "enum": [
+                            "BASIC_PROFILE",
+                            "BUSINESS_CONTEXT",
+                            "VERIFICATION"
+                        ]
+                    },
+                    "nextStep": {
+                        "type": "string",
+                        "enum": [
+                            "BASIC_PROFILE",
+                            "BUSINESS_CONTEXT",
+                            "VERIFICATION"
+                        ]
+                    },
+                    "isCompleted": {
+                        "type": "boolean"
+                    },
+                    "isVerified": {
+                        "type": "boolean"
+                    },
+                    "progressPercentage": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Pageable": {
+                "type": "object",
+                "properties": {
+                    "page": {
+                        "minimum": 0,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "minimum": 1,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "PageGigResponse": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GigResponse"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageGigApplicationResponse": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GigApplicationResponse"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ChatSummaryDto": {
+                "required": [
+                    "createdAt",
+                    "gigId",
+                    "id",
+                    "isActive",
+                    "organizerId",
+                    "performerId",
+                    "unreadCount"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "gigId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "organizerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "performerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "lastMessageContent": {
+                        "type": "string"
+                    },
+                    "lastMessageAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "unreadCount": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "isActive": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "PageChatSummaryDto": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ChatSummaryDto"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ChatDto": {
+                "required": [
+                    "createdAt",
+                    "gigId",
+                    "id",
+                    "isActive",
+                    "organizerId",
+                    "performerId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "gigId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "organizerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "performerId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "isActive": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "archivedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "archiveReason": {
+                        "type": "string"
+                    },
+                    "lastMessageAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "organizerLastReadAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "performerLastReadAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "PageMessageDto": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MessageDto"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "Bearer Authentication": {
+                "type": "http",
+                "description": "Enter JWT token obtained from sign-in",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
