@@ -504,7 +504,7 @@ const GigDetailPage = () => {
                                       </div>
                                     )}
                                   </Avatar>
-                                  {application.performerRating && application.performerRating >= 4.5 && (
+                                  {application.performerRating != null && application.performerRating >= 4.5 && (
                                     <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
                                       <Star className="h-3 w-3 text-white fill-current" />
                                     </div>
