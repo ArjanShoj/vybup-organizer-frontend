@@ -18,13 +18,11 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { apiClient } from '@/lib/api';
-import { GigResponse, OrganizerStatisticsDto, PageResponse, PaymentSummaryDto, ReviewSummaryDto } from '@/types/api';
+import { GigResponse, OrganizerStatisticsDto, PageResponse } from '@/types/api';
 
 const DashboardPage = () => {
   const [statistics, setStatistics] = useState<OrganizerStatisticsDto | null>(null);
   const [recentGigs, setRecentGigs] = useState<GigResponse[]>([]);
-  const [paymentSummary, setPaymentSummary] = useState<PaymentSummaryDto | null>(null);
-  const [reviewSummary, setReviewSummary] = useState<ReviewSummaryDto | null>(null);
   const [unreadMessagesCount, setUnreadMessagesCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,14 +36,10 @@ const DashboardPage = () => {
         const [
           statisticsResponse,
           gigsResponse,
-          paymentSummaryResponse,
-          reviewSummaryResponse,
           unreadCountResponse
         ] = await Promise.allSettled([
           apiClient.getStatistics(),
           apiClient.getGigs(0, 5), // Get first 5 gigs for recent gigs display
-          apiClient.getPaymentSummary(),
-          apiClient.getReviewSummary(),
           apiClient.getTotalUnreadCount()
         ]);
 
@@ -62,20 +56,6 @@ const DashboardPage = () => {
           setRecentGigs(gigsData.content || []);
         } else {
           console.error('Failed to fetch gigs:', gigsResponse.reason);
-        }
-
-        // Handle payment summary
-        if (paymentSummaryResponse.status === 'fulfilled') {
-          setPaymentSummary(paymentSummaryResponse.value as PaymentSummaryDto);
-        } else {
-          console.error('Failed to fetch payment summary:', paymentSummaryResponse.reason);
-        }
-
-        // Handle review summary
-        if (reviewSummaryResponse.status === 'fulfilled') {
-          setReviewSummary(reviewSummaryResponse.value as ReviewSummaryDto);
-        } else {
-          console.error('Failed to fetch review summary:', reviewSummaryResponse.reason);
         }
 
         // Handle unread messages count
@@ -227,90 +207,6 @@ const DashboardPage = () => {
           </CardContent>
         </Card>
       </div>
-
-      {/* Additional Insights */}
-      {(paymentSummary || reviewSummary) && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {paymentSummary && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <DollarSign className="h-5 w-5" />
-                  Payment Summary
-                </CardTitle>
-                <CardDescription>
-                  Overview of your payment activity
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Total Payments</span>
-                    <span className="font-semibold">{paymentSummary.totalPayments}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Completed</span>
-                    <span className="font-semibold text-green-600">{paymentSummary.completedPayments}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Failed</span>
-                    <span className="font-semibold text-red-600">{paymentSummary.failedPayments}</span>
-                  </div>
-                  <div className="flex justify-between items-center pt-2 border-t">
-                    <span className="text-sm text-gray-600">Total Processed</span>
-                    <span className="font-bold">€{paymentSummary.totalAmountProcessed.amountInEuros}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {reviewSummary && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Star className="h-5 w-5" />
-                  Review Summary
-                </CardTitle>
-                <CardDescription>
-                  Your reputation and feedback
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Total Reviews</span>
-                    <span className="font-semibold">{reviewSummary.totalReviews}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Average Rating</span>
-                    <span className="font-semibold">
-                      {reviewSummary.averageRating?.toFixed(1) || 'N/A'} ⭐
-                    </span>
-                  </div>
-                  {reviewSummary.recentReviews.length > 0 && (
-                    <div className="pt-2 border-t">
-                      <span className="text-sm text-gray-600 block mb-2">Recent Review</span>
-                      <div className="bg-gray-50 p-2 rounded text-xs">
-                        <div className="flex gap-1 mb-1">
-                          {[...Array(5)].map((_, i) => (
-                            <span key={i} className={i < reviewSummary.recentReviews[0].rating ? 'text-yellow-400' : 'text-gray-300'}>
-                              ⭐
-                            </span>
-                          ))}
-                        </div>
-                        <p className="text-gray-700 line-clamp-2">
-                          {reviewSummary.recentReviews[0].reviewText || 'No review text provided'}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      )}
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
