@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Avatar } from '@/components/ui/avatar';
 import { 
   Home, 
   Briefcase, 
@@ -17,43 +18,119 @@ import {
   Menu,
   X,
   User,
-  FileText
+  FileText,
+  MapPin,
+  Crown,
+  Shield,
+  Building2,
+  Sparkles
 } from 'lucide-react';
+import { apiClient } from '@/lib/api';
+import { OrganizerProfileDto } from '@/types/api';
 
 interface SidebarProps {
   className?: string;
 }
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: Home },
-  { name: 'Gigs', href: '/dashboard/gigs', icon: Briefcase },
-  { name: 'Applications', href: '/dashboard/applications', icon: Users },
-  { name: 'Messages', href: '/dashboard/messages', icon: MessageSquare, badge: '3' },
-  { name: 'Payments', href: '/dashboard/payments', icon: CreditCard },
-  { name: 'Reviews', href: '/dashboard/reviews', icon: Star },
-  { name: 'Profile', href: '/dashboard/profile', icon: User },
-  { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-];
-
 const Sidebar = ({ className }: SidebarProps) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [profile, setProfile] = useState<OrganizerProfileDto | null>(null);
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState<number>(0);
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
+
+  // Fetch profile data and unread messages count
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        setIsProfileLoading(true);
+        
+        const [profileResponse, unreadCountResponse] = await Promise.allSettled([
+          apiClient.getProfile(),
+          apiClient.getTotalUnreadCount()
+        ]);
+
+        if (profileResponse.status === 'fulfilled') {
+          setProfile(profileResponse.value as OrganizerProfileDto);
+        } else {
+          console.error('Failed to fetch profile:', profileResponse.reason);
+        }
+
+        if (unreadCountResponse.status === 'fulfilled') {
+          const unreadData = unreadCountResponse.value as { count?: number };
+          setUnreadMessagesCount(unreadData.count || 0);
+        } else {
+          console.error('Failed to fetch unread count:', unreadCountResponse.reason);
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      } finally {
+        setIsProfileLoading(false);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard', icon: Home },
+    { name: 'Gigs', href: '/dashboard/gigs', icon: Briefcase },
+    { name: 'Applications', href: '/dashboard/applications', icon: Users },
+    { 
+      name: 'Messages', 
+      href: '/dashboard/messages', 
+      icon: MessageSquare, 
+      badge: unreadMessagesCount > 0 ? unreadMessagesCount.toString() : undefined 
+    },
+    { name: 'Payments', href: '/dashboard/payments', icon: CreditCard },
+    { name: 'Reviews', href: '/dashboard/reviews', icon: Star },
+    { name: 'Profile', href: '/dashboard/profile', icon: User },
+    { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+  ];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const getOrganizerTypeIcon = (type?: string) => {
+    switch (type) {
+      case 'BUSINESS': return Building2;
+      case 'PRIVATE': return User;
+      default: return User;
+    }
+  };
+
+  const getOrganizerTypeBadge = (type?: string) => {
+    switch (type) {
+      case 'BUSINESS': return { label: 'Business', color: 'bg-blue-100 text-blue-800 border-blue-200' };
+      case 'PRIVATE': return { label: 'Individual', color: 'bg-green-100 text-green-800 border-green-200' };
+      default: return { label: 'Organizer', color: 'bg-gray-100 text-gray-800 border-gray-200' };
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'ACTIVE': return 'bg-green-400';
+      case 'INACTIVE': return 'bg-gray-400';
+      case 'SUSPENDED': return 'bg-red-400';
+      default: return 'bg-gray-400';
+    }
+  };
+
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
-      {/* Logo */}
-      <div className="flex items-center justify-between px-4 py-6 border-b">
+    <div className="flex flex-col h-full bg-gradient-to-b from-white to-slate-50">
+      {/* Logo Section */}
+      <div className="px-6 py-8 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-purple-600">
         <Link href="/dashboard" className="flex items-center space-x-3">
-          <div className="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center">
-            <span className="text-white font-bold text-lg">V</span>
+          <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-white font-bold text-xl">V</span>
           </div>
           <div className="hidden lg:block">
-            <h1 className="text-xl font-bold text-gray-900">Vybup</h1>
-            <p className="text-sm text-gray-500">Organizer</p>
+            <h1 className="text-xl font-bold text-white">Vybup</h1>
+            <p className="text-blue-100 text-sm flex items-center gap-1">
+              <Sparkles className="h-3 w-3" />
+              Organizer Portal
+            </p>
           </div>
         </Link>
         
@@ -61,7 +138,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         <Button
           variant="ghost"
           size="sm"
-          className="lg:hidden"
+          className="lg:hidden absolute top-6 right-6 text-white hover:bg-white/20"
           onClick={toggleMobileMenu}
         >
           <X className="h-5 w-5" />
@@ -69,7 +146,7 @@ const Sidebar = ({ className }: SidebarProps) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-4 space-y-2">
+      <nav className="flex-1 px-4 py-6 space-y-2">
         {navigation.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
           return (
@@ -77,22 +154,29 @@ const Sidebar = ({ className }: SidebarProps) => {
               key={item.name}
               href={item.href}
               className={cn(
-                'flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                'flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group',
                 isActive
-                  ? 'bg-indigo-100 text-indigo-700'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg transform scale-[1.02]'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-white hover:shadow-md'
               )}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <div className="flex items-center space-x-3">
-                <item.icon className={cn(
-                  'h-5 w-5',
-                  isActive ? 'text-indigo-700' : 'text-gray-400'
-                )} />
-                <span>{item.name}</span>
+                <div className={cn(
+                  'w-8 h-8 rounded-lg flex items-center justify-center transition-colors',
+                  isActive 
+                    ? 'bg-white/20 backdrop-blur-sm' 
+                    : 'bg-gray-100 group-hover:bg-blue-100'
+                )}>
+                  <item.icon className={cn(
+                    'h-4 w-4',
+                    isActive ? 'text-white' : 'text-gray-500 group-hover:text-blue-600'
+                  )} />
+                </div>
+                <span className="font-medium">{item.name}</span>
               </div>
               {item.badge && (
-                <Badge variant="secondary" className="ml-auto">
+                <Badge className="bg-red-500 text-white border-0 shadow-sm px-2 py-1 text-xs">
                   {item.badge}
                 </Badge>
               )}
@@ -101,17 +185,92 @@ const Sidebar = ({ className }: SidebarProps) => {
         })}
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t">
-        <div className="flex items-center space-x-3 px-3 py-2">
-          <div className="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
-            <User className="h-4 w-4 text-gray-600" />
+      {/* Profile Section */}
+      <div className="p-4 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+        {isProfileLoading ? (
+          <div className="animate-pulse">
+            <div className="flex items-center space-x-3 px-3 py-3">
+              <div className="h-12 w-12 bg-gray-200 rounded-full"></div>
+              <div className="hidden lg:block flex-1">
+                <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
+                <div className="h-3 bg-gray-200 rounded w-32"></div>
+              </div>
+            </div>
           </div>
-          <div className="hidden lg:block">
-            <p className="text-sm font-medium text-gray-900">John Doe</p>
-            <p className="text-xs text-gray-500">john@example.com</p>
+        ) : profile ? (
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <Avatar className="h-12 w-12 border-2 border-white shadow-lg">
+                  <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
+                    {profile.firstName?.[0] || profile.displayName?.[0] || 'U'}
+                    {profile.lastName?.[0] || ''}
+                  </div>
+                </Avatar>
+                <div className={cn(
+                  'absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white',
+                  getStatusColor(profile.status)
+                )}></div>
+              </div>
+              
+              <div className="hidden lg:block flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-sm font-semibold text-gray-900 truncate">
+                    {profile.displayName || `${profile.firstName || ''} ${profile.lastName || ''}`.trim() || 'Organizer'}
+                  </p>
+                  {profile.organizerType && (
+                    <div className="flex items-center">
+                      <Badge className={`text-xs px-2 py-0.5 ${getOrganizerTypeBadge(profile.organizerType).color}`}>
+                        {getOrganizerTypeBadge(profile.organizerType).label}
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="flex items-center gap-1 text-xs text-gray-600">
+                  {profile.locationCity && (
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-3 w-3" />
+                      <span className="truncate">{profile.locationCity}</span>
+                    </div>
+                  )}
+                </div>
+                
+                {profile.companyInfo?.name && (
+                  <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+                    <Building2 className="h-3 w-3" />
+                    <span className="truncate">{profile.companyInfo.name}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Status indicator for mobile */}
+            <div className="lg:hidden mt-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className={cn('w-2 h-2 rounded-full', getStatusColor(profile.status))}></div>
+                <span className="text-xs text-gray-600 capitalize">{profile.status.toLowerCase()}</span>
+              </div>
+              {profile.organizerType && (
+                <Badge className={`text-xs ${getOrganizerTypeBadge(profile.organizerType).color}`}>
+                  {getOrganizerTypeBadge(profile.organizerType).label}
+                </Badge>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+            <div className="flex items-center space-x-3">
+              <div className="h-12 w-12 bg-gray-200 rounded-full flex items-center justify-center">
+                <User className="h-6 w-6 text-gray-400" />
+              </div>
+              <div className="hidden lg:block">
+                <p className="text-sm font-medium text-gray-900">Profile Unavailable</p>
+                <p className="text-xs text-gray-500">Please try refreshing</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -124,7 +283,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           variant="outline"
           size="sm"
           onClick={toggleMobileMenu}
-          className="bg-white shadow-md"
+          className="bg-white shadow-lg border-gray-200 hover:bg-gray-50"
         >
           <Menu className="h-5 w-5" />
         </Button>
@@ -133,14 +292,14 @@ const Sidebar = ({ className }: SidebarProps) => {
       {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="lg:hidden fixed inset-0 z-40 bg-gray-600 bg-opacity-75"
+          className="lg:hidden fixed inset-0 z-40 bg-gray-900 bg-opacity-50 backdrop-blur-sm"
           onClick={toggleMobileMenu}
         />
       )}
 
       {/* Desktop sidebar */}
       <div className={cn(
-        'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 bg-white border-r',
+        'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 border-r border-gray-200 shadow-lg',
         className
       )}>
         <SidebarContent />
@@ -148,7 +307,7 @@ const Sidebar = ({ className }: SidebarProps) => {
 
       {/* Mobile sidebar */}
       <div className={cn(
-        'lg:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white border-r transform transition-transform duration-300 ease-in-out',
+        'lg:hidden fixed inset-y-0 left-0 z-50 w-64 border-r border-gray-200 shadow-xl transform transition-transform duration-300 ease-in-out',
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       )}>
         <SidebarContent />
