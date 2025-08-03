@@ -123,6 +123,19 @@ class ApiClient {
     });
   }
 
+  async completeGig(gigId: string) {
+    return this.request(`/api/organizer/gigs/${gigId}/complete`, {
+      method: 'POST',
+    });
+  }
+
+  async cancelGig(gigId: string, reason: string) {
+    return this.request(`/api/organizer/gigs/${gigId}/cancel`, {
+      method: 'POST',
+      body: JSON.stringify({ reason }),
+    });
+  }
+
   // Applications
   async getGigApplications(gigId: string, page = 0, size = 20) {
     return this.request(`/api/organizer/gigs/${gigId}/applications?page=${page}&size=${size}`);

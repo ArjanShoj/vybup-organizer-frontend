@@ -25,123 +25,69 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { GigResponse } from '@/types/api';
+import { GigResponse, PageResponse } from '@/types/api';
+import { apiClient } from '@/lib/api';
 
 const GigsPage = () => {
   const [gigs, setGigs] = useState<GigResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [error, setError] = useState<string | null>(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+  
+  // Action loading states
+  const [actionLoading, setActionLoading] = useState<{ [gigId: string]: boolean }>({});
 
+  const fetchGigs = async (page: number = currentPage, search: string = '', status: string = statusFilter) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const response = await apiClient.getGigs(page, pageSize) as PageResponse<GigResponse>;
+      
+      setGigs(response.content || []);
+      setTotalPages(response.totalPages);
+      setTotalElements(response.totalElements);
+      setCurrentPage(response.number);
+      
+    } catch (error) {
+      console.error('Error fetching gigs:', error);
+      setError('Failed to load gigs. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Initial fetch
   useEffect(() => {
-    const fetchGigs = async () => {
-      try {
-        // Simulated gigs data since backend is not running
-        setGigs([
-          {
-            gigId: '1',
-            publicId: 'GIG-001',
-            organizerId: 'org-1',
-            title: 'Jazz Trio for Corporate Event',
-            description: 'Looking for a professional jazz trio for our annual company gathering. The event will be held in a sophisticated venue with excellent acoustics.',
-            category: 'Music',
-            genres: ['Jazz', 'Blues'],
-            locationCity: 'Amsterdam',
-            eventDate: '2024-02-15T19:00:00Z',
-            applicationDeadline: '2024-02-10T23:59:59Z',
-            pricing: {
-              amountInCents: 75000,
-              currency: 'EUR',
-              amountInEuros: 750
-            },
-            priceType: 'FIXED',
-            isNegotiable: false,
-            paymentMethod: 'STRIPE_CONNECT',
-            status: 'OPEN',
-            applicationsCount: 8,
-            canApply: true,
-            createdAt: '2024-01-20T10:00:00Z'
-          },
-          {
-            gigId: '2',
-            publicId: 'GIG-002',
-            organizerId: 'org-1',
-            title: 'Wedding Reception DJ',
-            description: 'Need an experienced DJ for a wedding reception. Must be able to read the crowd and play a mix of genres.',
-            category: 'DJ',
-            genres: ['Pop', 'Dance', 'R&B'],
-            locationCity: 'Rotterdam',
-            eventDate: '2024-02-28T20:00:00Z',
-            pricing: {
-              amountInCents: 50000,
-              currency: 'EUR',
-              amountInEuros: 500
-            },
-            priceType: 'FIXED',
-            isNegotiable: true,
-            paymentMethod: 'CASH',
-            status: 'BOOKED',
-            applicationsCount: 12,
-            canApply: false,
-            createdAt: '2024-01-18T14:30:00Z'
-          },
-          {
-            gigId: '3',
-            publicId: 'GIG-003',
-            organizerId: 'org-1',
-            title: 'Acoustic Guitarist for Restaurant',
-            description: 'Looking for an acoustic guitarist to perform during dinner hours at our upscale restaurant.',
-            category: 'Music',
-            genres: ['Acoustic', 'Folk', 'Pop'],
-            locationCity: 'Utrecht',
-            eventDate: '2024-03-05T18:00:00Z',
-            applicationDeadline: '2024-02-25T23:59:59Z',
-            pricing: {
-              amountInCents: 30000,
-              currency: 'EUR',
-              amountInEuros: 300
-            },
-            priceType: 'HOURLY',
-            isNegotiable: true,
-            paymentMethod: 'CASH',
-            status: 'DRAFT',
-            applicationsCount: 0,
-            canApply: false,
-            createdAt: '2024-01-25T09:15:00Z'
-          },
-          {
-            gigId: '4',
-            publicId: 'GIG-004',
-            organizerId: 'org-1',
-            title: 'Birthday Party Band',
-            description: 'Fun band needed for a 50th birthday celebration. Mix of classic rock and modern hits preferred.',
-            category: 'Music',
-            genres: ['Rock', 'Pop'],
-            locationCity: 'The Hague',
-            eventDate: '2024-01-30T19:30:00Z',
-            pricing: {
-              amountInCents: 80000,
-              currency: 'EUR',
-              amountInEuros: 800
-            },
-            priceType: 'FIXED',
-            isNegotiable: false,
-            paymentMethod: 'STRIPE_CONNECT',
-            status: 'COMPLETED',
-            applicationsCount: 15,
-            canApply: false,
-            createdAt: '2024-01-10T16:45:00Z'
-          }
-        ]);
-      } catch (error) {
-        console.error('Error fetching gigs:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchGigs();
   }, []);
+
+  // Fetch on page change
+  useEffect(() => {
+    if (currentPage > 0) {
+      fetchGigs(currentPage);
+    }
+  }, [currentPage]);
+
+  // Debounced search effect
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (currentPage === 0) {
+        fetchGigs(0, searchTerm, statusFilter);
+      } else {
+        setCurrentPage(0);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, statusFilter]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -154,15 +100,49 @@ const GigsPage = () => {
     }
   };
 
-  const filteredGigs = gigs.filter(gig => {
-    const matchesSearch = gig.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         gig.locationCity?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         gig.category.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || gig.status.toLowerCase() === statusFilter.toLowerCase();
-    return matchesSearch && matchesStatus;
-  });
+  const handlePublishGig = async (gigId: string) => {
+    try {
+      setActionLoading(prev => ({ ...prev, [gigId]: true }));
+      await apiClient.publishGig(gigId);
+      await fetchGigs(); // Refresh the list
+    } catch (error) {
+      console.error('Error publishing gig:', error);
+      setError('Failed to publish gig. Please try again.');
+    } finally {
+      setActionLoading(prev => ({ ...prev, [gigId]: false }));
+    }
+  };
 
-  if (isLoading) {
+  const handleCompleteGig = async (gigId: string) => {
+    try {
+      setActionLoading(prev => ({ ...prev, [gigId]: true }));
+      await apiClient.completeGig(gigId);
+      await fetchGigs(); // Refresh the list
+    } catch (error) {
+      console.error('Error completing gig:', error);
+      setError('Failed to complete gig. Please try again.');
+    } finally {
+      setActionLoading(prev => ({ ...prev, [gigId]: false }));
+    }
+  };
+
+  const handleCancelGig = async (gigId: string) => {
+    const reason = prompt('Please provide a reason for cancelling this gig:');
+    if (!reason) return;
+
+    try {
+      setActionLoading(prev => ({ ...prev, [gigId]: true }));
+      await apiClient.cancelGig(gigId, reason);
+      await fetchGigs(); // Refresh the list
+    } catch (error) {
+      console.error('Error cancelling gig:', error);
+      setError('Failed to cancel gig. Please try again.');
+    } finally {
+      setActionLoading(prev => ({ ...prev, [gigId]: false }));
+    }
+  };
+
+  if (isLoading && gigs.length === 0) {
     return (
       <div className="space-y-6">
         <div className="animate-pulse">
@@ -232,9 +212,28 @@ const GigsPage = () => {
         </CardContent>
       </Card>
 
+      {/* Error Display */}
+      {error && (
+        <Card>
+          <CardContent className="pt-6">
+            <div className="text-center py-4">
+              <p className="text-red-600 mb-4">{error}</p>
+              <Button onClick={() => fetchGigs()} variant="outline">
+                Try Again
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Gigs List */}
-      <div className="space-y-4">
-        {filteredGigs.map((gig) => (
+      <div className="space-y-4 relative">
+        {isLoading && gigs.length > 0 && (
+          <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-10">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+          </div>
+        )}
+        {gigs.map((gig) => (
           <Card key={gig.gigId} className="hover:shadow-md transition-shadow">
             <CardContent className="pt-6">
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
@@ -298,19 +297,35 @@ const GigsPage = () => {
                   
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full sm:w-auto"
+                        disabled={actionLoading[gig.gigId]}
+                      >
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       {gig.status === 'DRAFT' && (
-                        <DropdownMenuItem>Publish Gig</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handlePublishGig(gig.gigId)}>
+                          Publish Gig
+                        </DropdownMenuItem>
                       )}
                       {gig.status === 'BOOKED' && (
-                        <DropdownMenuItem>Mark as Completed</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleCompleteGig(gig.gigId)}>
+                          Mark as Completed
+                        </DropdownMenuItem>
                       )}
                       <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                      <DropdownMenuItem className="text-red-600">Cancel Gig</DropdownMenuItem>
+                      {(gig.status === 'OPEN' || gig.status === 'DRAFT') && (
+                        <DropdownMenuItem 
+                          className="text-red-600"
+                          onClick={() => handleCancelGig(gig.gigId)}
+                        >
+                          Cancel Gig
+                        </DropdownMenuItem>
+                      )}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
@@ -319,7 +334,7 @@ const GigsPage = () => {
           </Card>
         ))}
         
-        {filteredGigs.length === 0 && (
+        {gigs.length === 0 && !isLoading && (
           <Card>
             <CardContent className="text-center py-12">
               <div className="text-gray-500">
@@ -344,6 +359,61 @@ const GigsPage = () => {
           </Card>
         )}
       </div>
+
+      {/* Pagination */}
+      {gigs.length > 0 && totalPages > 1 && (
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span>
+                  Showing {currentPage * pageSize + 1} to {Math.min((currentPage + 1) * pageSize, totalElements)} of {totalElements} gigs
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 0 || isLoading}
+                >
+                  Previous
+                </Button>
+                
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    const pageNumber = Math.max(0, Math.min(currentPage - 2 + i, totalPages - 5 + i));
+                    const isCurrentPage = pageNumber === currentPage;
+                    
+                    return (
+                      <Button
+                        key={pageNumber}
+                        variant={isCurrentPage ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCurrentPage(pageNumber)}
+                        disabled={isLoading}
+                        className="w-8 h-8 p-0"
+                      >
+                        {pageNumber + 1}
+                      </Button>
+                    );
+                  })}
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage >= totalPages - 1 || isLoading}
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
