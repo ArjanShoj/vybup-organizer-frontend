@@ -523,7 +523,7 @@ const GigDetailPage = () => {
                                   </div>
                                   
                                   <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                                    {application.performerRating && (
+                                    {application.performerRating != null && application.performerRating > 0 && (
                                       <span className="flex items-center gap-1">
                                         <Star className="h-3 w-3 text-yellow-400 fill-current" />
                                         <span className="font-medium text-gray-900">

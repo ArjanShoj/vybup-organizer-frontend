@@ -263,7 +263,7 @@ const ApplicationsPage = () => {
                   </div>
                   
                   <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
-                    {application.performerRating && (
+                    {application.performerRating != null && application.performerRating > 0 && (
                       <span className="flex items-center gap-1">
                         <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                         {application.performerRating.toFixed(1)} ({application.performerReviewCount} reviews)
@@ -331,7 +331,7 @@ const ApplicationsPage = () => {
                       </Avatar>
                       
                       <div className="flex-1">
-                        {application.performerRating && (
+                        {application.performerRating != null && application.performerRating > 0 && (
                           <div className="flex items-center gap-1 mb-3">
                             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                             <span className="font-medium">{application.performerRating.toFixed(1)}</span>
