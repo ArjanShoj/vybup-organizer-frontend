@@ -204,10 +204,10 @@ const ApplicationsPage = () => {
 
   const filteredApplications = applications.filter(app => {
     const matchesSearch = 
-      app.performer.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.performer.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.performer.stageName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.performer.location.toLowerCase().includes(searchTerm.toLowerCase());
+      (app.performerFirstName?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+      (app.performerLastName?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+      (app.performerDisplayName?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+      (app.gigTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
     const matchesStatus = statusFilter === 'all' || app.status.toLowerCase() === statusFilter.toLowerCase();
     return matchesSearch && matchesStatus;
   });
@@ -232,7 +232,9 @@ const ApplicationsPage = () => {
   }
 
   const ApplicationCard = ({ application }: { application: GigApplicationResponse }) => {
-    const performer = application.performer;
+    const performerName = application.performerDisplayName || 
+      `${application.performerFirstName || ''} ${application.performerLastName || ''}`.trim() || 
+      'Unknown Performer';
     
     return (
       <Card className="hover:shadow-md transition-shadow">
@@ -241,34 +243,30 @@ const ApplicationsPage = () => {
             <div className="flex-1">
               <div className="flex items-start gap-4 mb-4">
                 <Avatar className="h-12 w-12">
-                  <AvatarImage src={performer.profileImageUrl || undefined} />
-                  <AvatarFallback>
-                    {performer.firstName[0]}{performer.lastName[0]}
-                  </AvatarFallback>
+                  {application.performerAvatarUrl ? (
+                    <AvatarImage src={application.performerAvatarUrl} />
+                  ) : (
+                    <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-500 text-white">
+                      {(application.performerFirstName?.[0] || '?')}{(application.performerLastName?.[0] || '?')}
+                    </AvatarFallback>
+                  )}
                 </Avatar>
                 
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="text-lg font-semibold text-gray-900">
-                      {performer.firstName} {performer.lastName}
+                      {performerName}
                     </h3>
-                    {performer.stageName && (
-                      <span className="text-sm text-gray-500">({performer.stageName})</span>
-                    )}
                     <Badge className={getStatusColor(application.status)}>
                       {application.status}
                     </Badge>
                   </div>
                   
                   <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
-                    <span className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {performer.location}
-                    </span>
-                    {performer.averageRating && (
+                    {application.performerRating && (
                       <span className="flex items-center gap-1">
                         <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                        {performer.averageRating.toFixed(1)} ({performer.totalReviews} reviews)
+                        {application.performerRating.toFixed(1)} ({application.performerReviewCount} reviews)
                       </span>
                     )}
                     <span className="flex items-center gap-1">
@@ -277,20 +275,25 @@ const ApplicationsPage = () => {
                     </span>
                   </div>
                   
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {performer.genres.map((genre) => (
-                      <Badge key={genre} variant="secondary" className="text-xs">
-                        {genre}
-                      </Badge>
-                    ))}
+                  <div className="mb-2">
+                    <span className="text-sm font-medium text-gray-600">Gig: </span>
+                    <span className="text-sm text-gray-900">{application.gigTitle}</span>
                   </div>
                   
-                  <p className="text-sm text-gray-600 mb-3">{performer.bio}</p>
+                  {application.performerGenres && application.performerGenres.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {application.performerGenres.map((genre) => (
+                        <Badge key={genre} variant="secondary" className="text-xs">
+                          {genre}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
                   
-                  {application.message && (
+                  {application.applicationMessage && (
                     <div className="bg-gray-50 p-3 rounded-lg">
                       <p className="text-sm font-medium text-gray-900 mb-1">Application Message:</p>
-                      <p className="text-sm text-gray-700">{application.message}</p>
+                      <p className="text-sm text-gray-700">{application.applicationMessage}</p>
                     </div>
                   )}
                 </div>
@@ -308,54 +311,51 @@ const ApplicationsPage = () => {
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
                     <DialogTitle>
-                      {performer.firstName} {performer.lastName}
-                      {performer.stageName && ` (${performer.stageName})`}
+                      {performerName}
                     </DialogTitle>
                     <DialogDescription>
-                      Performer profile and application details
+                      Performer profile and application details for "{application.gigTitle}"
                     </DialogDescription>
                   </DialogHeader>
                   
                   <div className="space-y-6">
                     <div className="flex items-start gap-4">
                       <Avatar className="h-16 w-16">
-                        <AvatarImage src={performer.profileImageUrl || undefined} />
-                        <AvatarFallback>
-                          {performer.firstName[0]}{performer.lastName[0]}
-                        </AvatarFallback>
+                        {application.performerAvatarUrl ? (
+                          <AvatarImage src={application.performerAvatarUrl} />
+                        ) : (
+                          <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-500 text-white text-lg">
+                            {(application.performerFirstName?.[0] || '?')}{(application.performerLastName?.[0] || '?')}
+                          </AvatarFallback>
+                        )}
                       </Avatar>
                       
                       <div className="flex-1">
-                        <div className="flex items-center gap-4 mb-2">
-                          <span className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            {performer.location}
-                          </span>
-                          {performer.averageRating && (
-                            <span className="flex items-center gap-1">
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                              {performer.averageRating.toFixed(1)} ({performer.totalReviews} reviews)
-                            </span>
-                          )}
-                        </div>
+                        {application.performerRating && (
+                          <div className="flex items-center gap-1 mb-3">
+                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <span className="font-medium">{application.performerRating.toFixed(1)}</span>
+                            <span className="text-gray-600">({application.performerReviewCount} reviews)</span>
+                          </div>
+                        )}
                         
-                        <div className="flex flex-wrap gap-1 mb-3">
-                          {performer.genres.map((genre) => (
-                            <Badge key={genre} variant="secondary">
-                              {genre}
-                            </Badge>
-                          ))}
-                        </div>
-                        
-                        <p className="text-gray-700">{performer.bio}</p>
+                        {application.performerGenres && application.performerGenres.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-3">
+                            {application.performerGenres.map((genre) => (
+                              <Badge key={genre} variant="secondary">
+                                {genre}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                     
-                    {application.message && (
+                    {application.applicationMessage && (
                       <div>
                         <h4 className="font-medium text-gray-900 mb-2">Application Message</h4>
                         <div className="bg-gray-50 p-4 rounded-lg">
-                          <p className="text-gray-700">{application.message}</p>
+                          <p className="text-gray-700">{application.applicationMessage}</p>
                         </div>
                       </div>
                     )}

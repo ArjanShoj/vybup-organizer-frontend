@@ -472,8 +472,10 @@ const GigDetailPage = () => {
                   ) : (
                     <div className="space-y-4">
                       {applications.map((application) => {
-                        // Add safety check for performer object
-                        if (!application.performer) {
+                        // Check if performer data is available in the flattened structure
+                        const hasPerformerData = application.performerFirstName || application.performerLastName || application.performerDisplayName;
+                        
+                        if (!hasPerformerData) {
                           return (
                             <div key={application.id} className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                               <div className="text-center py-8 text-gray-500">
@@ -484,27 +486,25 @@ const GigDetailPage = () => {
                           );
                         }
                         
-                        const performer = application.performer;
-                        
                         return (
                           <div key={application.id} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
                             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
                               <div className="flex items-start gap-4 flex-1">
                                 <div className="relative">
                                   <Avatar className="h-16 w-16 border-2 border-white shadow-lg">
-                                    {performer.profileImageUrl ? (
+                                    {application.performerAvatarUrl ? (
                                       <img 
-                                        src={performer.profileImageUrl} 
-                                        alt={`${performer.firstName || ''} ${performer.lastName || ''}`}
+                                        src={application.performerAvatarUrl} 
+                                        alt={`${application.performerFirstName || ''} ${application.performerLastName || ''}`}
                                         className="h-full w-full object-cover"
                                       />
                                     ) : (
                                       <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
-                                        {(performer.firstName?.[0] || '?')}{(performer.lastName?.[0] || '?')}
+                                        {(application.performerFirstName?.[0] || '?')}{(application.performerLastName?.[0] || '?')}
                                       </div>
                                     )}
                                   </Avatar>
-                                  {performer.averageRating && performer.averageRating >= 4.5 && (
+                                  {application.performerRating && application.performerRating >= 4.5 && (
                                     <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
                                       <Star className="h-3 w-3 text-white fill-current" />
                                     </div>
@@ -514,8 +514,8 @@ const GigDetailPage = () => {
                                 <div className="flex-1">
                                   <div className="flex items-center gap-3 mb-2">
                                     <h4 className="text-lg font-bold text-gray-900">
-                                      {performer.stageName || 
-                                       `${performer.firstName || ''} ${performer.lastName || ''}`}
+                                      {application.performerDisplayName || 
+                                       `${application.performerFirstName || ''} ${application.performerLastName || ''}`.trim() || 'Unknown Performer'}
                                     </h4>
                                     <Badge className={`${getApplicationStatusColor(application.status)} shadow-sm`}>
                                       {application.status}
@@ -523,42 +523,38 @@ const GigDetailPage = () => {
                                   </div>
                                   
                                   <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                                    <span className="flex items-center gap-1">
-                                      <MapPin className="h-3 w-3" />
-                                      {performer.location || 'Location not specified'}
-                                    </span>
-                                    {performer.averageRating && (
+                                    {application.performerRating && (
                                       <span className="flex items-center gap-1">
                                         <Star className="h-3 w-3 text-yellow-400 fill-current" />
                                         <span className="font-medium text-gray-900">
-                                          {performer.averageRating.toFixed(1)}
+                                          {application.performerRating.toFixed(1)}
                                         </span>
                                         <span className="text-gray-500">
-                                          ({performer.totalReviews || 0} reviews)
+                                          ({application.performerReviewCount || 0} reviews)
                                         </span>
                                       </span>
                                     )}
                                   </div>
                                   
-                                  {performer.genres && performer.genres.length > 0 && (
+                                  {application.performerGenres && application.performerGenres.length > 0 && (
                                     <div className="flex flex-wrap gap-1 mb-4">
-                                      {performer.genres.slice(0, 3).map((genre) => (
+                                      {application.performerGenres.slice(0, 3).map((genre) => (
                                         <Badge key={genre} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
                                           {genre}
                                         </Badge>
                                       ))}
-                                      {performer.genres.length > 3 && (
+                                      {application.performerGenres.length > 3 && (
                                         <Badge variant="outline" className="text-xs bg-gray-50 text-gray-600">
-                                          +{performer.genres.length - 3}
+                                          +{application.performerGenres.length - 3}
                                         </Badge>
                                       )}
                                     </div>
                                   )}
                                   
-                                  {application.message && (
+                                  {application.applicationMessage && (
                                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
                                       <p className="text-xs font-medium text-blue-800 mb-1">Application Message</p>
-                                      <p className="text-sm text-blue-700 leading-relaxed">{application.message}</p>
+                                      <p className="text-sm text-blue-700 leading-relaxed">{application.applicationMessage}</p>
                                     </div>
                                   )}
                                   
@@ -801,7 +797,7 @@ const GigDetailPage = () => {
                 Accept Application
               </DialogTitle>
               <DialogDescription className="text-base leading-relaxed">
-                Are you sure you want to accept <span className="font-semibold">{selectedApplication?.performer?.firstName || 'this performer'} {selectedApplication?.performer?.lastName || ''}</span>'s application? 
+                Are you sure you want to accept <span className="font-semibold">{selectedApplication?.performerDisplayName || `${selectedApplication?.performerFirstName || ''} ${selectedApplication?.performerLastName || ''}`.trim() || 'this performer'}</span>'s application? 
                 <br /><br />
                 This will automatically reject all other applications and mark the gig as booked.
               </DialogDescription>
@@ -832,7 +828,7 @@ const GigDetailPage = () => {
                 Reject Application
               </DialogTitle>
               <DialogDescription className="text-base leading-relaxed">
-                Please provide a reason for rejecting <span className="font-semibold">{selectedApplication?.performer?.firstName || 'this performer'} {selectedApplication?.performer?.lastName || ''}</span>'s application.
+                Please provide a reason for rejecting <span className="font-semibold">{selectedApplication?.performerDisplayName || `${selectedApplication?.performerFirstName || ''} ${selectedApplication?.performerLastName || ''}`.trim() || 'this performer'}</span>'s application.
               </DialogDescription>
             </DialogHeader>
             <div className="py-4">

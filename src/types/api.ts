@@ -56,11 +56,20 @@ export interface GigResponse {
 export interface GigApplicationResponse {
   id: string;
   gigId: string;
-  performerId: string;
-  performer: PerformerSummary;
+  gigTitle: string;
+  performerId?: string;
+  performerDisplayName?: string;
+  performerFirstName?: string;
+  performerLastName?: string;
+  performerAvatarUrl?: string;
+  performerGenres: string[];
+  performerRating?: number;
+  performerReviewCount: number;
+  applicationMessage?: string;
   status: 'PENDING' | 'ACCEPTED' | 'REJECTED';
-  message?: string;
   appliedAt: string;
+  decisionAt?: string;
+  decisionReason?: string;
 }
 
 export interface PerformerSummary {

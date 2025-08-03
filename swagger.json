@@ -3191,6 +3191,8 @@
                     "gigId",
                     "gigTitle",
                     "id",
+                    "performerGenres",
+                    "performerReviewCount",
                     "status"
                 ],
                 "type": "object",
@@ -3209,6 +3211,29 @@
                     },
                     "performerDisplayName": {
                         "type": "string"
+                    },
+                    "performerFirstName": {
+                        "type": "string"
+                    },
+                    "performerLastName": {
+                        "type": "string"
+                    },
+                    "performerAvatarUrl": {
+                        "type": "string"
+                    },
+                    "performerGenres": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "performerRating": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "performerReviewCount": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "applicationMessage": {
                         "type": "string"
