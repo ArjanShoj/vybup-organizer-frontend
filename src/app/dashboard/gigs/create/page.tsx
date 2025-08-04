@@ -2,54 +2,118 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, 
-  Plus, 
   X,
   Calendar,
   MapPin,
   DollarSign,
   Clock,
-  Users
+  Music,
+  FileText,
+  CreditCard,
+  CheckCircle,
+  AlertCircle,
+  Sparkles
 } from 'lucide-react';
-import Link from 'next/link';
-import { CreateGigRequest } from '@/types/api';
+import { apiClient } from '@/lib/api';
+import { CreateGigRequest, GigResponse } from '@/types/api';
 
+// Categories available for gigs
 const categories = [
-  'Music',
-  'DJ',
-  'Entertainment',
-  'Speaking',
-  'Performance Art',
-  'Comedy',
-  'Dance'
+  { value: 'MUSIC', label: 'Music', icon: Music },
+  { value: 'DJ', label: 'DJ & Electronic', icon: Music },
+  { value: 'ENTERTAINMENT', label: 'Entertainment', icon: Sparkles },
+  { value: 'COMEDY', label: 'Comedy', icon: Sparkles },
+  { value: 'DANCE', label: 'Dance', icon: Sparkles },
+  { value: 'SPEAKING', label: 'Speaking & Hosting', icon: FileText },
 ];
 
-const musicGenres = [
+// Music and performance genres
+const genres = [
   'Rock', 'Pop', 'Jazz', 'Blues', 'Folk', 'Country', 'R&B', 'Hip-Hop',
   'Electronic', 'Dance', 'House', 'Techno', 'Classical', 'Acoustic',
-  'Indie', 'Alternative', 'Reggae', 'Latin', 'World Music'
+  'Indie', 'Alternative', 'Reggae', 'Latin', 'World Music', 'Funk',
+  'Soul', 'Gospel', 'Punk', 'Metal', 'Ambient', 'Experimental'
 ];
 
+// Price types with descriptions
 const priceTypes = [
-  { value: 'FIXED', label: 'Fixed Price' },
-  { value: 'HOURLY', label: 'Hourly Rate' },
-  { value: 'NEGOTIABLE', label: 'Negotiable' }
+  { 
+    value: 'FIXED', 
+    label: 'Fixed Price',
+    description: 'One-time payment for the entire performance'
+  },
+  { 
+    value: 'HOURLY', 
+    label: 'Hourly Rate',
+    description: 'Payment based on hours performed'
+  },
+  { 
+    value: 'NEGOTIABLE', 
+    label: 'Negotiable',
+    description: 'Price can be discussed with performers'
+  }
 ];
 
+// Payment methods with descriptions
 const paymentMethods = [
-  { value: 'CASH', label: 'Cash Payment' },
-  { value: 'STRIPE_CONNECT', label: 'Online Payment (Stripe)' }
+  { 
+    value: 'CASH', 
+    label: 'Cash Payment',
+    description: 'Pay the performer directly in cash',
+    icon: DollarSign
+  },
+  { 
+    value: 'STRIPE_CONNECT', 
+    label: 'Online Payment',
+    description: 'Secure payment through the platform',
+    icon: CreditCard
+  }
 ];
+
+// Form sections for better organization
+const FormSection = ({ 
+  title, 
+  description, 
+  icon: Icon, 
+  children, 
+  completed = false 
+}: {
+  title: string;
+  description: string;
+  icon: any;
+  children: React.ReactNode;
+  completed?: boolean;
+}) => (
+  <Card className="border-0 shadow-lg">
+    <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+      <div className="flex items-center gap-3">
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+          completed ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'
+        }`}>
+          {completed ? <CheckCircle className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
+        </div>
+        <div className="flex-1">
+          <CardTitle className="text-xl">{title}</CardTitle>
+          <CardDescription className="mt-1">{description}</CardDescription>
+        </div>
+      </div>
+    </CardHeader>
+    <CardContent className="p-6">
+      {children}
+    </CardContent>
+  </Card>
+);
 
 const CreateGigPage = () => {
   const router = useRouter();
@@ -70,7 +134,8 @@ const CreateGigPage = () => {
       amountInEuros: 0
     },
     priceType: 'FIXED',
-    isNegotiable: false
+    isNegotiable: false,
+    paymentMethod: 'STRIPE_CONNECT'
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -117,23 +182,27 @@ const CreateGigPage = () => {
 
   const validateForm = () => {
     if (!formData.title.trim()) {
-      setError('Title is required');
+      setError('Gig title is required');
       return false;
     }
     if (!formData.category) {
-      setError('Category is required');
+      setError('Please select a category');
       return false;
     }
     if (selectedGenres.length === 0) {
-      setError('At least one genre is required');
+      setError('Please select at least one genre');
       return false;
     }
     if (!formData.eventDate) {
-      setError('Event date is required');
+      setError('Event date and time is required');
       return false;
     }
     if (formData.pricing.amountInEuros <= 0) {
       setError('Price must be greater than 0');
+      return false;
+    }
+    if (!formData.paymentMethod) {
+      setError('Please select a payment method');
       return false;
     }
     
@@ -152,6 +221,10 @@ const CreateGigPage = () => {
         setError('Application deadline must be before the event date');
         return false;
       }
+      if (deadline <= now) {
+        setError('Application deadline must be in the future');
+        return false;
+      }
     }
 
     return true;
@@ -168,253 +241,330 @@ const CreateGigPage = () => {
     setError('');
 
     try {
-      // Since backend is not running, we'll simulate the API call
-      console.log('Creating gig:', { ...formData, status: isDraft ? 'DRAFT' : 'OPEN' });
+      const response = await apiClient.createGig(formData) as GigResponse;
       
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
-      
-      toast.success(isDraft ? 'Gig saved as draft!' : 'Gig created and published!');
-      router.push('/dashboard/gigs');
+      toast.success(isDraft ? 'Gig saved as draft!' : 'Gig created successfully!');
+      router.push(`/dashboard/gigs/${response.gigId}`);
     } catch (err: any) {
-      setError(err.message || 'Failed to create gig');
+      setError(err.message || 'Failed to create gig. Please try again.');
+      toast.error('Failed to create gig');
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Check form completion for visual feedback
+  const basicInfoCompleted = formData.title && formData.category && selectedGenres.length > 0;
+  const eventDetailsCompleted = formData.eventDate;
+  const pricingCompleted = formData.pricing.amountInEuros > 0 && formData.paymentMethod;
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard/gigs">
-          <Button variant="outline" size="sm">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Gigs
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Create New Gig</h1>
-          <p className="text-sm text-gray-500">Post a new gig to find talented performers</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="w-full px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <Link href="/dashboard/gigs">
+              <Button variant="ghost" className="hover:bg-white/80 shadow-sm">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Gigs
+              </Button>
+            </Link>
+            
+            <div className="text-right">
+              <h1 className="text-3xl font-bold text-gray-900">Create New Gig</h1>
+              <p className="text-gray-600 mt-1">Find the perfect performer for your event</p>
+            </div>
+          </div>
+
+          {/* Error Display */}
+          {error && (
+            <Card className="mb-8 border-red-200 bg-red-50 shadow-sm">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                    <AlertCircle className="h-4 w-4 text-red-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-red-800 font-medium">Please fix the following issue:</p>
+                    <p className="text-red-700 text-sm">{error}</p>
+                  </div>
+                  <Button onClick={() => setError('')} variant="ghost" size="sm" className="text-red-700 hover:bg-red-100">
+                    Dismiss
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          <form onSubmit={(e) => handleSubmit(e, false)} className="space-y-8">
+            {/* Basic Information */}
+            <FormSection
+              title="Basic Information"
+              description="Tell us about your event and what type of performance you need"
+              icon={FileText}
+              completed={basicInfoCompleted}
+            >
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="title" className="text-base font-medium">Gig Title *</Label>
+                  <Input
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleInputChange}
+                    placeholder="e.g., Jazz Trio for Corporate Holiday Party"
+                    className="h-12 text-base"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-base font-medium">Description</Label>
+                  <Textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    placeholder="Describe your event, the atmosphere you want to create, specific requirements, and what kind of performance you're looking for..."
+                    rows={4}
+                    className="text-base resize-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label className="text-base font-medium">Category *</Label>
+                    <Select value={formData.category} onValueChange={(value) => handleSelectChange('category', value)}>
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="Select performance category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map(category => {
+                          const IconComponent = category.icon;
+                          return (
+                            <SelectItem key={category.value} value={category.value}>
+                              <div className="flex items-center gap-2">
+                                <IconComponent className="h-4 w-4" />
+                                {category.label}
+                              </div>
+                            </SelectItem>
+                          );
+                        })}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="locationCity" className="text-base font-medium">Location</Label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Input
+                        id="locationCity"
+                        name="locationCity"
+                        value={formData.locationCity}
+                        onChange={handleInputChange}
+                        placeholder="City or venue location"
+                        className="pl-11 h-12 text-base"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-base font-medium">Genres & Styles *</Label>
+                  <Select onValueChange={handleGenreSelect}>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Add genres and musical styles" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-60">
+                      {genres
+                        .filter(genre => !selectedGenres.includes(genre))
+                        .map(genre => (
+                          <SelectItem key={genre} value={genre}>
+                            {genre}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedGenres.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {selectedGenres.map(genre => (
+                        <Badge key={genre} className="bg-blue-100 text-blue-800 hover:bg-blue-200 px-3 py-1">
+                          {genre}
+                          <button
+                            type="button"
+                            onClick={() => removeGenre(genre)}
+                            className="ml-2 hover:text-red-600 transition-colors"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </FormSection>
+
+            {/* Event Details */}
+            <FormSection
+              title="Event Details"
+              description="When and where will your event take place?"
+              icon={Calendar}
+              completed={eventDetailsCompleted}
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="eventDate" className="text-base font-medium">Event Date & Time *</Label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Input
+                      id="eventDate"
+                      name="eventDate"
+                      type="datetime-local"
+                      value={formData.eventDate}
+                      onChange={handleInputChange}
+                      className="pl-11 h-12 text-base"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="applicationDeadline" className="text-base font-medium">Application Deadline</Label>
+                  <div className="relative">
+                    <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Input
+                      id="applicationDeadline"
+                      name="applicationDeadline"
+                      type="datetime-local"
+                      value={formData.applicationDeadline}
+                      onChange={handleInputChange}
+                      className="pl-11 h-12 text-base"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-500">Optional: Set a deadline for performers to apply</p>
+                </div>
+              </div>
+            </FormSection>
+
+            {/* Pricing & Payment */}
+            <FormSection
+              title="Pricing & Payment"
+              description="Set your budget and choose how you'd like to pay"
+              icon={DollarSign}
+              completed={pricingCompleted}
+            >
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label className="text-base font-medium">Price Type *</Label>
+                    <Select value={formData.priceType} onValueChange={(value) => handleSelectChange('priceType', value)}>
+                      <SelectTrigger className="h-12">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {priceTypes.map(type => (
+                          <SelectItem key={type.value} value={type.value}>
+                            <div className="flex flex-col items-start">
+                              <span className="font-medium">{type.label}</span>
+                              <span className="text-xs text-gray-500">{type.description}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="price" className="text-base font-medium">
+                      {formData.priceType === 'HOURLY' ? 'Hourly Rate (€)' : 'Total Budget (€)'} *
+                    </Label>
+                    <div className="relative">
+                      <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Input
+                        id="price"
+                        type="number"
+                        step="1"
+                        min="1"
+                        value={formData.pricing.amountInEuros || ''}
+                        onChange={handlePriceChange}
+                        placeholder="Enter amount"
+                        className="pl-11 h-12 text-base"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <Label className="text-base font-medium">Payment Method *</Label>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {paymentMethods.map(method => {
+                      const IconComponent = method.icon;
+                      return (
+                        <div key={method.value} className="relative">
+                          <input
+                            type="radio"
+                            id={method.value}
+                            name="paymentMethod"
+                            value={method.value}
+                            checked={formData.paymentMethod === method.value}
+                            onChange={(e) => handleSelectChange('paymentMethod', e.target.value)}
+                            className="sr-only peer"
+                          />
+                          <label
+                            htmlFor={method.value}
+                            className="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-300 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all"
+                          >
+                            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center peer-checked:bg-blue-100">
+                              <IconComponent className="h-5 w-5 text-gray-600 peer-checked:text-blue-600" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-medium text-gray-900">{method.label}</p>
+                              <p className="text-sm text-gray-500">{method.description}</p>
+                            </div>
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </FormSection>
+
+            {/* Submit Actions */}
+            <Card className="border-0 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex flex-col sm:flex-row gap-4 justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="lg"
+                    onClick={(e) => handleSubmit(e as any, true)}
+                    disabled={isLoading}
+                    className="bg-white hover:bg-gray-50"
+                  >
+                    Save as Draft
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    size="lg"
+                    disabled={isLoading}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg"
+                  >
+                    {isLoading ? 'Creating...' : 'Create & Publish Gig'}
+                  </Button>
+                </div>
+                <p className="text-sm text-gray-500 text-center mt-4">
+                  Your gig will be visible to performers immediately after publishing
+                </p>
+              </CardContent>
+            </Card>
+          </form>
         </div>
       </div>
-
-      <form onSubmit={(e) => handleSubmit(e, false)} className="space-y-6">
-        {error && (
-          <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-
-        {/* Basic Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Basic Information</CardTitle>
-            <CardDescription>
-              Provide the essential details about your gig
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="title">Gig Title *</Label>
-              <Input
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                placeholder="e.g., Jazz Trio for Corporate Event"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Describe your event, requirements, and what you're looking for..."
-                rows={4}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Category *</Label>
-                <Select value={formData.category} onValueChange={(value) => handleSelectChange('category', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map(category => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="locationCity">Location</Label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                  <Input
-                    id="locationCity"
-                    name="locationCity"
-                    value={formData.locationCity}
-                    onChange={handleInputChange}
-                    placeholder="City"
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Genres *</Label>
-              <Select onValueChange={handleGenreSelect}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Add genres" />
-                </SelectTrigger>
-                <SelectContent>
-                  {musicGenres
-                    .filter(genre => !selectedGenres.includes(genre))
-                    .map(genre => (
-                      <SelectItem key={genre} value={genre}>
-                        {genre}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-              {selectedGenres.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {selectedGenres.map(genre => (
-                    <Badge key={genre} variant="secondary" className="text-sm">
-                      {genre}
-                      <button
-                        type="button"
-                        onClick={() => removeGenre(genre)}
-                        className="ml-2 hover:text-red-500"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Event Details */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Event Details</CardTitle>
-            <CardDescription>
-              Specify when and where the event will take place
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="eventDate">Event Date & Time *</Label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                  <Input
-                    id="eventDate"
-                    name="eventDate"
-                    type="datetime-local"
-                    value={formData.eventDate}
-                    onChange={handleInputChange}
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="applicationDeadline">Application Deadline</Label>
-                <div className="relative">
-                  <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                  <Input
-                    id="applicationDeadline"
-                    name="applicationDeadline"
-                    type="datetime-local"
-                    value={formData.applicationDeadline}
-                    onChange={handleInputChange}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Pricing */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Pricing</CardTitle>
-            <CardDescription>
-              Set your budget and payment preferences
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Price Type *</Label>
-                <Select value={formData.priceType} onValueChange={(value) => handleSelectChange('priceType', value)}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {priceTypes.map(type => (
-                      <SelectItem key={type.value} value={type.value}>
-                        {type.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="price">
-                  {formData.priceType === 'HOURLY' ? 'Hourly Rate (€)' : 'Total Budget (€)'} *
-                </Label>
-                <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                  <Input
-                    id="price"
-                    type="number"
-                    step="0.01"
-                    min="1"
-                    value={formData.pricing.amountInEuros || ''}
-                    onChange={handlePriceChange}
-                    placeholder="0.00"
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-end">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={(e) => handleSubmit(e, true)}
-            disabled={isLoading}
-          >
-            Save as Draft
-          </Button>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? 'Creating...' : 'Create & Publish Gig'}
-          </Button>
-        </div>
-      </form>
     </div>
   );
 };

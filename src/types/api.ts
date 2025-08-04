@@ -98,6 +98,7 @@ export interface CreateGigRequest {
   pricing: Money;
   priceType: 'FIXED' | 'HOURLY' | 'NEGOTIABLE';
   isNegotiable: boolean;
+  paymentMethod: 'CASH' | 'STRIPE_CONNECT';
 }
 
 export interface SignUpRequest {
