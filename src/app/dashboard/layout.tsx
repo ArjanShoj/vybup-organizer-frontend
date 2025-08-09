@@ -43,8 +43,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500"></div>
       </div>
     );
   }
@@ -54,12 +54,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
+    <div className="min-h-screen bg-slate-900">
       <Sidebar />
       
       {/* Main content */}
-      <div className="lg:pl-64 min-h-screen">
-        <main className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
+      <div className="lg:pl-64 min-h-screen bg-slate-900">
+        <main className="min-h-screen">
           {children}
         </main>
       </div>

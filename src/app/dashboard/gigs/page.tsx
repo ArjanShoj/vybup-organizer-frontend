@@ -103,12 +103,12 @@ const GigsPage = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'OPEN': return 'bg-green-100 text-green-800 border-green-300';
-      case 'DRAFT': return 'bg-gray-100 text-gray-800 border-gray-300';
-      case 'BOOKED': return 'bg-blue-100 text-blue-800 border-blue-300';
-      case 'COMPLETED': return 'bg-purple-100 text-purple-800 border-purple-300';
-      case 'CANCELLED': return 'bg-red-100 text-red-800 border-red-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+      case 'OPEN': return 'status-open';
+      case 'DRAFT': return 'status-draft';
+      case 'BOOKED': return 'status-booked';
+      case 'COMPLETED': return 'status-completed';
+      case 'CANCELLED': return 'status-cancelled';
+      default: return 'status-draft';
     }
   };
 
@@ -164,48 +164,48 @@ const GigsPage = () => {
 
   if (isLoading && gigs.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="container mx-auto px-4 py-8">
+      <div className="page-container">
+        <div className="page-content">
           <div className="animate-pulse space-y-8">
             {/* Header skeleton */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div className="page-header">
               <div>
-                <div className="h-8 bg-gray-200 rounded w-48 mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-72"></div>
+                <div className="h-8 bg-dark-700/50 rounded w-48 mb-2"></div>
+                <div className="h-4 bg-dark-700/50 rounded w-72"></div>
               </div>
-              <div className="h-10 bg-gray-200 rounded w-40 mt-4 sm:mt-0"></div>
+              <div className="h-10 bg-dark-700/50 rounded w-40 mt-4 sm:mt-0"></div>
             </div>
             
             {/* Filter skeleton */}
-            <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="luxury-card">
               <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex-1 h-10 bg-gray-200 rounded-lg"></div>
-                <div className="w-48 h-10 bg-gray-200 rounded-lg"></div>
+                <div className="flex-1 h-10 bg-dark-700/50 rounded-lg"></div>
+                <div className="w-48 h-10 bg-dark-700/50 rounded-lg"></div>
               </div>
             </div>
             
             {/* Gigs skeleton */}
             <div className="space-y-6">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="bg-white rounded-2xl shadow-lg p-8">
+                <div key={i} className="luxury-card">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-gray-200 rounded-lg"></div>
+                        <div className="w-12 h-12 bg-dark-700/50 rounded-lg"></div>
                         <div>
-                          <div className="h-6 bg-gray-200 rounded w-48 mb-2"></div>
-                          <div className="h-4 bg-gray-200 rounded w-32"></div>
+                          <div className="h-6 bg-dark-700/50 rounded w-48 mb-2"></div>
+                          <div className="h-4 bg-dark-700/50 rounded w-32"></div>
                         </div>
                       </div>
-                      <div className="h-4 bg-gray-200 rounded w-full mb-4"></div>
+                      <div className="h-4 bg-dark-700/50 rounded w-full mb-4"></div>
                       <div className="flex gap-4">
-                        <div className="h-4 bg-gray-200 rounded w-24"></div>
-                        <div className="h-4 bg-gray-200 rounded w-32"></div>
-                        <div className="h-4 bg-gray-200 rounded w-28"></div>
+                        <div className="h-4 bg-dark-700/50 rounded w-24"></div>
+                        <div className="h-4 bg-dark-700/50 rounded w-32"></div>
+                        <div className="h-4 bg-dark-700/50 rounded w-28"></div>
                       </div>
                     </div>
                     <div className="mt-4 lg:mt-0 lg:ml-6">
-                      <div className="h-9 bg-gray-200 rounded w-32"></div>
+                      <div className="h-9 bg-dark-700/50 rounded w-32"></div>
                     </div>
                   </div>
                 </div>
@@ -218,21 +218,21 @@ const GigsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="page-container">
+      <div className="page-content">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+        <div className="page-header">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              My Gigs 🎭
+            <h1 className="page-title">
+              <span className="gradient-text">My Gigs</span> 🎭
             </h1>
-            <p className="text-gray-600 text-lg">
+            <p className="page-subtitle">
               Manage your event postings and track performer applications
             </p>
           </div>
           <div className="mt-6 sm:mt-0">
             <Link href="/dashboard/gigs/create">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg transform hover:scale-105 transition-all duration-200">
+              <Button size="lg" className="gold-glow">
                 <Plus className="h-5 w-5 mr-2" />
                 Create New Gig
                 <Sparkles className="h-4 w-4 ml-2" />
@@ -242,15 +242,15 @@ const GigsPage = () => {
         </div>
 
         {/* Filters */}
-        <Card className="mb-8 border-0 shadow-xl">
-          <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
-            <CardTitle className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Search className="h-4 w-4 text-blue-600" />
+        <Card className="search-container">
+          <CardHeader className="bg-transparent border-b border-gold-500/20 pb-6">
+            <CardTitle className="flex items-center gap-2 text-xl text-white">
+              <div className="icon-container icon-primary">
+                <Search className="h-4 w-4" />
               </div>
               Search & Filter
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-dark-300">
               Find specific gigs by title, location, category, or status
             </CardDescription>
           </CardHeader>
@@ -259,21 +259,21 @@ const GigsPage = () => {
               <div className="flex-1">
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                    <Search className="text-gray-400 h-5 w-5" />
+                    <Search className="text-dark-400 h-5 w-5" />
                   </div>
                   <Input
                     placeholder="Search gigs by title, location, or category..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 h-12 bg-white border-gray-200 focus:border-blue-400 focus:ring-blue-400 text-base"
+                    className="pl-12 h-12 text-base"
                   />
                 </div>
               </div>
               <div className="sm:w-64">
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="h-12 bg-white border-gray-200 focus:border-blue-400 focus:ring-blue-400">
+                  <SelectTrigger className="h-12">
                     <div className="flex items-center gap-2">
-                      <Filter className="h-4 w-4 text-gray-500" />
+                      <Filter className="h-4 w-4 text-dark-400" />
                       <SelectValue placeholder="Filter by status" />
                     </div>
                   </SelectTrigger>
@@ -293,17 +293,17 @@ const GigsPage = () => {
 
         {/* Error Display */}
         {error && (
-          <Card className="mb-8 border-red-200 bg-red-50 shadow-sm">
+          <Card className="luxury-card mb-8 border-red-500/30 bg-red-500/10">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                  <Activity className="h-4 w-4 text-red-600" />
+                <div className="icon-container icon-danger">
+                  <Activity className="h-4 w-4" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-red-800 font-medium">Error Loading Gigs</p>
-                  <p className="text-red-700 text-sm">{error}</p>
+                  <p className="text-red-400 font-medium">Error Loading Gigs</p>
+                  <p className="text-red-300 text-sm">{error}</p>
                 </div>
-                <Button onClick={() => fetchGigs()} variant="ghost" size="sm" className="text-red-700 hover:bg-red-100">
+                <Button onClick={() => fetchGigs()} variant="ghost" size="sm" className="text-red-400 hover:bg-red-500/20">
                   Try Again
                 </Button>
               </div>
@@ -314,10 +314,10 @@ const GigsPage = () => {
         {/* Gigs List */}
         <div className="space-y-6 relative">
           {isLoading && gigs.length > 0 && (
-            <div className="absolute inset-0 bg-white bg-opacity-75 backdrop-blur-sm flex items-center justify-center z-10 rounded-2xl">
-              <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-lg">
-                <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-600 border-t-transparent"></div>
-                <span className="text-gray-700 font-medium">Loading gigs...</span>
+            <div className="absolute inset-0 bg-dark-900/75 backdrop-blur-sm flex items-center justify-center z-10 rounded-2xl">
+              <div className="flex items-center gap-3 bg-dark-800/90 border border-gold-500/20 p-4 rounded-lg shadow-lg backdrop-blur-md">
+                <div className="loading-spinner"></div>
+                <span className="text-white font-medium">Loading gigs...</span>
               </div>
             </div>
           )}
@@ -325,43 +325,43 @@ const GigsPage = () => {
           {gigs.map((gig) => {
             const StatusIcon = getStatusIcon(gig.status);
             return (
-              <Card key={gig.gigId} className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 bg-white">
+              <Card key={gig.gigId} className="luxury-card hover-lift">
                 <CardContent className="p-8">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex-1">
                       <div className="flex items-start gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                          <StatusIcon className="h-6 w-6 text-white" />
+                        <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <StatusIcon className="h-6 w-6 text-dark-900" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-xl font-bold text-gray-900">{gig.title}</h3>
+                            <h3 className="text-xl font-bold text-white">{gig.title}</h3>
                             <Badge className={`${getStatusColor(gig.status)} shadow-sm`}>
                               {gig.status}
                             </Badge>
                           </div>
-                          <p className="text-gray-600 mb-4 leading-relaxed line-clamp-2">{gig.description}</p>
+                          <p className="text-dark-300 mb-4 leading-relaxed line-clamp-2">{gig.description}</p>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                            <MapPin className="h-4 w-4 text-green-600" />
+                        <div className="flex items-center gap-3 p-3 bg-green-500/20 rounded-lg border border-green-500/30">
+                          <div className="icon-container icon-success">
+                            <MapPin className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-xs text-green-600 font-medium">Location</p>
-                            <p className="text-sm font-semibold text-green-900">{gig.locationCity}</p>
+                            <p className="text-xs text-green-400 font-medium">Location</p>
+                            <p className="text-sm font-semibold text-white">{gig.locationCity}</p>
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <Calendar className="h-4 w-4 text-blue-600" />
+                        <div className="flex items-center gap-3 p-3 bg-secondary-500/20 rounded-lg border border-secondary-500/30">
+                          <div className="icon-container icon-secondary">
+                            <Calendar className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-xs text-blue-600 font-medium">Event Date</p>
-                            <p className="text-sm font-semibold text-blue-900">
+                            <p className="text-xs text-secondary-400 font-medium">Event Date</p>
+                            <p className="text-sm font-semibold text-white">
                               {new Date(gig.eventDate).toLocaleDateString('en-US', {
                                 month: 'short',
                                 day: 'numeric'
@@ -370,23 +370,23 @@ const GigsPage = () => {
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
-                          <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                            <Users className="h-4 w-4 text-purple-600" />
+                        <div className="flex items-center gap-3 p-3 bg-dark-700/50 rounded-lg border border-gold-500/20">
+                          <div className="icon-container bg-dark-600/50 border border-dark-500/30 text-dark-300">
+                            <Users className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-xs text-purple-600 font-medium">Applications</p>
-                            <p className="text-sm font-semibold text-purple-900">{gig.applicationsCount}</p>
+                            <p className="text-xs text-dark-400 font-medium">Applications</p>
+                            <p className="text-sm font-semibold text-white">{gig.applicationsCount}</p>
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                          <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                            <DollarSign className="h-4 w-4 text-yellow-600" />
+                        <div className="flex items-center gap-3 p-3 bg-gold-500/20 rounded-lg border border-gold-500/30">
+                          <div className="icon-container icon-primary">
+                            <DollarSign className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-xs text-yellow-600 font-medium">Payment</p>
-                            <p className="text-sm font-semibold text-yellow-900">
+                            <p className="text-xs text-gold-400 font-medium">Payment</p>
+                            <p className="text-sm font-semibold text-white">
                               €{gig.pricing.amountInEuros} {gig.priceType === 'HOURLY' && '/hr'}
                             </p>
                           </div>
@@ -396,7 +396,7 @@ const GigsPage = () => {
                       {gig.genres.length > 0 && (
                         <div className="flex flex-wrap gap-2">
                           {gig.genres.map((genre) => (
-                            <Badge key={genre} className="bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 transition-colors">
+                            <Badge key={genre} variant="outline" className="bg-dark-700/50 text-dark-300 border-dark-500/50 hover:bg-dark-600/50 transition-colors">
                               <Music className="h-3 w-3 mr-1" />
                               {genre}
                             </Badge>
@@ -407,7 +407,7 @@ const GigsPage = () => {
                     
                     <div className="flex flex-col gap-3 mt-6 lg:mt-0 lg:ml-8 lg:min-w-[200px]">
                       <Link href={`/dashboard/gigs/${gig.gigId}`}>
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700 shadow-sm">
+                        <Button className="w-full" size="sm">
                           <Eye className="h-4 w-4 mr-2" />
                           View Details
                           <ArrowUpRight className="h-3 w-3 ml-2" />
@@ -417,7 +417,7 @@ const GigsPage = () => {
                       {gig.status === 'DRAFT' && (
                         <div className="flex gap-2">
                           <Link href={`/dashboard/gigs/${gig.gigId}/edit`} className="flex-1">
-                            <Button variant="outline" size="sm" className="w-full bg-white hover:bg-gray-50 shadow-sm">
+                            <Button variant="outline" size="sm" className="w-full">
                               <Edit className="h-4 w-4 mr-2" />
                               Edit
                             </Button>
@@ -426,10 +426,10 @@ const GigsPage = () => {
                             size="sm"
                             onClick={() => handlePublishGig(gig.gigId)}
                             disabled={actionLoading[gig.gigId]}
-                            className="bg-green-600 hover:bg-green-700 shadow-sm"
+                            className="bg-green-500 hover:bg-green-600 text-white"
                           >
                             {actionLoading[gig.gigId] ? (
-                              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                              <div className="loading-spinner w-4 h-4"></div>
                             ) : (
                               <Zap className="h-4 w-4" />
                             )}
@@ -442,10 +442,10 @@ const GigsPage = () => {
                           size="sm"
                           onClick={() => handleCompleteGig(gig.gigId)}
                           disabled={actionLoading[gig.gigId]}
-                          className="bg-purple-600 hover:bg-purple-700 shadow-sm"
+                          variant="secondary"
                         >
                           {actionLoading[gig.gigId] ? (
-                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                            <div className="loading-spinner w-4 h-4 mr-2"></div>
                           ) : (
                             <Activity className="h-4 w-4 mr-2" />
                           )}
@@ -455,7 +455,7 @@ const GigsPage = () => {
                       
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="sm" className="bg-white hover:bg-gray-50 shadow-sm">
+                          <Button variant="outline" size="sm">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -464,7 +464,7 @@ const GigsPage = () => {
                           <DropdownMenuItem>Duplicate</DropdownMenuItem>
                           {(gig.status === 'OPEN' || gig.status === 'DRAFT') && (
                             <DropdownMenuItem 
-                              className="text-red-600 focus:text-red-600"
+                              className="text-red-400 focus:text-red-400"
                               onClick={() => handleCancelGig(gig.gigId)}
                               disabled={actionLoading[gig.gigId]}
                             >
@@ -481,16 +481,16 @@ const GigsPage = () => {
           })}
           
           {gigs.length === 0 && !isLoading && (
-            <Card className="border-0 shadow-xl">
+            <Card className="luxury-card">
               <CardContent className="pt-6">
-                <div className="text-center py-16">
+                <div className="empty-state">
                   {searchTerm || statusFilter !== 'all' ? (
                     <>
-                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gray-400 to-gray-500 rounded-full flex items-center justify-center">
-                        <Search className="h-10 w-10 text-white" />
+                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-dark-600 to-dark-700 rounded-full flex items-center justify-center">
+                        <Search className="h-10 w-10 text-dark-400" />
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">No Gigs Found</h3>
-                      <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                      <h3 className="empty-state-title">No Gigs Found</h3>
+                      <p className="empty-state-description">
                         No gigs match your current search criteria. Try adjusting your filters or search terms.
                       </p>
                       <div className="flex justify-center gap-3">
@@ -500,12 +500,11 @@ const GigsPage = () => {
                             setSearchTerm('');
                             setStatusFilter('all');
                           }}
-                          className="bg-white hover:bg-gray-50"
                         >
                           Clear Filters
                         </Button>
                         <Link href="/dashboard/gigs/create">
-                          <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                          <Button>
                             <Plus className="h-4 w-4 mr-2" />
                             Create New Gig
                           </Button>
@@ -514,15 +513,15 @@ const GigsPage = () => {
                     </>
                   ) : (
                     <>
-                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-                        <Briefcase className="h-10 w-10 text-white" />
+                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gold-400 to-gold-500 rounded-full flex items-center justify-center">
+                        <Briefcase className="h-10 w-10 text-dark-900" />
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">Ready to Create Your First Gig?</h3>
-                      <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                      <h3 className="empty-state-title">Ready to Create Your First Gig?</h3>
+                      <p className="empty-state-description">
                         Start by posting your first event and connect with talented performers in your area.
                       </p>
                       <Link href="/dashboard/gigs/create">
-                        <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg">
+                        <Button size="lg" className="gold-glow">
                           <Plus className="h-5 w-5 mr-2" />
                           Create Your First Gig
                           <Sparkles className="h-4 w-4 ml-2" />
@@ -538,10 +537,10 @@ const GigsPage = () => {
 
         {/* Pagination */}
         {gigs.length > 0 && totalPages > 1 && (
-          <Card className="mt-8 border-0 shadow-lg">
+          <Card className="luxury-card mt-8">
             <CardContent className="p-6">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-dark-300">
                   <TrendingUp className="h-4 w-4" />
                   <span>
                     Showing {currentPage * pageSize + 1} to {Math.min((currentPage + 1) * pageSize, totalElements)} of {totalElements} gigs
@@ -554,7 +553,6 @@ const GigsPage = () => {
                     size="sm"
                     onClick={() => setCurrentPage(currentPage - 1)}
                     disabled={currentPage === 0 || isLoading}
-                    className="bg-white hover:bg-gray-50 shadow-sm"
                   >
                     <ChevronLeft className="h-4 w-4 mr-1" />
                     Previous
@@ -574,9 +572,7 @@ const GigsPage = () => {
                           disabled={isLoading}
                           className={cn(
                             "w-10 h-10 p-0",
-                            isCurrentPage 
-                              ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-sm" 
-                              : "bg-white hover:bg-gray-50 shadow-sm"
+                            isCurrentPage && "gold-glow"
                           )}
                         >
                           {pageNumber + 1}
@@ -590,7 +586,6 @@ const GigsPage = () => {
                     size="sm"
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={currentPage >= totalPages - 1 || isLoading}
-                    className="bg-white hover:bg-gray-50 shadow-sm"
                   >
                     Next
                     <ChevronRight className="h-4 w-4 ml-1" />

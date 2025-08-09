@@ -8,20 +8,20 @@ const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
-      variant: {
-        default:
-          "bg-gradient-to-r from-gold-500 to-gold-600 text-black font-semibold shadow-lg hover:from-gold-600 hover:to-gold-700 hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-gold-400 focus:ring-offset-2",
+              variant: {
+          default:
+            "bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold shadow-lg hover:from-amber-600 hover:to-amber-700 hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-amber-400 focus:ring-offset-2",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border-2 border-gold-400 bg-transparent text-gold-400 font-semibold shadow-xs hover:border-gold-300 hover:bg-gold-400/10 hover:text-gold-300 focus:ring-2 focus:ring-gold-400 focus:ring-offset-2",
+          "border-2 border-amber-400 bg-transparent text-amber-400 font-semibold shadow-xs hover:border-amber-300 hover:bg-amber-400/10 hover:text-amber-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-2",
         secondary:
-          "bg-gradient-to-r from-secondary-600 to-secondary-700 text-white font-semibold shadow-lg hover:from-secondary-700 hover:to-secondary-800 hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2",
+          "bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold shadow-lg hover:from-purple-700 hover:to-purple-800 hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2",
         ghost:
-          "text-dark-300 hover:text-white hover:bg-dark-700/50 dark:hover:bg-accent/50",
-        link: "text-gold-500 underline-offset-4 hover:underline hover:text-gold-400",
+          "text-slate-300 hover:text-white hover:bg-slate-700/50 dark:hover:bg-accent/50",
+        link: "text-amber-500 underline-offset-4 hover:underline hover:text-amber-400",
         luxury:
-          "bg-gradient-to-r from-secondary-600 to-secondary-700 text-white font-semibold shadow-lg hover:from-secondary-700 hover:to-secondary-800 hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 luxury-shadow",
+          "bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold shadow-lg hover:from-purple-700 hover:to-purple-800 hover:shadow-xl hover:-translate-y-0.5 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

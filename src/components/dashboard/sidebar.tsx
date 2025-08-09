@@ -118,16 +118,16 @@ const Sidebar = ({ className }: SidebarProps) => {
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
+    <div className="flex flex-col h-full bg-slate-800">
       {/* Logo Section */}
-      <div className="px-6 py-8 border-b border-gold-500/20 bg-gradient-to-r from-dark-800/80 to-dark-800/60 backdrop-blur-sm">
+      <div className="px-6 py-8 border-b border-amber-500/20 bg-slate-800/90">
         <Link href="/dashboard" className="flex items-center space-x-3">
-          <div className="h-12 w-12 bg-gradient-to-br from-gold-500/20 to-gold-600/20 border border-gold-500/30 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
-            <span className="text-gold-400 font-bold text-xl">V</span>
+          <div className="h-12 w-12 bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-amber-400 font-bold text-xl">V</span>
           </div>
           <div className="hidden lg:block">
             <h1 className="text-xl font-bold text-white">Vybup</h1>
-            <p className="text-dark-300 text-sm flex items-center gap-1">
+            <p className="text-slate-300 text-sm flex items-center gap-1">
               <Sparkles className="h-3 w-3" />
               Organizer Portal
             </p>
@@ -138,7 +138,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         <Button
           variant="ghost"
           size="sm"
-          className="lg:hidden absolute top-6 right-6 text-gold-400 hover:text-gold-300 hover:bg-gold-500/20"
+          className="lg:hidden absolute top-6 right-6 text-amber-400 hover:text-amber-300 hover:bg-amber-500/20"
           onClick={toggleMobileMenu}
         >
           <X className="h-5 w-5" />
@@ -159,8 +159,8 @@ const Sidebar = ({ className }: SidebarProps) => {
               className={cn(
                 'flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group',
                 isActive
-                  ? 'bg-gradient-to-r from-gold-500 to-primary-600 text-black shadow-lg transform scale-[1.02] gold-glow'
-                  : 'text-dark-300 hover:text-white hover:bg-dark-700/50 hover:shadow-md hover:border hover:border-gold-500/20'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg transform scale-[1.02]'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50 hover:shadow-md hover:border hover:border-amber-500/20'
               )}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -169,17 +169,17 @@ const Sidebar = ({ className }: SidebarProps) => {
                   'w-8 h-8 rounded-lg flex items-center justify-center transition-colors',
                   isActive 
                     ? 'bg-black/20 backdrop-blur-sm' 
-                    : 'bg-dark-700 group-hover:bg-gold-500/20'
+                    : 'bg-slate-700 group-hover:bg-amber-500/20'
                 )}>
                   <item.icon className={cn(
                     'h-4 w-4',
-                    isActive ? 'text-black font-bold' : 'text-dark-400 group-hover:text-gold-400'
+                    isActive ? 'text-black font-bold' : 'text-slate-400 group-hover:text-amber-400'
                   )} />
                 </div>
                 <span className="font-medium">{item.name}</span>
               </div>
               {item.badge && (
-                <Badge className="bg-secondary-600 text-white border-0 shadow-sm px-2 py-1 text-xs">
+                <Badge className="bg-purple-600 text-white border-0 shadow-sm px-2 py-1 text-xs">
                   {item.badge}
                 </Badge>
               )}
@@ -189,7 +189,7 @@ const Sidebar = ({ className }: SidebarProps) => {
       </nav>
 
       {/* Profile Section */}
-      <div className="p-4 border-t border-gold-500/20 bg-gradient-to-r from-dark-800/60 to-dark-900/80 backdrop-blur-sm">
+      <div className="p-4 border-t border-amber-500/20 bg-slate-800/90">
         {isProfileLoading ? (
           <div className="animate-pulse">
             <div className="flex items-center space-x-3 px-3 py-3">
@@ -286,7 +286,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           variant="outline"
           size="sm"
           onClick={toggleMobileMenu}
-          className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-sm shadow-lg border border-gold-500/30 hover:border-gold-400/50 text-gold-400 hover:text-gold-300"
+          className="bg-slate-800/90 backdrop-blur-sm shadow-lg border border-amber-500/30 hover:border-amber-400/50 text-amber-400 hover:text-amber-300"
         >
           <Menu className="h-5 w-5" />
         </Button>
