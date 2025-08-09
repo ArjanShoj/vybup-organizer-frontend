@@ -269,7 +269,7 @@ const CreateGigPage = () => {
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <Link href="/dashboard/gigs">
-              <Button variant="outline" className="border-amber-500/30 text-amber-400 hover:text-amber-300 hover:border-amber-400/50">
+              <Button variant="outline" className="border-purple-500/30 text-purple-400 hover:text-purple-300 hover:border-purple-500/30">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Gigs
               </Button>
@@ -394,7 +394,7 @@ const CreateGigPage = () => {
                   {selectedGenres.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-3">
                       {selectedGenres.map(genre => (
-                        <Badge key={genre} className="bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 px-3 py-1">
+                        <Badge key={genre} className="bg-purple-500/10 text-purple-400 border border-purple-500/30 hover:bg-purple-500/20 px-3 py-1">
                           {genre}
                           <button
                             type="button"
@@ -520,10 +520,10 @@ const CreateGigPage = () => {
                           />
                           <label
                             htmlFor={method.value}
-                            className="flex items-center gap-4 p-4 border-2 border-amber-500/20 rounded-xl cursor-pointer hover:border-amber-400/50 peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all"
+                            className="flex items-center gap-4 p-4 border-2 border-purple-500/20 rounded-xl cursor-pointer hover:border-purple-500/30 peer-checked:border-purple-500 peer-checked:bg-purple-500/10 transition-all"
                           >
-                            <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center peer-checked:bg-amber-500/20">
-                              <IconComponent className="h-5 w-5 text-slate-300 peer-checked:text-amber-400" />
+                            <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center peer-checked:bg-purple-500/20">
+                              <IconComponent className="h-5 w-5 text-slate-300 peer-checked:text-purple-400" />
                             </div>
                             <div className="flex-1">
                               <p className="font-medium text-white">{method.label}</p>

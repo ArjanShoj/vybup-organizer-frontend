@@ -120,10 +120,10 @@ const Sidebar = ({ className }: SidebarProps) => {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-slate-800">
       {/* Logo Section */}
-      <div className="px-6 py-8 border-b border-amber-500/20 bg-slate-800/90">
+      <div className="px-6 py-8 border-b border-purple-500/20 bg-slate-800/90">
         <Link href="/dashboard" className="flex items-center space-x-3">
-          <div className="h-12 w-12 bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl flex items-center justify-center shadow-lg">
-            <span className="text-amber-400 font-bold text-xl">V</span>
+          <div className="h-12 w-12 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-purple-400 font-bold text-xl">V</span>
           </div>
           <div className="hidden lg:block">
             <h1 className="text-xl font-bold text-white">Vybup</h1>
@@ -159,8 +159,8 @@ const Sidebar = ({ className }: SidebarProps) => {
               className={cn(
                 'flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group',
                 isActive
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg transform scale-[1.02]'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50 hover:shadow-md hover:border hover:border-amber-500/20'
+                  ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg transform scale-[1.02]'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50 hover:shadow-md hover:border hover:border-purple-500/20'
               )}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -169,11 +169,11 @@ const Sidebar = ({ className }: SidebarProps) => {
                   'w-8 h-8 rounded-lg flex items-center justify-center transition-colors',
                   isActive 
                     ? 'bg-black/20 backdrop-blur-sm' 
-                    : 'bg-slate-700 group-hover:bg-amber-500/20'
+                    : 'bg-slate-700 group-hover:bg-purple-500/20'
                 )}>
                   <item.icon className={cn(
                     'h-4 w-4',
-                    isActive ? 'text-black font-bold' : 'text-slate-400 group-hover:text-amber-400'
+                    isActive ? 'text-white' : 'text-slate-400 group-hover:text-purple-400'
                   )} />
                 </div>
                 <span className="font-medium">{item.name}</span>

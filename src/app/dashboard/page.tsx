@@ -185,7 +185,7 @@ const DashboardPage = () => {
           </div>
           <div className="mt-6 sm:mt-0">
             <Link href="/dashboard/gigs/create">
-              <Button size="lg" className="gold-glow">
+              <Button size="lg">
                 <Plus className="h-5 w-5 mr-2" />
                 Create New Gig
                 <Sparkles className="h-4 w-4 ml-2" />
@@ -439,7 +439,7 @@ const DashboardPage = () => {
                       Start by posting your first event and connect with talented performers in your area.
                     </p>
                     <Link href="/dashboard/gigs/create">
-                      <Button size="lg" className="gold-glow">
+                      <Button size="lg">
                         <Plus className="h-5 w-5 mr-2" />
                         Create Your First Gig
                         <Sparkles className="h-4 w-4 ml-2" />

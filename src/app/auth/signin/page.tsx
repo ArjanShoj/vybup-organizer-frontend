@@ -51,7 +51,7 @@ const SignInPage = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
-            <div className="h-16 w-16 bg-gradient-to-r from-gold-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg gold-glow">
+            <div className="h-16 w-16 bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl flex items-center justify-center shadow-lg">
               <span className="text-black font-bold text-2xl glow-text">V</span>
             </div>
           </div>
@@ -110,7 +110,7 @@ const SignInPage = () => {
               Don't have an account?{' '}
               <Link 
                 href="/auth/signup" 
-                className="text-gold-400 hover:text-gold-300 font-semibold transition-colors duration-200"
+                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-200"
               >
                 Sign up here
               </Link>

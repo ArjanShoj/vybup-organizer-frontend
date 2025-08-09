@@ -10,13 +10,13 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-sm [a&]:hover:from-gold-600 [a&]:hover:to-gold-700",
+          "border-transparent bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-sm [a&]:hover:from-purple-700 [a&]:hover:to-purple-800",
         secondary:
           "border-transparent bg-gradient-to-r from-secondary-600 to-secondary-700 text-white shadow-sm [a&]:hover:from-secondary-700 [a&]:hover:to-secondary-800",
         destructive:
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border-gold-400 text-gold-400 bg-transparent [a&]:hover:bg-gold-400/10 [a&]:hover:text-gold-300 [a&]:hover:border-gold-300",
+          "border-purple-400 text-purple-300 bg-transparent [a&]:hover:bg-purple-500/10 [a&]:hover:text-white [a&]:hover:border-purple-300",
         luxury:
           "border-transparent bg-gradient-to-r from-secondary-500 to-secondary-600 text-white shadow-md [a&]:hover:from-secondary-600 [a&]:hover:to-secondary-700",
       },
