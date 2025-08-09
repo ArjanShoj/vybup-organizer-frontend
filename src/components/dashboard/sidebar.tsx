@@ -201,17 +201,17 @@ const Sidebar = ({ className }: SidebarProps) => {
             </div>
           </div>
         ) : profile ? (
-          <div className="bg-dark-800/50 rounded-xl p-4 shadow-lg border border-gold-500/20 backdrop-blur-sm">
+          <div className="bg-slate-800/80 rounded-xl p-4 shadow-lg border border-amber-500/20 backdrop-blur-sm">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <Avatar className="h-12 w-12 border-2 border-gold-400 shadow-lg gold-glow">
-                  <div className="h-full w-full bg-gradient-to-br from-gold-400 to-primary-600 flex items-center justify-center text-black font-bold text-lg">
+                <Avatar className="h-12 w-12 border-2 border-amber-400 shadow-lg">
+                  <div className="h-full w-full bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center text-black font-bold text-lg rounded-full ring-2 ring-amber-400/20">
                     {profile.firstName?.[0] || profile.displayName?.[0] || 'U'}
                     {profile.lastName?.[0] || ''}
                   </div>
                 </Avatar>
                 <div className={cn(
-                  'absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gold-400',
+                  'absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-slate-900',
                   getStatusColor(profile.status)
                 )}></div>
               </div>

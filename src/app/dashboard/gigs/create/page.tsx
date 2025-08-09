@@ -259,37 +259,37 @@ const CreateGigPage = () => {
   const pricingCompleted = formData.pricing.amountInEuros > 0 && formData.paymentMethod;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="page-container">
       <div className="w-full px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <Link href="/dashboard/gigs">
-              <Button variant="ghost" className="hover:bg-white/80 shadow-sm">
+              <Button variant="outline" className="border-amber-500/30 text-amber-400 hover:text-amber-300 hover:border-amber-400/50">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Gigs
               </Button>
             </Link>
             
             <div className="text-right">
-              <h1 className="text-3xl font-bold text-gray-900">Create New Gig</h1>
-              <p className="text-gray-600 mt-1">Find the perfect performer for your event</p>
+              <h1 className="text-3xl font-bold text-white">Create New Gig</h1>
+              <p className="text-slate-300 mt-1">Find the perfect performer for your event</p>
             </div>
           </div>
 
           {/* Error Display */}
           {error && (
-            <Card className="mb-8 border-red-200 bg-red-50 shadow-sm">
+            <Card className="luxury-card mb-8 border-red-500/30 bg-red-500/10">
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                    <AlertCircle className="h-4 w-4 text-red-600" />
+                  <div className="icon-container bg-red-500/20 border border-red-500/30 text-red-400">
+                    <AlertCircle className="h-4 w-4" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-red-800 font-medium">Please fix the following issue:</p>
-                    <p className="text-red-700 text-sm">{error}</p>
+                    <p className="text-red-400 font-medium">Please fix the following issue:</p>
+                    <p className="text-red-300 text-sm">{error}</p>
                   </div>
-                  <Button onClick={() => setError('')} variant="ghost" size="sm" className="text-red-700 hover:bg-red-100">
+                  <Button onClick={() => setError('')} variant="ghost" size="sm" className="text-red-400 hover:bg-red-500/20">
                     Dismiss
                   </Button>
                 </div>
@@ -469,7 +469,7 @@ const CreateGigPage = () => {
                           <SelectItem key={type.value} value={type.value}>
                             <div className="flex flex-col items-start">
                               <span className="font-medium">{type.label}</span>
-                              <span className="text-xs text-gray-500">{type.description}</span>
+                              <span className="text-xs text-slate-400">{type.description}</span>
                             </div>
                           </SelectItem>
                         ))}
@@ -482,7 +482,7 @@ const CreateGigPage = () => {
                       {formData.priceType === 'HOURLY' ? 'Hourly Rate (€)' : 'Total Budget (€)'} *
                     </Label>
                     <div className="relative">
-                      <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
                       <Input
                         id="price"
                         type="number"
@@ -557,7 +557,7 @@ const CreateGigPage = () => {
                     {isLoading ? 'Creating...' : 'Create & Publish Gig'}
                   </Button>
                 </div>
-                <p className="text-sm text-gray-500 text-center mt-4">
+                <p className="text-sm text-slate-400 text-center mt-4">
                   Your gig will be visible to performers immediately after publishing
                 </p>
               </CardContent>

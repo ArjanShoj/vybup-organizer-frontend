@@ -195,17 +195,17 @@ const DashboardPage = () => {
         </div>
 
         {/* Hero Statistics Section */}
-        <Card className="mb-8 bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-gold-500/20 backdrop-blur-xl shadow-2xl overflow-hidden">
+        <Card className="mb-8 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-amber-500/20 backdrop-blur-xl shadow-2xl overflow-hidden">
           <CardContent className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-gold-500/20 to-gold-600/20 border border-gold-500/30 rounded-2xl flex items-center justify-center group-hover:border-gold-400/50 transition-all duration-300">
-                  <Briefcase className="h-8 w-8 text-gold-400" />
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-2xl flex items-center justify-center group-hover:border-amber-400/50 transition-all duration-300">
+                  <Briefcase className="h-8 w-8 text-amber-400" />
                 </div>
                 <div className="text-3xl font-bold mb-1 text-white">
                   {statistics?.totalGigsCreated || 0}
                 </div>
-                <p className="text-gold-400 text-sm font-medium">Total Gigs Created</p>
+                <p className="text-amber-400 text-sm font-medium">Total Gigs Created</p>
                 <div className="mt-2 text-xs text-dark-300">
                   {statistics?.totalGigsCompleted || 0} completed
                 </div>
@@ -225,26 +225,26 @@ const DashboardPage = () => {
               </div>
 
               <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500/20 to-primary-600/20 border border-primary-500/30 rounded-2xl flex items-center justify-center group-hover:border-primary-400/50 transition-all duration-300">
-                  <Star className="h-8 w-8 text-primary-400" />
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-2xl flex items-center justify-center group-hover:border-purple-400/50 transition-all duration-300">
+                  <Star className="h-8 w-8 text-purple-400" />
                 </div>
                 <div className="text-3xl font-bold mb-1 text-white">
                   {statistics?.averageRating?.toFixed(1) || 'N/A'}
                 </div>
-                <p className="text-primary-400 text-sm font-medium">Average Rating</p>
+                <p className="text-purple-400 text-sm font-medium">Average Rating</p>
                 <div className="mt-2 text-xs text-dark-300">
                   {statistics?.totalReviews || 0} reviews total
                 </div>
               </div>
 
               <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-gold-500/20 to-gold-600/20 border border-gold-500/30 rounded-2xl flex items-center justify-center group-hover:border-gold-400/50 transition-all duration-300">
-                  <DollarSign className="h-8 w-8 text-gold-400" />
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-2xl flex items-center justify-center group-hover:border-amber-400/50 transition-all duration-300">
+                  <DollarSign className="h-8 w-8 text-amber-400" />
                 </div>
                 <div className="text-3xl font-bold mb-1 text-white">
                   €{statistics?.totalAmountPaid ? (statistics.totalAmountPaid / 100).toFixed(0) : '0'}
                 </div>
-                <p className="text-gold-400 text-sm font-medium">Total Earnings</p>
+                <p className="text-amber-400 text-sm font-medium">Total Earnings</p>
                 <div className="mt-2 text-xs text-dark-300">
                   From completed gigs
                 </div>
