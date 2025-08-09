@@ -254,9 +254,13 @@ const CreateGigPage = () => {
   };
 
   // Check form completion for visual feedback
-  const basicInfoCompleted = formData.title && formData.category && selectedGenres.length > 0;
-  const eventDetailsCompleted = formData.eventDate;
-  const pricingCompleted = formData.pricing.amountInEuros > 0 && formData.paymentMethod;
+  const basicInfoCompleted = Boolean(
+    formData.title && formData.category && selectedGenres.length > 0
+  );
+  const eventDetailsCompleted = Boolean(formData.eventDate);
+  const pricingCompleted = Boolean(
+    formData.pricing.amountInEuros > 0 && formData.paymentMethod
+  );
 
   return (
     <div className="page-container">
