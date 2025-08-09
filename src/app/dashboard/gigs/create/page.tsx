@@ -96,10 +96,10 @@ const FormSection = ({
   completed?: boolean;
 }) => (
   <Card className="border-0 shadow-lg">
-    <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+    <CardHeader className="bg-transparent border-b border-amber-500/20">
       <div className="flex items-center gap-3">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-          completed ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'
+          completed ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-amber-500/20 border border-amber-500/30 text-amber-400'
         }`}>
           {completed ? <CheckCircle className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
         </div>
@@ -358,7 +358,7 @@ const CreateGigPage = () => {
                   <div className="space-y-2">
                     <Label htmlFor="locationCity" className="text-base font-medium">Location</Label>
                     <div className="relative">
-                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
                       <Input
                         id="locationCity"
                         name="locationCity"
@@ -390,7 +390,7 @@ const CreateGigPage = () => {
                   {selectedGenres.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-3">
                       {selectedGenres.map(genre => (
-                        <Badge key={genre} className="bg-blue-100 text-blue-800 hover:bg-blue-200 px-3 py-1">
+                        <Badge key={genre} className="bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 px-3 py-1">
                           {genre}
                           <button
                             type="button"
@@ -418,7 +418,7 @@ const CreateGigPage = () => {
                 <div className="space-y-2">
                   <Label htmlFor="eventDate" className="text-base font-medium">Event Date & Time *</Label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
                     <Input
                       id="eventDate"
                       name="eventDate"
@@ -434,7 +434,7 @@ const CreateGigPage = () => {
                 <div className="space-y-2">
                   <Label htmlFor="applicationDeadline" className="text-base font-medium">Application Deadline</Label>
                   <div className="relative">
-                    <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
                     <Input
                       id="applicationDeadline"
                       name="applicationDeadline"
@@ -444,7 +444,7 @@ const CreateGigPage = () => {
                       className="pl-11 h-12 text-base"
                     />
                   </div>
-                  <p className="text-sm text-gray-500">Optional: Set a deadline for performers to apply</p>
+                  <p className="text-sm text-slate-400">Optional: Set a deadline for performers to apply</p>
                 </div>
               </div>
             </FormSection>
@@ -516,14 +516,14 @@ const CreateGigPage = () => {
                           />
                           <label
                             htmlFor={method.value}
-                            className="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-300 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all"
+                            className="flex items-center gap-4 p-4 border-2 border-amber-500/20 rounded-xl cursor-pointer hover:border-amber-400/50 peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-all"
                           >
-                            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center peer-checked:bg-blue-100">
-                              <IconComponent className="h-5 w-5 text-gray-600 peer-checked:text-blue-600" />
+                            <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center peer-checked:bg-amber-500/20">
+                              <IconComponent className="h-5 w-5 text-slate-300 peer-checked:text-amber-400" />
                             </div>
                             <div className="flex-1">
-                              <p className="font-medium text-gray-900">{method.label}</p>
-                              <p className="text-sm text-gray-500">{method.description}</p>
+                              <p className="font-medium text-white">{method.label}</p>
+                              <p className="text-sm text-slate-400">{method.description}</p>
                             </div>
                           </label>
                         </div>
@@ -535,7 +535,7 @@ const CreateGigPage = () => {
             </FormSection>
 
             {/* Submit Actions */}
-            <Card className="border-0 shadow-lg">
+            <Card className="section-card">
               <CardContent className="p-6">
                 <div className="flex flex-col sm:flex-row gap-4 justify-end">
                   <Button
@@ -544,7 +544,7 @@ const CreateGigPage = () => {
                     size="lg"
                     onClick={(e) => handleSubmit(e as any, true)}
                     disabled={isLoading}
-                    className="bg-white hover:bg-gray-50"
+                    className=""
                   >
                     Save as Draft
                   </Button>
@@ -552,7 +552,7 @@ const CreateGigPage = () => {
                     type="submit" 
                     size="lg"
                     disabled={isLoading}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg"
+                    className=""
                   >
                     {isLoading ? 'Creating...' : 'Create & Publish Gig'}
                   </Button>
