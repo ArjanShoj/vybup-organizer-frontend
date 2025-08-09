@@ -81,16 +81,16 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center hero-gradient p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
-            <div className="h-12 w-12 bg-indigo-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">V</span>
+            <div className="h-16 w-16 bg-gradient-to-r from-gold-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg gold-glow">
+              <span className="text-black font-bold text-2xl glow-text">V</span>
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-center">Join Vybup</CardTitle>
-          <CardDescription className="text-center">
+          <CardTitle className="text-3xl font-bold text-center gradient-text">Join Vybup</CardTitle>
+          <CardDescription className="text-center text-dark-300">
             Create your organizer account to start posting gigs.
           </CardDescription>
         </CardHeader>
@@ -188,7 +188,7 @@ const SignUpPage = () => {
               Already have an account?{' '}
               <Link 
                 href="/auth/signin" 
-                className="text-indigo-600 hover:text-indigo-500 font-medium"
+                className="text-gold-400 hover:text-gold-300 font-semibold transition-colors duration-200"
               >
                 Sign in here
               </Link>

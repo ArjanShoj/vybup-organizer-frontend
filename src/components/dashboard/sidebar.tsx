@@ -102,32 +102,32 @@ const Sidebar = ({ className }: SidebarProps) => {
 
   const getOrganizerTypeBadge = (type?: string) => {
     switch (type) {
-      case 'BUSINESS': return { label: 'Business', color: 'bg-blue-100 text-blue-800 border-blue-200' };
-      case 'PRIVATE': return { label: 'Individual', color: 'bg-green-100 text-green-800 border-green-200' };
-      default: return { label: 'Organizer', color: 'bg-gray-100 text-gray-800 border-gray-200' };
+      case 'BUSINESS': return { label: 'Business', color: 'bg-secondary-100 text-secondary-800 border-secondary-200' };
+      case 'PRIVATE': return { label: 'Individual', color: 'bg-primary-100 text-primary-800 border-primary-200' };
+      default: return { label: 'Organizer', color: 'bg-dark-100 text-dark-800 border-dark-200' };
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'ACTIVE': return 'bg-green-400';
-      case 'INACTIVE': return 'bg-gray-400';
-      case 'SUSPENDED': return 'bg-red-400';
-      default: return 'bg-gray-400';
+      case 'ACTIVE': return 'bg-green-500';
+      case 'INACTIVE': return 'bg-dark-400';
+      case 'SUSPENDED': return 'bg-red-500';
+      default: return 'bg-dark-400';
     }
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-gradient-to-b from-white to-slate-50">
+    <div className="flex flex-col h-full bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
       {/* Logo Section */}
-      <div className="px-6 py-8 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-purple-600">
+      <div className="px-6 py-8 border-b border-gold-500/20 bg-gradient-to-r from-dark-800/80 to-dark-800/60 backdrop-blur-sm">
         <Link href="/dashboard" className="flex items-center space-x-3">
-          <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-xl">V</span>
+          <div className="h-12 w-12 bg-gradient-to-br from-gold-500/20 to-gold-600/20 border border-gold-500/30 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-gold-400 font-bold text-xl">V</span>
           </div>
           <div className="hidden lg:block">
             <h1 className="text-xl font-bold text-white">Vybup</h1>
-            <p className="text-blue-100 text-sm flex items-center gap-1">
+            <p className="text-dark-300 text-sm flex items-center gap-1">
               <Sparkles className="h-3 w-3" />
               Organizer Portal
             </p>
@@ -138,7 +138,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         <Button
           variant="ghost"
           size="sm"
-          className="lg:hidden absolute top-6 right-6 text-white hover:bg-white/20"
+          className="lg:hidden absolute top-6 right-6 text-gold-400 hover:text-gold-300 hover:bg-gold-500/20"
           onClick={toggleMobileMenu}
         >
           <X className="h-5 w-5" />
@@ -159,8 +159,8 @@ const Sidebar = ({ className }: SidebarProps) => {
               className={cn(
                 'flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group',
                 isActive
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg transform scale-[1.02]'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-white hover:shadow-md'
+                  ? 'bg-gradient-to-r from-gold-500 to-primary-600 text-black shadow-lg transform scale-[1.02] gold-glow'
+                  : 'text-dark-300 hover:text-white hover:bg-dark-700/50 hover:shadow-md hover:border hover:border-gold-500/20'
               )}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -168,18 +168,18 @@ const Sidebar = ({ className }: SidebarProps) => {
                 <div className={cn(
                   'w-8 h-8 rounded-lg flex items-center justify-center transition-colors',
                   isActive 
-                    ? 'bg-white/20 backdrop-blur-sm' 
-                    : 'bg-gray-100 group-hover:bg-blue-100'
+                    ? 'bg-black/20 backdrop-blur-sm' 
+                    : 'bg-dark-700 group-hover:bg-gold-500/20'
                 )}>
                   <item.icon className={cn(
                     'h-4 w-4',
-                    isActive ? 'text-white' : 'text-gray-500 group-hover:text-blue-600'
+                    isActive ? 'text-black font-bold' : 'text-dark-400 group-hover:text-gold-400'
                   )} />
                 </div>
                 <span className="font-medium">{item.name}</span>
               </div>
               {item.badge && (
-                <Badge className="bg-red-500 text-white border-0 shadow-sm px-2 py-1 text-xs">
+                <Badge className="bg-secondary-600 text-white border-0 shadow-sm px-2 py-1 text-xs">
                   {item.badge}
                 </Badge>
               )}
@@ -189,36 +189,36 @@ const Sidebar = ({ className }: SidebarProps) => {
       </nav>
 
       {/* Profile Section */}
-      <div className="p-4 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+      <div className="p-4 border-t border-gold-500/20 bg-gradient-to-r from-dark-800/60 to-dark-900/80 backdrop-blur-sm">
         {isProfileLoading ? (
           <div className="animate-pulse">
             <div className="flex items-center space-x-3 px-3 py-3">
-              <div className="h-12 w-12 bg-gray-200 rounded-full"></div>
+              <div className="h-12 w-12 bg-dark-700 rounded-full"></div>
               <div className="hidden lg:block flex-1">
-                <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded w-32"></div>
+                <div className="h-4 bg-dark-700 rounded w-24 mb-2"></div>
+                <div className="h-3 bg-dark-700 rounded w-32"></div>
               </div>
             </div>
           </div>
         ) : profile ? (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <div className="bg-dark-800/50 rounded-xl p-4 shadow-lg border border-gold-500/20 backdrop-blur-sm">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <Avatar className="h-12 w-12 border-2 border-white shadow-lg">
-                  <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
+                <Avatar className="h-12 w-12 border-2 border-gold-400 shadow-lg gold-glow">
+                  <div className="h-full w-full bg-gradient-to-br from-gold-400 to-primary-600 flex items-center justify-center text-black font-bold text-lg">
                     {profile.firstName?.[0] || profile.displayName?.[0] || 'U'}
                     {profile.lastName?.[0] || ''}
                   </div>
                 </Avatar>
                 <div className={cn(
-                  'absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white',
+                  'absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gold-400',
                   getStatusColor(profile.status)
                 )}></div>
               </div>
               
               <div className="hidden lg:block flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <p className="text-sm font-semibold text-gray-900 truncate">
+                  <p className="text-sm font-semibold text-white truncate">
                     {profile.displayName || `${profile.firstName || ''} ${profile.lastName || ''}`.trim() || 'Organizer'}
                   </p>
                   {profile.organizerType && (
@@ -230,7 +230,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                   )}
                 </div>
                 
-                <div className="flex items-center gap-1 text-xs text-gray-600">
+                <div className="flex items-center gap-1 text-xs text-dark-300">
                   {profile.locationCity && (
                     <div className="flex items-center gap-1">
                       <MapPin className="h-3 w-3" />
@@ -240,7 +240,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                 </div>
                 
                 {profile.companyInfo?.name && (
-                  <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+                  <div className="flex items-center gap-1 text-xs text-dark-400 mt-1">
                     <Building2 className="h-3 w-3" />
                     <span className="truncate">{profile.companyInfo.name}</span>
                   </div>
@@ -252,7 +252,7 @@ const Sidebar = ({ className }: SidebarProps) => {
             <div className="lg:hidden mt-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className={cn('w-2 h-2 rounded-full', getStatusColor(profile.status))}></div>
-                <span className="text-xs text-gray-600 capitalize">{profile.status.toLowerCase()}</span>
+                <span className="text-xs text-dark-300 capitalize">{profile.status.toLowerCase()}</span>
               </div>
               {profile.organizerType && (
                 <Badge className={`text-xs ${getOrganizerTypeBadge(profile.organizerType).color}`}>
@@ -262,14 +262,14 @@ const Sidebar = ({ className }: SidebarProps) => {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <div className="bg-dark-800/50 rounded-xl p-4 shadow-lg border border-gold-500/20 backdrop-blur-sm">
             <div className="flex items-center space-x-3">
-              <div className="h-12 w-12 bg-gray-200 rounded-full flex items-center justify-center">
-                <User className="h-6 w-6 text-gray-400" />
+              <div className="h-12 w-12 bg-dark-700 rounded-full flex items-center justify-center">
+                <User className="h-6 w-6 text-dark-400" />
               </div>
               <div className="hidden lg:block">
-                <p className="text-sm font-medium text-gray-900">Profile Unavailable</p>
-                <p className="text-xs text-gray-500">Please try refreshing</p>
+                <p className="text-sm font-medium text-white">Profile Unavailable</p>
+                <p className="text-xs text-dark-300">Please try refreshing</p>
               </div>
             </div>
           </div>
@@ -286,7 +286,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           variant="outline"
           size="sm"
           onClick={toggleMobileMenu}
-          className="bg-white shadow-lg border-gray-200 hover:bg-gray-50"
+          className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-sm shadow-lg border border-gold-500/30 hover:border-gold-400/50 text-gold-400 hover:text-gold-300"
         >
           <Menu className="h-5 w-5" />
         </Button>
@@ -295,14 +295,14 @@ const Sidebar = ({ className }: SidebarProps) => {
       {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="lg:hidden fixed inset-0 z-40 bg-gray-900 bg-opacity-50 backdrop-blur-sm"
+          className="lg:hidden fixed inset-0 z-40 bg-dark-900 bg-opacity-75 backdrop-blur-sm"
           onClick={toggleMobileMenu}
         />
       )}
 
       {/* Desktop sidebar */}
       <div className={cn(
-        'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 border-r border-gray-200 shadow-lg',
+        'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 border-r border-gold-500/20 shadow-2xl',
         className
       )}>
         <SidebarContent />
@@ -310,7 +310,7 @@ const Sidebar = ({ className }: SidebarProps) => {
 
       {/* Mobile sidebar */}
       <div className={cn(
-        'lg:hidden fixed inset-y-0 left-0 z-50 w-64 border-r border-gray-200 shadow-xl transform transition-transform duration-300 ease-in-out',
+        'lg:hidden fixed inset-y-0 left-0 z-50 w-64 border-r border-gold-500/20 shadow-2xl transform transition-transform duration-300 ease-in-out',
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       )}>
         <SidebarContent />

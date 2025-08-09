@@ -4,39 +4,96 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Vybup Primary Colors (Warm Orange/Amber) */
+  --color-primary-50: #fefdf9;
+  --color-primary-100: #fef7ed;
+  --color-primary-200: #fdecc8;
+  --color-primary-300: #fbd997;
+  --color-primary-400: #f7c55a;
+  --color-primary-500: #f3a833;
+  --color-primary-600: #d97706;
+  --color-primary-700: #b45309;
+  --color-primary-800: #92400e;
+  --color-primary-900: #78350f;
+
+  /* Vybup Secondary Colors (Purple/Violet) */
+  --color-secondary-50: #faf7ff;
+  --color-secondary-100: #f3ebff;
+  --color-secondary-200: #e9d5ff;
+  --color-secondary-300: #d8b4fe;
+  --color-secondary-400: #c084fc;
+  --color-secondary-500: #a855f7;
+  --color-secondary-600: #9333ea;
+  --color-secondary-700: #7c3aed;
+  --color-secondary-800: #6b21a8;
+  --color-secondary-900: #581c87;
+
+  /* Vybup Gold Colors (Accent/Luxury) */
+  --color-gold-50: #fffdf7;
+  --color-gold-100: #fffbeb;
+  --color-gold-200: #fef3c7;
+  --color-gold-300: #fde68a;
+  --color-gold-400: #fcd34d;
+  --color-gold-500: #fbbf24;
+  --color-gold-600: #f59e0b;
+  --color-gold-700: #d97706;
+  --color-gold-800: #b45309;
+  --color-gold-900: #92400e;
+
+  /* Vybup Dark Colors (Backgrounds/Text) */
+  --color-dark-50: #f8fafc;
+  --color-dark-100: #f1f5f9;
+  --color-dark-200: #e2e8f0;
+  --color-dark-300: #cbd5e1;
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-900: #0f172a;
+
+  /* Theme mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
+  --color-popover-foreground: var(--popover-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  /* Sidebar colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Chart colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Font families */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+  /* Border radius */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -45,71 +102,73 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Dark theme with Vybup colors - default is now dark */
+  --background: #0f172a; /* dark-900 */
+  --foreground: #ffffff;
+  --card: #1e293b; /* dark-800 */
+  --card-foreground: #ffffff;
+  --popover: #1e293b; /* dark-800 */
+  --popover-foreground: #ffffff;
+  --primary: #fbbf24; /* gold-500 */
+  --primary-foreground: #000000;
+  --secondary: #a855f7; /* secondary-500 */
+  --secondary-foreground: #ffffff;
+  --muted: #334155; /* dark-700 */
+  --muted-foreground: #cbd5e1; /* dark-300 */
+  --accent: #f3a833; /* primary-500 */
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --border: rgba(251, 191, 36, 0.2); /* gold border with opacity */
+  --input: rgba(251, 191, 36, 0.15); /* gold input with opacity */
+  --ring: #fcd34d; /* gold-400 */
+  --chart-1: #f3a833; /* primary-500 */
+  --chart-2: #a855f7; /* secondary-500 */
+  --chart-3: #fbbf24; /* gold-500 */
+  --chart-4: #7c3aed; /* secondary-700 */
+  --chart-5: #f59e0b; /* gold-600 */
+  --sidebar: #1e293b; /* dark-800 */
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #fbbf24; /* gold-500 */
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #334155; /* dark-700 */
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(251, 191, 36, 0.2); /* gold border with opacity */
+  --sidebar-ring: #fcd34d; /* gold-400 */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Dark theme with Vybup colors */
+  --background: #0f172a; /* dark-900 */
+  --foreground: #ffffff;
+  --card: #1e293b; /* dark-800 */
+  --card-foreground: #ffffff;
+  --popover: #1e293b; /* dark-800 */
+  --popover-foreground: #ffffff;
+  --primary: #fbbf24; /* gold-500 */
+  --primary-foreground: #000000;
+  --secondary: #a855f7; /* secondary-500 */
+  --secondary-foreground: #ffffff;
+  --muted: #334155; /* dark-700 */
+  --muted-foreground: #cbd5e1; /* dark-300 */
+  --accent: #f3a833; /* primary-500 */
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --border: rgba(251, 191, 36, 0.2); /* gold border with opacity */
+  --input: rgba(251, 191, 36, 0.15); /* gold input with opacity */
+  --ring: #fcd34d; /* gold-400 */
+  --chart-1: #f3a833; /* primary-500 */
+  --chart-2: #a855f7; /* secondary-500 */
+  --chart-3: #fbbf24; /* gold-500 */
+  --chart-4: #7c3aed; /* secondary-700 */
+  --chart-5: #f59e0b; /* gold-600 */
+  --sidebar: #1e293b; /* dark-800 */
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #fbbf24; /* gold-500 */
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #334155; /* dark-700 */
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(251, 191, 36, 0.2); /* gold border with opacity */
+  --sidebar-ring: #fcd34d; /* gold-400 */
 }
 
 @layer base {
@@ -118,5 +177,73 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Vybup Primary Button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-gold-500 to-gold-600 px-8 py-4 font-semibold text-black transition-all duration-300 hover:from-gold-600 hover:to-gold-700 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2;
+  }
+
+  /* Vybup Secondary Button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border-2 border-gold-400 bg-transparent px-8 py-4 font-semibold text-gold-400 transition-all duration-300 hover:border-gold-300 hover:bg-gold-400/10 hover:text-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2;
+  }
+
+  /* Vybup Luxury Button */
+  .btn-luxury {
+    @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-secondary-600 to-secondary-700 px-8 py-4 font-semibold text-white transition-all duration-300 hover:from-secondary-700 hover:to-secondary-800 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2;
+  }
+
+  /* Luxury Card */
+  .luxury-card {
+    @apply relative rounded-2xl border border-gold-500/20 bg-gradient-to-br from-dark-800/50 to-dark-900/50 p-8 backdrop-blur-xl transition-all duration-300 hover:border-gold-500/30 hover:shadow-2xl;
+  }
+  
+  .luxury-card::before {
+    content: '';
+    @apply absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 opacity-50;
+    filter: blur(1px);
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 bg-clip-text text-transparent;
+  }
+
+  /* Glow Text */
+  .glow-text {
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+  }
+
+  /* Section Padding */
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+
+  /* Container Custom */
+  .container-custom {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Hero Gradient Background */
+  .hero-gradient {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #581c87 100%);
+  }
+
+  /* Card Gradient Background */
+  .card-gradient {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+  }
+
+  /* Gold Glow Effect */
+  .gold-glow {
+    box-shadow: 0 10px 40px rgba(251, 191, 36, 0.2);
+  }
+
+  /* Luxury Shadow */
+  .luxury-shadow {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
 }
