@@ -131,14 +131,45 @@ export interface PageResponse<T> {
 export interface ChatSummaryDto {
   id: string;
   gigId: string;
-  gigTitle: string;
+  organizerId: string;
   performerId: string;
-  performerName: string;
-  performerImageUrl?: string;
-  lastMessage?: string;
+  lastMessageContent?: string;
   lastMessageAt?: string;
   unreadCount: number;
-  status: 'ACTIVE' | 'ARCHIVED';
+  isActive: boolean;
+  createdAt: string;
+}
+
+export interface ChatDto {
+  id: string;
+  gigId: string;
+  organizerId: string;
+  performerId: string;
+  isActive: boolean;
+  createdAt: string;
+  archivedAt?: string;
+  archiveReason?: string;
+  lastMessageAt?: string;
+  organizerLastReadAt?: string;
+  performerLastReadAt?: string;
+}
+
+export interface MessageDto {
+  id: string;
+  chatId: string;
+  senderId: string;
+  content: string;
+  messageType: 'TEXT' | 'SYSTEM' | 'IMAGE' | 'FILE';
+  status: 'SENT' | 'DELIVERED' | 'READ';
+  sentAt: string;
+  readAt?: string;
+  isSystemMessage: boolean;
+}
+
+export interface SendMessageRequest {
+  chatId: string;
+  content: string;
+  messageType?: 'TEXT' | 'SYSTEM' | 'IMAGE' | 'FILE';
 }
 
 export interface ReviewDto {

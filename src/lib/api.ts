@@ -40,10 +40,24 @@ class ApiClient {
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
     
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...options.headers,
     };
+
+    // Merge existing headers
+    if (options.headers) {
+      if (options.headers instanceof Headers) {
+        options.headers.forEach((value, key) => {
+          headers[key] = value;
+        });
+      } else if (Array.isArray(options.headers)) {
+        options.headers.forEach(([key, value]) => {
+          headers[key] = value;
+        });
+      } else {
+        Object.assign(headers, options.headers);
+      }
+    }
 
     if (this.token) {
       headers.Authorization = `Bearer ${this.token}`;
@@ -195,8 +209,51 @@ class ApiClient {
     return this.request(`/api/organizer/chats?page=${page}&size=${size}`);
   }
 
+  async getChat(chatId: string) {
+    return this.request(`/api/organizer/chats/${chatId}`);
+  }
+
+  async getChatByGig(gigId: string) {
+    return this.request(`/api/organizer/chats/by-gig/${gigId}`);
+  }
+
+  async getMessages(chatId: string, page = 0, size = 50, since?: string) {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      size: size.toString()
+    });
+    if (since) {
+      params.append('since', since);
+    }
+    return this.request(`/api/organizer/chats/${chatId}/messages?${params.toString()}`);
+  }
+
+  async sendMessage(chatId: string, content: string, messageType: 'TEXT' | 'SYSTEM' | 'IMAGE' | 'FILE' = 'TEXT') {
+    return this.request(`/api/organizer/chats/${chatId}/messages`, {
+      method: 'POST',
+      body: JSON.stringify({ chatId, content, messageType }),
+    });
+  }
+
+  async markMessagesAsRead(chatId: string) {
+    return this.request(`/api/organizer/chats/${chatId}/read`, {
+      method: 'POST',
+    });
+  }
+
+  async archiveChat(chatId: string, reason?: string) {
+    const params = reason ? `?reason=${encodeURIComponent(reason)}` : '';
+    return this.request(`/api/organizer/chats/${chatId}/archive${params}`, {
+      method: 'POST',
+    });
+  }
+
   async getUnreadCount() {
     return this.request('/api/organizer/chats/unread-count');
+  }
+
+  async getChatUnreadCount(chatId: string) {
+    return this.request(`/api/organizer/chats/${chatId}/unread-count`);
   }
 
   async getTotalUnreadCount() {

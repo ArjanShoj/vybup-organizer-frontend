@@ -147,9 +147,12 @@ const Sidebar = ({ className }: SidebarProps) => {
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-6 space-y-2">
-        {navigation.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-          return (
+              {navigation.map((item) => {
+        // Special handling for Dashboard - only active on exact match
+        const isActive = item.href === '/dashboard' 
+          ? pathname === '/dashboard'
+          : pathname === item.href || pathname.startsWith(item.href + '/');
+        return (
             <Link
               key={item.name}
               href={item.href}
