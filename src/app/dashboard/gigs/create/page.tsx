@@ -95,17 +95,19 @@ const FormSection = ({
   children: React.ReactNode;
   completed?: boolean;
 }) => (
-  <Card className="border-0 shadow-lg">
-    <CardHeader className="bg-transparent border-b border-purple-500/20">
-      <div className="flex items-center gap-3">
+  <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl shadow-2xl">
+    <CardHeader className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10">
+      <span className="pointer-events-none absolute -top-10 -left-10 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+      <span className="pointer-events-none absolute -bottom-12 -right-12 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
+      <div className="relative z-10 flex items-center gap-3">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-          completed ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-purple-500/20 border border-purple-500/30 text-purple-400'
+          completed ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-purple-500/20 border border-purple-500/30 text-purple-300'
         }`}>
           {completed ? <CheckCircle className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
         </div>
         <div className="flex-1">
-          <CardTitle className="text-xl">{title}</CardTitle>
-          <CardDescription className="mt-1">{description}</CardDescription>
+          <CardTitle className="text-lg font-extrabold text-white">{title}</CardTitle>
+          <CardDescription className="mt-1 text-slate-300">{description}</CardDescription>
         </div>
       </div>
     </CardHeader>
@@ -267,19 +269,59 @@ const CreateGigPage = () => {
       <div className="w-full px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <Link href="/dashboard/gigs">
-              <Button variant="outline" className="border-purple-500/30 text-purple-400 hover:text-purple-300 hover:border-purple-500/30">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Gigs
-              </Button>
-            </Link>
-            
-            <div className="text-right">
-              <h1 className="text-3xl font-bold text-white">Create New Gig</h1>
-              <p className="text-slate-300 mt-1">Find the perfect performer for your event</p>
+          <div className="relative overflow-hidden rounded-3xl border border-purple-500/20 bg-gradient-to-br from-slate-900/60 to-slate-800/60 p-6 md:p-8 shadow-2xl backdrop-blur-xl mb-8">
+            <div className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-purple-600/30 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
+            <div className="relative z-10 flex items-center justify-between gap-4">
+              <Link href="/dashboard/gigs">
+                <Button variant="outline" className="border-purple-500/30 text-white hover:text-purple-100 hover:border-purple-400/50">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Gigs
+                </Button>
+              </Link>
+              <div className="text-right">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                  <span className="bg-gradient-to-r from-purple-400 to-purple-300 bg-clip-text text-transparent">Create New Gig</span>
+                </h1>
+                <p className="text-slate-300 mt-1">Find the perfect performer for your event</p>
+              </div>
             </div>
           </div>
+
+          {/* Steps indicator */}
+          <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl shadow-2xl mb-8">
+            <CardContent className="py-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center ${basicInfoCompleted ? 'bg-green-500/20 border-green-500/40 text-green-400' : 'bg-purple-500/10 border-purple-500/30 text-purple-300'}`}>
+                    1
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">Basic Info</p>
+                    <p className="text-xs text-slate-400">Event name, category, genres</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center ${eventDetailsCompleted ? 'bg-green-500/20 border-green-500/40 text-green-400' : 'bg-purple-500/10 border-purple-500/30 text-purple-300'}`}>
+                    2
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">Event Details</p>
+                    <p className="text-xs text-slate-400">Date, time, location</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center ${pricingCompleted ? 'bg-green-500/20 border-green-500/40 text-green-400' : 'bg-purple-500/10 border-purple-500/30 text-purple-300'}`}>
+                    3
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">Pricing</p>
+                    <p className="text-xs text-slate-400">Type, budget, payment</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Error Display */}
           {error && (
@@ -318,7 +360,7 @@ const CreateGigPage = () => {
                     value={formData.title}
                     onChange={handleInputChange}
                     placeholder="e.g., Jazz Trio for Corporate Holiday Party"
-                    className="h-12 text-base"
+                    className="h-12 text-base bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
                     required
                   />
                 </div>
@@ -332,7 +374,7 @@ const CreateGigPage = () => {
                     onChange={handleInputChange}
                     placeholder="Describe your event, the atmosphere you want to create, specific requirements, and what kind of performance you're looking for..."
                     rows={4}
-                    className="text-base resize-none"
+                    className="text-base resize-none bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
                   />
                 </div>
 
@@ -340,10 +382,10 @@ const CreateGigPage = () => {
                   <div className="space-y-2">
                     <Label className="text-base font-medium">Category *</Label>
                     <Select value={formData.category} onValueChange={(value) => handleSelectChange('category', value)}>
-                      <SelectTrigger className="h-12">
+                      <SelectTrigger className="h-12 bg-slate-800/60 border-purple-500/20 text-slate-100">
                         <SelectValue placeholder="Select performance category" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-dark-900 border-purple-500/20 text-slate-100">
                         {categories.map(category => {
                           const IconComponent = category.icon;
                           return (
@@ -369,7 +411,7 @@ const CreateGigPage = () => {
                         value={formData.locationCity}
                         onChange={handleInputChange}
                         placeholder="City or venue location"
-                        className="pl-11 h-12 text-base"
+                        className="pl-11 h-12 text-base bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -378,10 +420,10 @@ const CreateGigPage = () => {
                 <div className="space-y-2">
                   <Label className="text-base font-medium">Genres & Styles *</Label>
                   <Select onValueChange={handleGenreSelect}>
-                    <SelectTrigger className="h-12">
+                    <SelectTrigger className="h-12 bg-slate-800/60 border-purple-500/20 text-slate-100">
                       <SelectValue placeholder="Add genres and musical styles" />
                     </SelectTrigger>
-                    <SelectContent className="max-h-60">
+                    <SelectContent className="max-h-60 bg-dark-900 border-purple-500/20 text-slate-100">
                       {genres
                         .filter(genre => !selectedGenres.includes(genre))
                         .map(genre => (
@@ -429,7 +471,7 @@ const CreateGigPage = () => {
                       type="datetime-local"
                       value={formData.eventDate}
                       onChange={handleInputChange}
-                      className="pl-11 h-12 text-base"
+                      className="pl-11 h-12 text-base bg-slate-800/60 border-purple-500/20 text-slate-100"
                       required
                     />
                   </div>
@@ -445,7 +487,7 @@ const CreateGigPage = () => {
                       type="datetime-local"
                       value={formData.applicationDeadline}
                       onChange={handleInputChange}
-                      className="pl-11 h-12 text-base"
+                      className="pl-11 h-12 text-base bg-slate-800/60 border-purple-500/20 text-slate-100"
                     />
                   </div>
                   <p className="text-sm text-slate-400">Optional: Set a deadline for performers to apply</p>
@@ -465,10 +507,10 @@ const CreateGigPage = () => {
                   <div className="space-y-2">
                     <Label className="text-base font-medium">Price Type *</Label>
                     <Select value={formData.priceType} onValueChange={(value) => handleSelectChange('priceType', value)}>
-                      <SelectTrigger className="h-12">
+                      <SelectTrigger className="h-12 bg-slate-800/60 border-purple-500/20 text-slate-100">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-dark-900 border-purple-500/20 text-slate-100">
                         {priceTypes.map(type => (
                           <SelectItem key={type.value} value={type.value}>
                             <div className="flex flex-col items-start">
@@ -495,7 +537,7 @@ const CreateGigPage = () => {
                         value={formData.pricing.amountInEuros || ''}
                         onChange={handlePriceChange}
                         placeholder="Enter amount"
-                        className="pl-11 h-12 text-base"
+                        className="pl-11 h-12 text-base bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
                         required
                       />
                     </div>
@@ -539,7 +581,7 @@ const CreateGigPage = () => {
             </FormSection>
 
             {/* Submit Actions */}
-            <Card className="section-card">
+            <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl shadow-2xl">
               <CardContent className="p-6">
                 <div className="flex flex-col sm:flex-row gap-4 justify-end">
                   <Button
@@ -548,7 +590,7 @@ const CreateGigPage = () => {
                     size="lg"
                     onClick={(e) => handleSubmit(e as any, true)}
                     disabled={isLoading}
-                    className=""
+                    className="border-purple-500/30 text-white hover:border-purple-400/50 hover:bg-purple-500/10"
                   >
                     Save as Draft
                   </Button>
@@ -556,7 +598,7 @@ const CreateGigPage = () => {
                     type="submit" 
                     size="lg"
                     disabled={isLoading}
-                    className=""
+                    className="bg-purple-600 hover:bg-purple-700"
                   >
                     {isLoading ? 'Creating...' : 'Create & Publish Gig'}
                   </Button>
