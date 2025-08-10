@@ -146,6 +146,7 @@ const ChatView = ({
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [gigDetails, setGigDetails] = useState<GigResponse | null>(null);
+  const [chatOrganizerId, setChatOrganizerId] = useState<string | null>(null);
 
   const fetchMessages = async () => {
     try {
@@ -162,6 +163,9 @@ const ChatView = ({
 
       if (chatResponse.status === 'fulfilled') {
         const chatData = chatResponse.value as any;
+        if (chatData?.organizerId) {
+          setChatOrganizerId(chatData.organizerId as string);
+        }
         if (chatData.gigId) {
           try {
             const gigResponse = await apiClient.getGigDetails(chatData.gigId) as GigResponse;
@@ -270,32 +274,35 @@ const ChatView = ({
             <p className="text-slate-400">No messages yet. Start the conversation!</p>
           </div>
         ) : (
-          messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.isSystemMessage ? 'justify-center' : 'justify-start'}`}
-            >
-              {message.isSystemMessage ? (
-                <div className="bg-slate-800/60 border border-purple-500/20 px-3 py-2 rounded-full text-sm text-slate-300">
-                  {message.content}
-                </div>
-              ) : (
-                <div className="max-w-xs lg:max-w-md">
-                  <div className={`rounded-2xl px-4 py-3 shadow-sm border ${message.isSentByCurrentUser ? 'bg-purple-600/30 border-purple-500/40' : 'bg-slate-800/60 border-purple-500/20'}`}>
-                    <p className="text-slate-100">{message.content}</p>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="text-xs text-slate-400">
-                        {formatMessageTime(message.sentAt)}
-                      </span>
-                      {message.status === 'READ' && (
-                        <CheckCircle2 className="h-3 w-3 text-purple-400" />
-                      )}
+          messages.map((message) => {
+            const isMine = chatOrganizerId ? message.senderId === chatOrganizerId : false;
+            return (
+              <div
+                key={message.id}
+                className={`flex ${message.isSystemMessage ? 'justify-center' : 'justify-start'}`}
+              >
+                {message.isSystemMessage ? (
+                  <div className="bg-slate-800/60 border border-purple-500/20 px-3 py-2 rounded-full text-sm text-slate-300">
+                    {message.content}
+                  </div>
+                ) : (
+                  <div className="max-w-xs lg:max-w-md">
+                    <div className={`rounded-2xl px-4 py-3 shadow-sm border ${isMine ? 'bg-purple-600/30 border-purple-500/40' : 'bg-slate-800/60 border-purple-500/20'}`}>
+                      <p className="text-slate-100">{message.content}</p>
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="text-xs text-slate-400">
+                          {formatMessageTime(message.sentAt)}
+                        </span>
+                        {message.status === 'READ' && (
+                          <CheckCircle2 className="h-3 w-3 text-purple-400" />
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))
+                )}
+              </div>
+            );
+          })
         )}
       </div>
 
