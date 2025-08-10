@@ -367,7 +367,7 @@ const GigDetailPage = () => {
         )}
 
         {/* Hero Section */}
-        <Card className="mb-8 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-purple-500/20 text-white backdrop-blur-xl shadow-2xl overflow-hidden">
+        <Card className="mb-8 border-0 shadow-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white overflow-hidden">
           <CardContent className="p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div className="flex-1">
@@ -377,31 +377,31 @@ const GigDetailPage = () => {
                     {gig.status}
                   </Badge>
                 </div>
-                <p className="text-slate-300 text-lg mb-6 leading-relaxed">
+                <p className="text-blue-100 text-lg mb-6 leading-relaxed">
                   {gig.description}
                 </p>
                 
                 {/* Key Stats */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="bg-slate-800/60 border border-purple-500/20 rounded-lg p-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
-                        <Users className="h-5 w-5 text-purple-400" />
+                      <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <Users className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className="text-sm text-purple-300">Applications</p>
+                        <p className="text-sm text-blue-100">Applications</p>
                         <p className="text-xl font-bold">{gig.applicationsCount}</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-slate-800/60 border border-purple-500/20 rounded-lg p-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
-                        <DollarSign className="h-5 w-5 text-purple-400" />
+                      <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <DollarSign className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className="text-sm text-purple-300">Payment</p>
+                        <p className="text-sm text-blue-100">Payment</p>
                         <p className="text-xl font-bold">
                           {gig.pricing.currency} {gig.pricing.amountInEuros}
                         </p>
@@ -409,13 +409,13 @@ const GigDetailPage = () => {
                     </div>
                   </div>
                   
-                  <div className="bg-slate-800/60 border border-purple-500/20 rounded-lg p-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
-                        <Calendar className="h-5 w-5 text-purple-400" />
+                      <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <Calendar className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className="text-sm text-purple-300">Event Date</p>
+                        <p className="text-sm text-blue-100">Event Date</p>
                         <p className="text-lg font-bold">
                           {new Date(gig.eventDate).toLocaleDateString('en-US', {
                             month: 'short',
