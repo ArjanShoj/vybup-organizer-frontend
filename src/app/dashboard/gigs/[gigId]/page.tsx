@@ -321,19 +321,19 @@ const GigDetailPage = () => {
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem>
+              <DropdownMenuContent align="end" className="w-56 bg-slate-900 border border-slate-700 text-slate-100 shadow-2xl">
+                <DropdownMenuItem className="hover:bg-slate-800 focus:bg-slate-800">
                   <Share2 className="h-4 w-4 mr-2" />
                   Share Gig
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-slate-800 focus:bg-slate-800">
                   <Eye className="h-4 w-4 mr-2" />
                   Preview Public View
                 </DropdownMenuItem>
-                <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-slate-800 focus:bg-slate-800">Duplicate</DropdownMenuItem>
                 {(gig.status === 'OPEN' || gig.status === 'DRAFT') && (
                   <DropdownMenuItem 
-                    className="text-red-600 focus:text-red-600"
+                    className="text-red-600 focus:text-red-600 hover:bg-red-900 focus:bg-red-900"
                     onClick={handleCancelGig}
                     disabled={actionLoading.cancel}
                   >
