@@ -174,23 +174,27 @@ const DashboardPage = () => {
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-white mb-2">
-              <span className="gradient-text">Welcome back!</span> 👋
-            </h1>
-            <p className="text-dark-300 text-lg">
-              Here's what's happening with your events today.
-            </p>
-          </div>
-          <div className="mt-6 sm:mt-0">
-            <Link href="/dashboard/gigs/create">
-              <Button size="lg">
-                <Plus className="h-5 w-5 mr-2" />
-                Create New Gig
-                <Sparkles className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
+        <div className="relative overflow-hidden rounded-3xl border border-purple-500/20 bg-gradient-to-br from-slate-900/60 to-slate-800/60 p-6 md:p-8 shadow-2xl backdrop-blur-xl mb-8">
+          <div className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-purple-600/30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                <span className="bg-gradient-to-r from-purple-400 to-purple-300 bg-clip-text text-transparent">Welcome back!</span> 👋
+              </h1>
+              <p className="text-slate-300 mt-2 max-w-2xl">
+                Here's what's happening with your events today.
+              </p>
+            </div>
+            <div className="mt-2 sm:mt-0 flex items-center gap-3">
+              <Link href="/dashboard/gigs/create">
+                <Button size="lg" className="shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-transform">
+                  <Plus className="h-5 w-5 mr-2" />
+                  Create New Gig
+                  <Sparkles className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -162,6 +162,11 @@ const GigsPage = () => {
     }
   };
 
+  const quickStatuses = ["all", "draft", "open", "booked", "completed", "cancelled"] as const;
+  const handleQuickStatusClick = (value: typeof quickStatuses[number]) => {
+    setStatusFilter(value);
+  };
+
   if (isLoading && gigs.length === 0) {
     return (
       <div className="page-container">
@@ -221,29 +226,33 @@ const GigsPage = () => {
     <div className="page-container">
       <div className="page-content">
         {/* Header */}
-        <div className="page-header">
-          <div>
-            <h1 className="page-title">
-              <span className="gradient-text">My Gigs</span> 🎭
-            </h1>
-            <p className="page-subtitle">
-              Manage your event postings and track performer applications
-            </p>
-          </div>
-          <div className="mt-6 sm:mt-0">
-            <Link href="/dashboard/gigs/create">
-              <Button size="lg" className="gold-glow">
-                <Plus className="h-5 w-5 mr-2" />
-                Create New Gig
-                <Sparkles className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
+        <div className="relative overflow-hidden rounded-3xl border border-purple-500/20 bg-gradient-to-br from-slate-900/60 to-slate-800/60 p-6 md:p-8 shadow-2xl backdrop-blur-xl">
+          <div className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-purple-600/30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-purple-500/20 blur-3xl" />
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                <span className="bg-gradient-to-r from-purple-400 to-purple-300 bg-clip-text text-transparent">My Gigs</span> 🎭
+              </h1>
+              <p className="text-slate-300 mt-2 max-w-2xl">
+                Manage your event postings, track applications, and publish gigs with a modern, elegant interface.
+              </p>
+            </div>
+            <div className="mt-2 sm:mt-0 flex items-center gap-3">
+              <Link href="/dashboard/gigs/create">
+                <Button size="lg" className="shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-transform">
+                  <Plus className="h-5 w-5 mr-2" />
+                  Create New Gig
+                  <Sparkles className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* Filters */}
-          <Card className="search-container">
-          <CardHeader className="bg-transparent border-b border-gold-500/20 pb-6">
+          <Card className="search-container mt-6">
+          <CardHeader className="bg-transparent border-b border-purple-500/20 pb-6">
             <CardTitle className="flex items-center gap-2 text-xl text-white">
               <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
                 <Search className="h-4 w-4" />
@@ -255,37 +264,56 @@ const GigsPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                    <Search className="text-purple-400 h-5 w-5" />
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1">
+                  <div className="relative">
+                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                      <Search className="text-purple-400 h-5 w-5" />
+                    </div>
+                    <Input
+                      placeholder="Search gigs by title, location, or category..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-12 h-12 text-base"
+                    />
                   </div>
-                  <Input
-                    placeholder="Search gigs by title, location, or category..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 h-12 text-base"
-                  />
+                </div>
+                <div className="sm:w-64">
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="h-12">
+                      <div className="flex items-center gap-2">
+                        <Filter className="h-4 w-4 text-dark-400" />
+                        <SelectValue placeholder="Filter by status" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="draft">Draft</SelectItem>
+                      <SelectItem value="open">Open</SelectItem>
+                      <SelectItem value="booked">Booked</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
-              <div className="sm:w-64">
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="h-12">
-                    <div className="flex items-center gap-2">
-                      <Filter className="h-4 w-4 text-dark-400" />
-                      <SelectValue placeholder="Filter by status" />
-                    </div>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="open">Open</SelectItem>
-                    <SelectItem value="booked">Booked</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="flex flex-wrap gap-2">
+                {quickStatuses.map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => handleQuickStatusClick(value)}
+                    className={cn(
+                      "rounded-full border px-3 py-1 text-xs font-medium transition-all",
+                      value === statusFilter
+                        ? "bg-purple-500/20 text-white border-purple-500/30"
+                        : "bg-slate-800 text-slate-300 border-purple-500/20 hover:bg-slate-700/60 hover:text-white"
+                    )}
+                  >
+                    {value.charAt(0).toUpperCase() + value.slice(1)}
+                  </button>
+                ))}
               </div>
             </div>
           </CardContent>
@@ -315,7 +343,7 @@ const GigsPage = () => {
         <div className="space-y-6 relative">
           {isLoading && gigs.length > 0 && (
             <div className="absolute inset-0 bg-dark-900/75 backdrop-blur-sm flex items-center justify-center z-10 rounded-2xl">
-              <div className="flex items-center gap-3 bg-dark-800/90 border border-gold-500/20 p-4 rounded-lg shadow-lg backdrop-blur-md">
+              <div className="flex items-center gap-3 bg-dark-800/90 border border-purple-500/20 p-4 rounded-lg shadow-lg backdrop-blur-md">
                 <div className="loading-spinner"></div>
                 <span className="text-white font-medium">Loading gigs...</span>
               </div>
@@ -325,12 +353,14 @@ const GigsPage = () => {
           {gigs.map((gig) => {
             const StatusIcon = getStatusIcon(gig.status);
             return (
-              <Card key={gig.gigId} className="luxury-card hover-lift">
-                <CardContent className="p-8">
+              <Card key={gig.gigId} className="relative overflow-hidden rounded-2xl bg-slate-800/80 border border-purple-500/20 shadow-2xl hover:border-purple-500/30 hover:shadow-purple-500/20 transition-all group">
+                <div className="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-purple-600/20 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-12 -left-12 h-40 w-40 rounded-full bg-purple-500/10 blur-3xl" />
+                <CardContent className="p-8 relative z-10">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex-1">
                       <div className="flex items-start gap-4 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-500 rounded-xl flex items-center justify-center shadow-lg ring-1 ring-inset ring-white/10">
                           <StatusIcon className="h-6 w-6 text-dark-900" />
                         </div>
                         <div className="flex-1">
@@ -345,7 +375,7 @@ const GigsPage = () => {
                       </div>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <div className="flex items-center gap-3 p-3 bg-green-500/20 rounded-lg border border-green-500/30">
+                        <div className="flex items-center gap-3 p-3 bg-green-500/20 rounded-lg border border-green-500/30 hover:-translate-y-0.5 transition-transform">
                           <div className="icon-container icon-success">
                             <MapPin className="h-4 w-4" />
                           </div>
@@ -355,7 +385,7 @@ const GigsPage = () => {
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-3 p-3 bg-secondary-500/20 rounded-lg border border-secondary-500/30">
+                        <div className="flex items-center gap-3 p-3 bg-secondary-500/20 rounded-lg border border-secondary-500/30 hover:-translate-y-0.5 transition-transform">
                           <div className="icon-container icon-secondary">
                             <Calendar className="h-4 w-4" />
                           </div>
@@ -370,7 +400,7 @@ const GigsPage = () => {
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-3 p-3 bg-dark-700/50 rounded-lg border border-gold-500/20">
+                        <div className="flex items-center gap-3 p-3 bg-dark-700/50 rounded-lg border border-purple-500/20 hover:-translate-y-0.5 transition-transform">
                           <div className="icon-container bg-dark-600/50 border border-dark-500/30 text-dark-300">
                             <Users className="h-4 w-4" />
                           </div>
@@ -380,12 +410,12 @@ const GigsPage = () => {
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-3 p-3 bg-gold-500/20 rounded-lg border border-gold-500/30">
+                        <div className="flex items-center gap-3 p-3 bg-purple-500/20 rounded-lg border border-purple-500/30 hover:-translate-y-0.5 transition-transform">
                           <div className="icon-container icon-primary">
                             <DollarSign className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-xs text-gold-400 font-medium">Payment</p>
+                            <p className="text-xs text-purple-300 font-medium">Payment</p>
                             <p className="text-sm font-semibold text-white">
                               €{gig.pricing.amountInEuros} {gig.priceType === 'HOURLY' && '/hr'}
                             </p>
@@ -407,7 +437,7 @@ const GigsPage = () => {
                     
                     <div className="flex flex-col gap-3 mt-6 lg:mt-0 lg:ml-8 lg:min-w-[200px]">
                       <Link href={`/dashboard/gigs/${gig.gigId}`}>
-                        <Button className="w-full" size="sm">
+                        <Button className="w-full shadow-md hover:shadow-lg" size="sm">
                           <Eye className="h-4 w-4 mr-2" />
                           View Details
                           <ArrowUpRight className="h-3 w-3 ml-2" />
@@ -455,7 +485,7 @@ const GigsPage = () => {
                       
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="sm">
+                          <Button variant="outline" size="sm" className="hover:border-purple-500/40 hover:bg-purple-500/10">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -486,7 +516,7 @@ const GigsPage = () => {
                 <div className="empty-state">
                   {searchTerm || statusFilter !== 'all' ? (
                     <>
-                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-dark-600 to-dark-700 rounded-full flex items-center justify-center">
+                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-dark-600 to-dark-700 rounded-full flex items-center justify-center ring-1 ring-inset ring-white/10">
                         <Search className="h-10 w-10 text-dark-400" />
                       </div>
                       <h3 className="empty-state-title">No Gigs Found</h3>
@@ -513,7 +543,7 @@ const GigsPage = () => {
                     </>
                   ) : (
                     <>
-                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gold-400 to-gold-500 rounded-full flex items-center justify-center">
+                      <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center">
                         <Briefcase className="h-10 w-10 text-dark-900" />
                       </div>
                       <h3 className="empty-state-title">Ready to Create Your First Gig?</h3>
@@ -521,7 +551,7 @@ const GigsPage = () => {
                         Start by posting your first event and connect with talented performers in your area.
                       </p>
                       <Link href="/dashboard/gigs/create">
-                        <Button size="lg" className="gold-glow">
+                        <Button size="lg" className="shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-transform">
                           <Plus className="h-5 w-5 mr-2" />
                           Create Your First Gig
                           <Sparkles className="h-4 w-4 ml-2" />
@@ -571,8 +601,8 @@ const GigsPage = () => {
                           onClick={() => setCurrentPage(pageNumber)}
                           disabled={isLoading}
                           className={cn(
-                            "w-10 h-10 p-0",
-                            isCurrentPage && "gold-glow"
+                            "w-10 h-10 p-0 transition-transform",
+                            isCurrentPage && "bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-xl"
                           )}
                         >
                           {pageNumber + 1}
