@@ -72,21 +72,21 @@ const ChatItem = ({
   return (
     <div
       onClick={onClick}
-      className={`p-4 border rounded-xl cursor-pointer transition-all duration-200 hover:shadow-md ${
+      className={`p-4 border rounded-xl cursor-pointer transition-all duration-200 ${
         isSelected 
-          ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 shadow-md' 
-          : 'bg-white border-gray-200 hover:border-gray-300'
+          ? 'bg-slate-800/60 border-purple-500/40 ring-1 ring-purple-500/30 shadow-md' 
+          : 'bg-slate-900/40 border-purple-500/20 hover:border-purple-500/30'
       }`}
     >
       <div className="flex items-start gap-4">
         <div className="relative">
-          <Avatar className="h-12 w-12 border-2 border-white shadow-lg">
-            <div className="h-full w-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg">
+          <Avatar className="h-12 w-12 border-2 border-slate-900 shadow-lg">
+            <div className="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
               P
             </div>
           </Avatar>
           {chat.unreadCount > 0 && (
-            <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+            <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center ring-2 ring-slate-900">
               <span className="text-xs text-white font-bold">
                 {chat.unreadCount > 9 ? '9+' : chat.unreadCount}
               </span>
@@ -98,32 +98,32 @@ const ChatItem = ({
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2">
               <h3 className={`font-semibold truncate ${
-                chat.unreadCount > 0 ? 'text-gray-900' : 'text-gray-700'
+                chat.unreadCount > 0 ? 'text-white' : 'text-slate-300'
               }`}>
                 Performer Chat
               </h3>
               {!chat.isActive && (
-                <Badge variant="outline" className="text-xs bg-gray-50 text-gray-500">
+                <Badge variant="outline" className="text-xs bg-slate-800 text-slate-300 border-slate-600">
                   Archived
                 </Badge>
               )}
             </div>
-            <span className="text-xs text-gray-500 ml-2 shrink-0">
+            <span className="text-xs text-slate-400 ml-2 shrink-0">
               {formatTime(chat.lastMessageAt)}
             </span>
           </div>
           
           {gigDetails && (
             <div className="flex items-center gap-2 mb-2">
-              <Music className="h-3 w-3 text-gray-400" />
-              <span className="text-sm text-gray-600 truncate">
+              <Music className="h-3 w-3 text-purple-400" />
+              <span className="text-sm text-slate-400 truncate">
                 {gigDetails.title}
               </span>
             </div>
           )}
           
           <p className={`text-sm truncate ${
-            chat.unreadCount > 0 ? 'text-gray-900 font-medium' : 'text-gray-500'
+            chat.unreadCount > 0 ? 'text-white font-medium' : 'text-slate-400'
           }`}>
             {chat.lastMessageContent || 'No messages yet'}
           </p>
@@ -214,8 +214,8 @@ const ChatView = ({
     return (
       <div className="h-full flex items-center justify-center">
         <div className="animate-pulse text-center">
-          <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4"></div>
-          <div className="h-4 bg-gray-200 rounded w-32 mx-auto"></div>
+          <div className="w-16 h-16 bg-slate-700 rounded-full mx-auto mb-4"></div>
+          <div className="h-4 bg-slate-700 rounded w-32 mx-auto"></div>
         </div>
       </div>
     );
@@ -224,23 +224,23 @@ const ChatView = ({
   return (
     <div className="h-full flex flex-col">
       {/* Chat Header */}
-      <div className="p-4 border-b bg-white">
+      <div className="p-4 border-b border-purple-500/20 bg-slate-900/60 text-white">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={onBack} className="lg:hidden">
             <ArrowLeft className="h-4 w-4" />
           </Button>
           
-          <Avatar className="h-10 w-10 border-2 border-white shadow-sm">
-            <div className="h-full w-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold">
+          <Avatar className="h-10 w-10 border-2 border-slate-900 shadow-sm">
+            <div className="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold">
               P
             </div>
           </Avatar>
           
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">Performer Chat</h3>
+            <h3 className="font-semibold text-white">Performer Chat</h3>
             {gigDetails && (
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Music className="h-3 w-3" />
+              <div className="flex items-center gap-2 text-sm text-slate-300">
+                <Music className="h-3 w-3 text-purple-400" />
                 <span className="truncate">{gigDetails.title}</span>
               </div>
             )}
@@ -248,12 +248,12 @@ const ChatView = ({
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-white hover:bg-slate-800">
                 <MoreVertical className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+            <DropdownMenuContent align="end" className="border-purple-500/20 bg-slate-900 text-slate-200">
+              <DropdownMenuItem className="focus:bg-slate-800">
                 <Archive className="h-4 w-4 mr-2" />
                 Archive Chat
               </DropdownMenuItem>
@@ -263,11 +263,11 @@ const ChatView = ({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900/40">
         {messages.length === 0 ? (
           <div className="text-center py-12">
-            <MessageSquare className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-            <p className="text-gray-500">No messages yet. Start the conversation!</p>
+            <MessageSquare className="h-12 w-12 mx-auto mb-4 text-slate-500" />
+            <p className="text-slate-400">No messages yet. Start the conversation!</p>
           </div>
         ) : (
           messages.map((message) => (
@@ -276,19 +276,19 @@ const ChatView = ({
               className={`flex ${message.isSystemMessage ? 'justify-center' : 'justify-start'}`}
             >
               {message.isSystemMessage ? (
-                <div className="bg-gray-100 px-3 py-2 rounded-full text-sm text-gray-600">
+                <div className="bg-slate-800/60 border border-purple-500/20 px-3 py-2 rounded-full text-sm text-slate-300">
                   {message.content}
                 </div>
               ) : (
                 <div className="max-w-xs lg:max-w-md">
-                  <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
-                    <p className="text-gray-900">{message.content}</p>
+                  <div className={`rounded-2xl px-4 py-3 shadow-sm border ${message.isSentByCurrentUser ? 'bg-purple-600/30 border-purple-500/40' : 'bg-slate-800/60 border-purple-500/20'}`}>
+                    <p className="text-slate-100">{message.content}</p>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-slate-400">
                         {formatMessageTime(message.sentAt)}
                       </span>
                       {message.status === 'READ' && (
-                        <CheckCircle2 className="h-3 w-3 text-blue-500" />
+                        <CheckCircle2 className="h-3 w-3 text-purple-400" />
                       )}
                     </div>
                   </div>
@@ -300,16 +300,16 @@ const ChatView = ({
       </div>
 
       {/* Message Input */}
-      <div className="p-4 border-t bg-white">
+      <div className="p-4 border-t border-purple-500/20 bg-slate-900/60">
         <form onSubmit={handleSendMessage} className="flex gap-3">
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1"
+            className="flex-1 bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
             disabled={isSending}
           />
-          <Button type="submit" disabled={!newMessage.trim() || isSending}>
+          <Button type="submit" disabled={!newMessage.trim() || isSending} className="bg-purple-600 hover:bg-purple-700">
             <Send className="h-4 w-4" />
           </Button>
         </form>
@@ -388,16 +388,16 @@ const MessagesPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="min-h-screen">
         <div className="w-full px-4 py-8">
           <div className="max-w-7xl mx-auto">
             <div className="animate-pulse space-y-6">
-              <div className="h-8 bg-gray-200 rounded w-48"></div>
-              <div className="h-4 bg-gray-200 rounded w-64"></div>
+              <div className="h-8 bg-slate-700 rounded w-48"></div>
+              <div className="h-4 bg-slate-700 rounded w-64"></div>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="space-y-4">
                   {[...Array(5)].map((_, i) => (
-                    <div key={i} className="h-20 bg-gray-200 rounded-xl"></div>
+                    <div key={i} className="h-20 bg-slate-700 rounded-xl"></div>
                   ))}
                 </div>
               </div>
@@ -409,40 +409,40 @@ const MessagesPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen">
       <div className="w-full px-4 py-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Messages</h1>
-            <p className="text-gray-600 mt-1">Communicate with your hired performers</p>
+            <h1 className="text-3xl font-bold text-white">Messages</h1>
+            <p className="text-slate-300 mt-1">Communicate with your hired performers</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-200px)]">
             {/* Chat List */}
             <div className={`${selectedChatId ? 'hidden lg:block' : 'block'} lg:col-span-1`}>
-              <Card className="h-full border-0 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+              <Card className="h-full border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
+                <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <MessageSquare className="h-4 w-4 text-blue-600" />
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                        <MessageSquare className="h-4 w-4 text-purple-400" />
                       </div>
                       Conversations
                     </CardTitle>
-                    <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+                    <Badge className="bg-purple-500/10 text-purple-300 border border-purple-500/30">
                       {chats.length}
                     </Badge>
                   </div>
                   
                   {/* Search */}
                   <div className="relative mt-4">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
                     <Input
                       placeholder="Search conversations..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
+                      className="pl-10 bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
                     />
                   </div>
                 </CardHeader>
@@ -450,11 +450,11 @@ const MessagesPage = () => {
                 <CardContent className="p-0 overflow-y-auto">
                   {filteredChats.length === 0 ? (
                     <div className="text-center py-12">
-                      <MessageSquare className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                      <p className="text-lg font-medium text-gray-500 mb-2">
+                      <MessageSquare className="h-12 w-12 mx-auto mb-4 text-slate-500" />
+                      <p className="text-lg font-medium text-slate-300 mb-2">
                         {chats.length === 0 ? 'No conversations yet' : 'No matching conversations'}
                       </p>
-                      <p className="text-gray-400">
+                      <p className="text-slate-400">
                         {chats.length === 0 
                           ? 'Conversations will appear here when you accept performer applications.'
                           : 'Try adjusting your search terms.'
@@ -480,7 +480,7 @@ const MessagesPage = () => {
 
             {/* Chat View */}
             <div className={`${selectedChatId ? 'block' : 'hidden lg:block'} lg:col-span-2`}>
-              <Card className="h-full border-0 shadow-lg">
+              <Card className="h-full border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
                 {selectedChatId ? (
                   <ChatView 
                     chatId={selectedChatId} 
@@ -489,11 +489,11 @@ const MessagesPage = () => {
                 ) : (
                   <CardContent className="h-full flex items-center justify-center">
                     <div className="text-center">
-                      <MessageSquare className="h-16 w-16 mx-auto mb-4 text-gray-300" />
-                      <p className="text-lg font-medium text-gray-500 mb-2">
+                      <MessageSquare className="h-16 w-16 mx-auto mb-4 text-slate-500" />
+                      <p className="text-lg font-medium text-slate-300 mb-2">
                         Select a conversation
                       </p>
-                      <p className="text-gray-400">
+                      <p className="text-slate-400">
                         Choose a conversation from the list to start chatting
                       </p>
                     </div>

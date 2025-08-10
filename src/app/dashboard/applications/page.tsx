@@ -195,10 +195,10 @@ const ApplicationsPage = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'PENDING': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'ACCEPTED': return 'bg-green-100 text-green-800 border-green-200';
-      case 'REJECTED': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'PENDING': return 'bg-purple-500/20 text-purple-300 border border-purple-500/30';
+      case 'ACCEPTED': return 'bg-green-500/20 text-green-300 border border-green-500/30';
+      case 'REJECTED': return 'bg-red-500/20 text-red-300 border border-red-500/30';
+      default: return 'bg-slate-700/40 text-slate-300 border border-slate-600/60';
     }
   };
 
@@ -218,13 +218,17 @@ const ApplicationsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-          <div className="space-y-4">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-48 bg-gray-200 rounded-lg"></div>
-            ))}
+      <div className="min-h-screen">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="space-y-6">
+            <div className="animate-pulse">
+              <div className="h-8 bg-slate-700 rounded w-1/4 mb-6"></div>
+              <div className="space-y-4">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="h-48 bg-slate-800 rounded-lg border border-purple-500/20"></div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -237,16 +241,16 @@ const ApplicationsPage = () => {
       'Unknown Performer';
     
     return (
-      <Card className="hover:shadow-md transition-shadow">
+      <Card className="hover:shadow-md transition-shadow border border-purple-500/20 bg-slate-900/60 text-white">
         <CardContent className="pt-6">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
             <div className="flex-1">
               <div className="flex items-start gap-4 mb-4">
-                <Avatar className="h-12 w-12">
+                <Avatar className="h-12 w-12 border-2 border-slate-900 shadow-sm">
                   {application.performerAvatarUrl ? (
                     <AvatarImage src={application.performerAvatarUrl} />
                   ) : (
-                    <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-500 text-white">
+                    <AvatarFallback className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
                       {(application.performerFirstName?.[0] || '?')}{(application.performerLastName?.[0] || '?')}
                     </AvatarFallback>
                   )}
@@ -254,7 +258,7 @@ const ApplicationsPage = () => {
                 
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-white">
                       {performerName}
                     </h3>
                     <Badge className={getStatusColor(application.status)}>
@@ -262,28 +266,28 @@ const ApplicationsPage = () => {
                     </Badge>
                   </div>
                   
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
+                  <div className="flex items-center gap-4 text-sm text-slate-300 mb-2">
                     {application.performerRating != null && application.performerRating > 0 && (
                       <span className="flex items-center gap-1">
-                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        <Star className="h-3 w-3 text-purple-400 fill-current" />
                         {application.performerRating.toFixed(1)} ({application.performerReviewCount} reviews)
                       </span>
                     )}
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      {new Date(application.appliedAt).toLocaleDateString()}
+                      <span className="text-slate-400">{new Date(application.appliedAt).toLocaleDateString()}</span>
                     </span>
                   </div>
                   
                   <div className="mb-2">
-                    <span className="text-sm font-medium text-gray-600">Gig: </span>
-                    <span className="text-sm text-gray-900">{application.gigTitle}</span>
+                    <span className="text-sm font-medium text-slate-300">Gig: </span>
+                    <span className="text-sm text-white">{application.gigTitle}</span>
                   </div>
                   
                   {application.performerGenres && application.performerGenres.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-3">
                       {application.performerGenres.map((genre) => (
-                        <Badge key={genre} variant="secondary" className="text-xs">
+                        <Badge key={genre} variant="outline" className="text-xs bg-purple-500/10 text-purple-300 border-purple-500/30">
                           {genre}
                         </Badge>
                       ))}
@@ -291,9 +295,9 @@ const ApplicationsPage = () => {
                   )}
                   
                   {application.applicationMessage && (
-                    <div className="bg-gray-50 p-3 rounded-lg">
-                      <p className="text-sm font-medium text-gray-900 mb-1">Application Message:</p>
-                      <p className="text-sm text-gray-700">{application.applicationMessage}</p>
+                    <div className="bg-slate-800/60 border border-purple-500/20 p-3 rounded-lg">
+                      <p className="text-sm font-medium text-white mb-1">Application Message:</p>
+                      <p className="text-sm text-slate-200">{application.applicationMessage}</p>
                     </div>
                   )}
                 </div>
@@ -303,28 +307,28 @@ const ApplicationsPage = () => {
             <div className="flex flex-col sm:flex-row lg:flex-col gap-2 mt-4 lg:mt-0 lg:ml-6">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" onClick={() => setSelectedApplication(application)}>
+                  <Button variant="outline" size="sm" className="border-purple-500/30 text-slate-200 hover:bg-purple-500/10" onClick={() => setSelectedApplication(application)}>
                     <Eye className="h-4 w-4 mr-2" />
                     View Profile
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl">
+                <DialogContent className="max-w-2xl border border-purple-500/20 bg-slate-900 text-white">
                   <DialogHeader>
                     <DialogTitle>
                       {performerName}
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-slate-300">
                       Performer profile and application details for "{application.gigTitle}"
                     </DialogDescription>
                   </DialogHeader>
                   
                   <div className="space-y-6">
                     <div className="flex items-start gap-4">
-                      <Avatar className="h-16 w-16">
+                      <Avatar className="h-16 w-16 border-2 border-slate-900">
                         {application.performerAvatarUrl ? (
                           <AvatarImage src={application.performerAvatarUrl} />
                         ) : (
-                          <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-500 text-white text-lg">
+                          <AvatarFallback className="bg-gradient-to-br from-purple-500 to-purple-600 text-white text-lg">
                             {(application.performerFirstName?.[0] || '?')}{(application.performerLastName?.[0] || '?')}
                           </AvatarFallback>
                         )}
@@ -333,16 +337,16 @@ const ApplicationsPage = () => {
                       <div className="flex-1">
                         {application.performerRating != null && application.performerRating > 0 && (
                           <div className="flex items-center gap-1 mb-3">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-medium">{application.performerRating.toFixed(1)}</span>
-                            <span className="text-gray-600">({application.performerReviewCount} reviews)</span>
+                            <Star className="h-4 w-4 text-purple-400 fill-current" />
+                            <span className="font-medium text-white">{application.performerRating.toFixed(1)}</span>
+                            <span className="text-slate-400">({application.performerReviewCount} reviews)</span>
                           </div>
                         )}
                         
                         {application.performerGenres && application.performerGenres.length > 0 && (
                           <div className="flex flex-wrap gap-1 mb-3">
                             {application.performerGenres.map((genre) => (
-                              <Badge key={genre} variant="secondary">
+                              <Badge key={genre} variant="outline" className="bg-purple-500/10 text-purple-300 border-purple-500/30">
                                 {genre}
                               </Badge>
                             ))}
@@ -353,9 +357,9 @@ const ApplicationsPage = () => {
                     
                     {application.applicationMessage && (
                       <div>
-                        <h4 className="font-medium text-gray-900 mb-2">Application Message</h4>
-                        <div className="bg-gray-50 p-4 rounded-lg">
-                          <p className="text-gray-700">{application.applicationMessage}</p>
+                        <h4 className="font-medium text-white mb-2">Application Message</h4>
+                        <div className="bg-slate-800/60 border border-purple-500/20 p-4 rounded-lg">
+                          <p className="text-slate-200">{application.applicationMessage}</p>
                         </div>
                       </div>
                     )}
@@ -363,7 +367,7 @@ const ApplicationsPage = () => {
                     {application.status === 'PENDING' && (
                       <div className="flex flex-col sm:flex-row gap-3">
                         <Button 
-                          className="flex-1"
+                          className="flex-1 bg-green-600 hover:bg-green-700"
                           onClick={() => handleAcceptApplication(application)}
                           disabled={isActionLoading}
                         >
@@ -373,15 +377,15 @@ const ApplicationsPage = () => {
                         
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button variant="outline" className="flex-1">
+                            <Button variant="outline" className="flex-1 border-red-500/30 text-red-300 hover:bg-red-500/10">
                               <X className="h-4 w-4 mr-2" />
                               Reject Application
                             </Button>
                           </DialogTrigger>
-                          <DialogContent>
+                          <DialogContent className="border border-purple-500/20 bg-slate-900 text-white">
                             <DialogHeader>
                               <DialogTitle>Reject Application</DialogTitle>
-                              <DialogDescription>
+                              <DialogDescription className="text-slate-300">
                                 Please provide a reason for rejecting this application.
                               </DialogDescription>
                             </DialogHeader>
@@ -395,21 +399,15 @@ const ApplicationsPage = () => {
                                   onChange={(e) => setActionMessage(e.target.value)}
                                   placeholder="Explain why this application doesn't fit your requirements..."
                                   rows={3}
+                                  className="bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
                                 />
                               </div>
                               
                               <div className="flex justify-end gap-3">
-                                <Button 
-                                  variant="outline" 
-                                  onClick={() => setActionMessage('')}
-                                >
+                                <Button variant="outline" className="border-slate-600 text-slate-200 hover:bg-slate-800" onClick={() => setActionMessage('')}>
                                   Cancel
                                 </Button>
-                                <Button 
-                                  variant="destructive"
-                                  onClick={() => handleRejectApplication(application)}
-                                  disabled={isActionLoading}
-                                >
+                                <Button className="bg-red-600 hover:bg-red-700" onClick={() => handleRejectApplication(application)} disabled={isActionLoading}>
                                   Reject Application
                                 </Button>
                               </div>
@@ -424,7 +422,7 @@ const ApplicationsPage = () => {
               
               {application.status === 'ACCEPTED' && (
                 <Link href={`/dashboard/messages`}>
-                  <Button size="sm" className="w-full sm:w-auto">
+                  <Button size="sm" className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700">
                     <MessageSquare className="h-4 w-4 mr-2" />
                     Message
                   </Button>
@@ -438,110 +436,114 @@ const ApplicationsPage = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Applications</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Review and manage performer applications for your gigs
-        </p>
-      </div>
-
-      {/* Filters */}
-      <Card>
-        <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  placeholder="Search by performer name or location..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            <div className="sm:w-48">
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger>
-                  <Filter className="h-4 w-4 mr-2" />
-                  <SelectValue placeholder="Filter by status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="accepted">Accepted</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="space-y-6">
+          {/* Header */}
+          <div>
+            <h1 className="text-2xl font-bold text-white">Applications</h1>
+            <p className="mt-1 text-sm text-slate-300">
+              Review and manage performer applications for your gigs
+            </p>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Applications Tabs */}
-      <Tabs defaultValue="pending" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="pending">
-            Pending ({pendingApplications.length})
-          </TabsTrigger>
-          <TabsTrigger value="accepted">
-            Accepted ({acceptedApplications.length})
-          </TabsTrigger>
-          <TabsTrigger value="rejected">
-            Rejected ({rejectedApplications.length})
-          </TabsTrigger>
-        </TabsList>
+          {/* Filters */}
+          <Card className="border border-purple-500/20 bg-slate-900/60 text-white">
+            <CardContent className="pt-6">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+                    <Input
+                      placeholder="Search by performer name or location..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10 bg-slate-800/60 border-purple-500/20 text-slate-100 placeholder:text-slate-400"
+                    />
+                  </div>
+                </div>
+                <div className="sm:w-48">
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="bg-slate-800/60 border-purple-500/20 text-slate-100">
+                      <Filter className="h-4 w-4 mr-2" />
+                      <SelectValue placeholder="Filter by status" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-900 border-purple-500/20 text-slate-100">
+                      <SelectItem value="all" className="focus:bg-slate-800">All Status</SelectItem>
+                      <SelectItem value="pending" className="focus:bg-slate-800">Pending</SelectItem>
+                      <SelectItem value="accepted" className="focus:bg-slate-800">Accepted</SelectItem>
+                      <SelectItem value="rejected" className="focus:bg-slate-800">Rejected</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <TabsContent value="pending" className="space-y-4">
-          {pendingApplications.length > 0 ? (
-            pendingApplications.map((application) => (
-              <ApplicationCard key={application.id} application={application} />
-            ))
-          ) : (
-            <Card>
-              <CardContent className="text-center py-12">
-                <Clock className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                <p className="text-lg font-medium text-gray-500 mb-2">No pending applications</p>
-                <p className="text-gray-400">New applications will appear here for review.</p>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
+          {/* Applications Tabs */}
+          <Tabs defaultValue="pending" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3 bg-slate-900/60 border border-purple-500/20">
+              <TabsTrigger value="pending" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-slate-300">
+                Pending ({pendingApplications.length})
+              </TabsTrigger>
+              <TabsTrigger value="accepted" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-slate-300">
+                Accepted ({acceptedApplications.length})
+              </TabsTrigger>
+              <TabsTrigger value="rejected" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-slate-300">
+                Rejected ({rejectedApplications.length})
+              </TabsTrigger>
+            </TabsList>
 
-        <TabsContent value="accepted" className="space-y-4">
-          {acceptedApplications.length > 0 ? (
-            acceptedApplications.map((application) => (
-              <ApplicationCard key={application.id} application={application} />
-            ))
-          ) : (
-            <Card>
-              <CardContent className="text-center py-12">
-                <Check className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                <p className="text-lg font-medium text-gray-500 mb-2">No accepted applications</p>
-                <p className="text-gray-400">Accepted applications will appear here.</p>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
+            <TabsContent value="pending" className="space-y-4">
+              {pendingApplications.length > 0 ? (
+                pendingApplications.map((application) => (
+                  <ApplicationCard key={application.id} application={application} />
+                ))
+              ) : (
+                <Card className="border border-purple-500/20 bg-slate-900/60 text-white">
+                  <CardContent className="text-center py-12">
+                    <Clock className="h-12 w-12 mx-auto mb-4 text-slate-500" />
+                    <p className="text-lg font-medium text-slate-300 mb-2">No pending applications</p>
+                    <p className="text-slate-400">New applications will appear here for review.</p>
+                  </CardContent>
+                </Card>
+              )}
+            </TabsContent>
 
-        <TabsContent value="rejected" className="space-y-4">
-          {rejectedApplications.length > 0 ? (
-            rejectedApplications.map((application) => (
-              <ApplicationCard key={application.id} application={application} />
-            ))
-          ) : (
-            <Card>
-              <CardContent className="text-center py-12">
-                <X className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                <p className="text-lg font-medium text-gray-500 mb-2">No rejected applications</p>
-                <p className="text-gray-400">Rejected applications will appear here.</p>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-      </Tabs>
+            <TabsContent value="accepted" className="space-y-4">
+              {acceptedApplications.length > 0 ? (
+                acceptedApplications.map((application) => (
+                  <ApplicationCard key={application.id} application={application} />
+                ))
+              ) : (
+                <Card className="border border-purple-500/20 bg-slate-900/60 text-white">
+                  <CardContent className="text-center py-12">
+                    <Check className="h-12 w-12 mx-auto mb-4 text-slate-500" />
+                    <p className="text-lg font-medium text-slate-300 mb-2">No accepted applications</p>
+                    <p className="text-slate-400">Accepted applications will appear here.</p>
+                  </CardContent>
+                </Card>
+              )}
+            </TabsContent>
+
+            <TabsContent value="rejected" className="space-y-4">
+              {rejectedApplications.length > 0 ? (
+                rejectedApplications.map((application) => (
+                  <ApplicationCard key={application.id} application={application} />
+                ))
+              ) : (
+                <Card className="border border-purple-500/20 bg-slate-900/60 text-white">
+                  <CardContent className="text-center py-12">
+                    <X className="h-12 w-12 mx-auto mb-4 text-slate-500" />
+                    <p className="text-lg font-medium text-slate-300 mb-2">No rejected applications</p>
+                    <p className="text-slate-400">Rejected applications will appear here.</p>
+                  </CardContent>
+                </Card>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
     </div>
   );
 };
