@@ -195,57 +195,57 @@ const DashboardPage = () => {
         </div>
 
         {/* Hero Statistics Section */}
-        <Card className="mb-8 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-amber-500/20 backdrop-blur-xl shadow-2xl overflow-hidden">
+        <Card className="mb-8 border-0 shadow-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white overflow-hidden">
           <CardContent className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-2xl flex items-center justify-center group-hover:border-amber-400/50 transition-all duration-300">
-                  <Briefcase className="h-8 w-8 text-amber-400" />
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <Briefcase className="h-8 w-8 text-white" />
                 </div>
                 <div className="text-3xl font-bold mb-1 text-white">
                   {statistics?.totalGigsCreated || 0}
                 </div>
-                <p className="text-amber-400 text-sm font-medium">Total Gigs Created</p>
-                <div className="mt-2 text-xs text-dark-300">
+                <p className="text-blue-100 text-sm font-medium">Total Gigs Created</p>
+                <div className="mt-2 text-xs text-blue-100/90">
                   {statistics?.totalGigsCompleted || 0} completed
                 </div>
               </div>
 
-              <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-secondary-500/20 to-secondary-600/20 border border-secondary-500/30 rounded-2xl flex items-center justify-center group-hover:border-secondary-400/50 transition-all duration-300">
-                  <Users className="h-8 w-8 text-secondary-400" />
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <Users className="h-8 w-8 text-white" />
                 </div>
                 <div className="text-3xl font-bold mb-1 text-white">
                   {statistics?.totalApplicationsReceived || 0}
                 </div>
-                <p className="text-secondary-400 text-sm font-medium">Applications Received</p>
-                <div className="mt-2 text-xs text-dark-300">
+                <p className="text-blue-100 text-sm font-medium">Applications Received</p>
+                <div className="mt-2 text-xs text-blue-100/90">
                   Across all your gigs
                 </div>
               </div>
 
-              <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-2xl flex items-center justify-center group-hover:border-purple-400/50 transition-all duration-300">
-                  <Star className="h-8 w-8 text-purple-400" />
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <Star className="h-8 w-8 text-white" />
                 </div>
                 <div className="text-3xl font-bold mb-1 text-white">
                   {statistics?.averageRating?.toFixed(1) || 'N/A'}
                 </div>
-                <p className="text-purple-400 text-sm font-medium">Average Rating</p>
-                <div className="mt-2 text-xs text-dark-300">
+                <p className="text-blue-100 text-sm font-medium">Average Rating</p>
+                <div className="mt-2 text-xs text-blue-100/90">
                   {statistics?.totalReviews || 0} reviews total
                 </div>
               </div>
 
-              <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-2xl flex items-center justify-center group-hover:border-amber-400/50 transition-all duration-300">
-                  <DollarSign className="h-8 w-8 text-amber-400" />
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <DollarSign className="h-8 w-8 text-white" />
                 </div>
                 <div className="text-3xl font-bold mb-1 text-white">
                   €{statistics?.totalAmountPaid ? (statistics.totalAmountPaid / 100).toFixed(0) : '0'}
                 </div>
-                <p className="text-amber-400 text-sm font-medium">Total Earnings</p>
-                <div className="mt-2 text-xs text-dark-300">
+                <p className="text-blue-100 text-sm font-medium">Total Earnings</p>
+                <div className="mt-2 text-xs text-blue-100/90">
                   From completed gigs
                 </div>
               </div>
@@ -253,14 +253,14 @@ const DashboardPage = () => {
 
             {/* Progress Section */}
             {statistics && statistics.totalGigsCreated > 0 && (
-              <div className="mt-8 pt-6 border-t border-gold-500/20">
+              <div className="mt-8 pt-6 border-t border-white/20">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm text-gold-400 font-medium">Completion Rate</span>
+                  <span className="text-sm text-blue-100 font-medium">Completion Rate</span>
                   <span className="text-sm font-semibold text-white">{completionRate.toFixed(0)}%</span>
                 </div>
-                <div className="w-full bg-dark-700/50 rounded-full h-3 overflow-hidden">
-                  <div 
-                    className="bg-gradient-to-r from-gold-400 to-gold-500 rounded-full h-3 transition-all duration-700 ease-out shadow-lg"
+                <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-blue-300 to-purple-300 rounded-full h-3 transition-all duration-700 ease-out shadow-lg"
                     style={{ width: `${completionRate}%` }}
                   ></div>
                 </div>
