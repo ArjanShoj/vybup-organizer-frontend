@@ -2402,15 +2402,27 @@
             "VATNumber": {
                 "required": [
                     "country",
+                    "countryName",
+                    "formattedNumber",
+                    "isValidFormat",
                     "number"
                 ],
                 "type": "object",
                 "properties": {
+                    "country": {
+                        "type": "string"
+                    },
                     "number": {
                         "type": "string"
                     },
-                    "country": {
+                    "formattedNumber": {
                         "type": "string"
+                    },
+                    "countryName": {
+                        "type": "string"
+                    },
+                    "isValidFormat": {
+                        "type": "boolean"
                     }
                 }
             },
@@ -3294,6 +3306,33 @@
                     }
                 }
             },
+            "ChatParticipantInfo": {
+                "required": [
+                    "displayName",
+                    "firstName",
+                    "id",
+                    "lastName"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "avatarUrl": {
+                        "type": "string"
+                    }
+                }
+            },
             "MessageDto": {
                 "required": [
                     "chatId",
@@ -3301,6 +3340,7 @@
                     "id",
                     "isSystemMessage",
                     "messageType",
+                    "sender",
                     "senderId",
                     "sentAt",
                     "status"
@@ -3318,6 +3358,9 @@
                     "senderId": {
                         "type": "string",
                         "format": "uuid"
+                    },
+                    "sender": {
+                        "$ref": "#/components/schemas/ChatParticipantInfo"
                     },
                     "content": {
                         "type": "string"
@@ -3586,10 +3629,10 @@
                     "empty": {
                         "type": "boolean"
                     },
-                    "sorted": {
+                    "unsorted": {
                         "type": "boolean"
                     },
-                    "unsorted": {
+                    "sorted": {
                         "type": "boolean"
                     }
                 }
@@ -3921,7 +3964,9 @@
                     "gigId",
                     "id",
                     "isActive",
+                    "organizer",
                     "organizerId",
+                    "performer",
                     "performerId",
                     "unreadCount"
                 ],
@@ -3942,6 +3987,12 @@
                     "performerId": {
                         "type": "string",
                         "format": "uuid"
+                    },
+                    "organizer": {
+                        "$ref": "#/components/schemas/ChatParticipantInfo"
+                    },
+                    "performer": {
+                        "$ref": "#/components/schemas/ChatParticipantInfo"
                     },
                     "lastMessageContent": {
                         "type": "string"
@@ -4015,7 +4066,9 @@
                     "gigId",
                     "id",
                     "isActive",
+                    "organizer",
                     "organizerId",
+                    "performer",
                     "performerId"
                 ],
                 "type": "object",
@@ -4035,6 +4088,12 @@
                     "performerId": {
                         "type": "string",
                         "format": "uuid"
+                    },
+                    "organizer": {
+                        "$ref": "#/components/schemas/ChatParticipantInfo"
+                    },
+                    "performer": {
+                        "$ref": "#/components/schemas/ChatParticipantInfo"
                     },
                     "isActive": {
                         "type": "boolean"
