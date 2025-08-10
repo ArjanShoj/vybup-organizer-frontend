@@ -372,24 +372,24 @@ const DashboardPage = () => {
           </Card>
 
           {/* Recent Gigs */}
-          <Card className="lg:col-span-2 bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-gold-500/25 hover:border-gold-400/40 transition-shadow backdrop-blur-xl shadow-2xl">
-            <CardHeader className="relative overflow-hidden border-b border-gold-500/25 bg-gradient-to-r from-gold-500/15 via-gold-500/10 to-primary-500/10">
-              <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-gold-500/20 blur-2xl" />
-              <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-primary-500/10 blur-3xl" />
+          <Card className="lg:col-span-2 bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/25 hover:border-purple-400/40 transition-shadow backdrop-blur-xl shadow-2xl">
+            <CardHeader className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10">
+              <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+              <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="relative z-10 flex items-center gap-2 text-lg font-extrabold text-white">
-                    <div className="w-8 h-8 bg-gradient-to-br from-gold-500/20 to-gold-600/20 border border-gold-500/30 rounded-lg flex items-center justify-center">
-                      <Calendar className="h-4 w-4 text-gold-400" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                      <Calendar className="h-4 w-4 text-purple-400" />
                     </div>
-                    <span className="bg-gradient-to-r from-amber-100 to-yellow-50 bg-clip-text text-transparent">Recent Gigs</span>
+                    <span className="bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">Recent Gigs</span>
                   </CardTitle>
                   <CardDescription className="relative z-10 mt-1 text-slate-300">
                     Your latest event postings and their current status
                   </CardDescription>
                 </div>
                 <Link href="/dashboard/gigs">
-                  <Button variant="outline" size="sm" className="relative z-10 bg-dark-800/40 border-gold-500/30 text-white hover:bg-gold-500/10 hover:border-gold-400/50">
+                  <Button variant="outline" size="sm" className="relative z-10 bg-dark-800/40 border-purple-500/30 text-white hover:bg-purple-500/10 hover:border-purple-400/50">
                     View All
                     <ArrowUpRight className="h-3 w-3 ml-1" />
                   </Button>
