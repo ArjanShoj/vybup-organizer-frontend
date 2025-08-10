@@ -82,10 +82,6 @@ const Sidebar = ({ className }: SidebarProps) => {
       icon: MessageSquare, 
       badge: unreadMessagesCount > 0 ? unreadMessagesCount.toString() : undefined 
     },
-    { name: 'Payments', href: '/dashboard/payments', icon: CreditCard },
-    { name: 'Reviews', href: '/dashboard/reviews', icon: Star },
-    { name: 'Profile', href: '/dashboard/profile', icon: User },
-    { name: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
 
   const toggleMobileMenu = () => {
