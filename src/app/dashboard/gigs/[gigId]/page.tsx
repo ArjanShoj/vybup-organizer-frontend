@@ -438,16 +438,19 @@ const GigDetailPage = () => {
             {/* Applications */}
             {gig.applicationsCount > 0 ? (
               <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
-                <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
+                <CardHeader className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10">
+                  <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+                  <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle className="flex items-center gap-2 text-xl text-white">
+                      <CardTitle className="relative z-10 flex items-center gap-2 text-lg font-extrabold text-white">
                         <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
                           <Users className="h-4 w-4 text-purple-400" />
                         </div>
-                        Applications ({applications.length})
+                        <span className="bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">Applications</span>
+                        <span className="text-slate-300">({applications.length})</span>
                       </CardTitle>
-                      <CardDescription className="mt-1 text-slate-300">
+                      <CardDescription className="relative z-10 mt-1 text-slate-300">
                         Review and manage performer applications for this gig
                       </CardDescription>
                     </div>
@@ -643,12 +646,14 @@ const GigDetailPage = () => {
           <div className="space-y-6">
             {/* Event Details */}
             <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
-              <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
-                <CardTitle className="flex items-center gap-2">
+              <CardHeader className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10">
+                <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+                <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
+                <CardTitle className="relative z-10 flex items-center gap-2 text-lg font-extrabold text-white">
                   <div className="w-6 h-6 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
                     <Calendar className="h-3 w-3 text-purple-400" />
                   </div>
-                  <span className="text-white">Event Details</span>
+                  <span className="bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">Event Details</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 space-y-4 text-white">
@@ -722,12 +727,14 @@ const GigDetailPage = () => {
             {/* Genres */}
             {gig.genres.length > 0 && (
               <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
-                <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
-                  <CardTitle className="flex items-center gap-2">
+                <CardHeader className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10">
+                  <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+                  <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
+                  <CardTitle className="relative z-10 flex items-center gap-2 text-lg font-extrabold text-white">
                     <div className="w-6 h-6 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
                       <Music className="h-3 w-3 text-purple-400" />
                     </div>
-                    <span className="text-white">Genres</span>
+                    <span className="bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">Genres</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
@@ -744,12 +751,14 @@ const GigDetailPage = () => {
 
             {/* Gig Info */}
             <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
-              <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
-                <CardTitle className="flex items-center gap-2">
+              <CardHeader className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10">
+                <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+                <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
+                <CardTitle className="relative z-10 flex items-center gap-2 text-lg font-extrabold text-white">
                   <div className="w-6 h-6 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
                     <Target className="h-3 w-3 text-purple-400" />
                   </div>
-                  <span className="text-white">Gig Information</span>
+                  <span className="bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">Gig Information</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 space-y-4 text-white">
@@ -788,7 +797,7 @@ const GigDetailPage = () => {
 
         {/* Accept Application Dialog */}
         <Dialog open={acceptDialogOpen} onOpenChange={setAcceptDialogOpen}>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-md bg-slate-900 text-white border border-slate-700">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
@@ -803,7 +812,11 @@ const GigDetailPage = () => {
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="gap-2">
-              <Button variant="outline" onClick={() => setAcceptDialogOpen(false)} className="bg-gray-50 hover:bg-gray-100">
+              <Button
+                variant="outline"
+                onClick={() => setAcceptDialogOpen(false)}
+                className="bg-white text-slate-900 border border-slate-200 hover:bg-slate-100 hover:border-slate-300"
+              >
                 Cancel
               </Button>
               <Button 
@@ -819,7 +832,7 @@ const GigDetailPage = () => {
 
         {/* Reject Application Dialog */}
         <Dialog open={rejectDialogOpen} onOpenChange={setRejectDialogOpen}>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-md bg-slate-900 text-white border border-slate-700">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
@@ -840,7 +853,11 @@ const GigDetailPage = () => {
               />
             </div>
             <DialogFooter className="gap-2">
-              <Button variant="outline" onClick={() => setRejectDialogOpen(false)} className="bg-gray-50 hover:bg-gray-100">
+              <Button
+                variant="outline"
+                onClick={() => setRejectDialogOpen(false)}
+                className="bg-white text-slate-900 border border-slate-200 hover:bg-slate-100 hover:border-slate-300"
+              >
                 Cancel
               </Button>
               <Button 
