@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { 
   Briefcase, 
   Users, 
@@ -167,6 +168,39 @@ const DashboardPage = () => {
     }
   };
 
+  type ActionTileProps = {
+    href: string;
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    ariaLabel: string;
+    borderClass?: string;
+    endAdornment?: React.ReactNode;
+  };
+
+  const ActionTile: React.FC<ActionTileProps> = ({ href, title, description, icon, ariaLabel, borderClass = 'border-purple-500/30', endAdornment }) => {
+    return (
+      <Link href={href} aria-label={ariaLabel} className="group outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60 rounded-xl">
+        <div
+          role="link"
+          tabIndex={0}
+          className={`flex items-center justify-between w-full rounded-xl border ${borderClass} bg-gradient-to-br from-dark-700/50 to-dark-800/50 p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-purple-400/50 hover:shadow-lg`}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+              {icon}
+            </div>
+            <div>
+              <div className="font-semibold text-white">{title}</div>
+              <div className="text-xs text-dark-300">{description}</div>
+            </div>
+          </div>
+          {endAdornment}
+        </div>
+      </Link>
+    );
+  };
+
   const completionRate = statistics ? 
     (statistics.totalGigsCompleted / Math.max(statistics.totalGigsCreated, 1)) * 100 : 0;
 
@@ -276,99 +310,86 @@ const DashboardPage = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Quick Actions */}
-          <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl shadow-2xl">
-            <CardHeader className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border-b border-purple-500/20">
-              <CardTitle className="flex items-center gap-2 text-xl text-white">
+          <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/25 hover:border-purple-400/40 transition-shadow backdrop-blur-xl shadow-2xl">
+            <CardHeader className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10">
+              <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+              <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
+              <CardTitle className="relative z-10 flex items-center gap-2 text-lg font-extrabold text-white">
                 <div className="w-8 h-8 bg-gradient-to-br from-secondary-500/20 to-secondary-600/20 border border-secondary-500/30 rounded-lg flex items-center justify-center">
                   <Zap className="h-4 w-4 text-secondary-400" />
                 </div>
-                Quick Actions
+                <span className="bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">Quick Actions</span>
               </CardTitle>
-              <CardDescription className="text-dark-300">
+              <CardDescription className="relative z-10 text-slate-300">
                 Common tasks to help you manage your events
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-6 space-y-4">
-              <Link href="/dashboard/gigs/create" className="block">
-                <Button variant="outline" className="w-full justify-start h-12 text-left bg-dark-700/30 border-gold-500/30 text-white hover:bg-gold-500/10 hover:border-gold-400/50 transition-all duration-200 group">
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center mr-3 group-hover:border-purple-400/50 transition-colors">
-                      <Plus className="h-4 w-4 text-purple-400" />
+            <CardContent className="p-6">
+              <div className="flex flex-col gap-3">
+                <ActionTile
+                  href="/dashboard/gigs/create"
+                  title="Create New Gig"
+                  description="Post a new event for performers"
+                  ariaLabel="Create a new gig"
+                  icon={<Plus className="h-5 w-5 text-purple-300" />}
+                  endAdornment={<ArrowUpRight className="h-4 w-4 text-dark-400 group-hover:text-purple-400" />}
+                />
+                <ActionTile
+                  href="/dashboard/applications"
+                  title="Review Applications"
+                  description="Manage performer applications"
+                  ariaLabel="Review applications"
+                  icon={<Users className="h-5 w-5 text-secondary-300" />}
+                  endAdornment={<ArrowUpRight className="h-4 w-4 text-dark-400 group-hover:text-secondary-400" />}
+                />
+                <ActionTile
+                  href="/dashboard/messages"
+                  title="Check Messages"
+                  description="Communicate with performers"
+                  ariaLabel="Open messages"
+                  icon={<MessageSquare className="h-5 w-5 text-primary-300" />}
+                  endAdornment={
+                    <div className="ml-auto flex items-center gap-2">
+                      {unreadMessagesCount > 0 && (
+                        <Badge className="bg-red-500 text-white px-2 py-1 text-xs">
+                          {unreadMessagesCount}
+                        </Badge>
+                      )}
+                      <ArrowUpRight className="h-4 w-4 text-dark-400 group-hover:text-primary-400" />
                     </div>
-                    <div>
-                      <div className="font-medium text-white">Create New Gig</div>
-                      <div className="text-xs text-dark-300">Post a new event for performers</div>
-                    </div>
-                  </div>
-                  <ArrowUpRight className="h-4 w-4 ml-auto text-dark-400 group-hover:text-purple-400" />
-                </Button>
-              </Link>
-              
-              <Link href="/dashboard/applications" className="block">
-                <Button variant="outline" className="w-full justify-start h-12 text-left bg-dark-700/30 border-secondary-500/30 text-white hover:bg-secondary-500/10 hover:border-secondary-400/50 transition-all duration-200 group">
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-secondary-500/20 to-secondary-600/20 border border-secondary-500/30 rounded-lg flex items-center justify-center mr-3 group-hover:border-secondary-400/50 transition-colors">
-                      <Users className="h-4 w-4 text-secondary-400" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-white">Review Applications</div>
-                      <div className="text-xs text-dark-300">Manage performer applications</div>
-                    </div>
-                  </div>
-                  <ArrowUpRight className="h-4 w-4 ml-auto text-dark-400 group-hover:text-secondary-400" />
-                </Button>
-              </Link>
-              
-              <Link href="/dashboard/messages" className="block">
-                <Button variant="outline" className="w-full justify-start h-12 text-left bg-dark-700/30 border-primary-500/30 text-white hover:bg-primary-500/10 hover:border-primary-400/50 transition-all duration-200 group">
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500/20 to-primary-600/20 border border-primary-500/30 rounded-lg flex items-center justify-center mr-3 group-hover:border-primary-400/50 transition-colors">
-                      <MessageSquare className="h-4 w-4 text-primary-400" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-white">Check Messages</div>
-                      <div className="text-xs text-dark-300">Communicate with performers</div>
-                    </div>
-                  </div>
-                  <div className="ml-auto flex items-center gap-2">
-                    {unreadMessagesCount > 0 && (
-                      <Badge className="bg-red-500 text-white px-2 py-1 text-xs">
-                        {unreadMessagesCount}
-                      </Badge>
-                    )}
-                    <ArrowUpRight className="h-4 w-4 text-dark-400 group-hover:text-primary-400" />
-                  </div>
-                </Button>
-              </Link>
-
-              <div className="pt-4 border-t">
-                <Link href="/dashboard/gigs" className="block">
-                  <Button variant="ghost" className="w-full justify-start text-sm text-dark-300 hover:text-purple-400 hover:bg-purple-500/10">
-                    <Eye className="h-4 w-4 mr-2" />
-                    View All Gigs
-                  </Button>
-                </Link>
+                  }
+                />
+                <ActionTile
+                  href="/dashboard/gigs"
+                  title="View All Gigs"
+                  description="See and manage all your gigs"
+                  ariaLabel="View all gigs"
+                  icon={<Eye className="h-5 w-5 text-gold-300" />}
+                  endAdornment={<ArrowUpRight className="h-4 w-4 text-dark-400 group-hover:text-gold-400" />}
+                />
               </div>
             </CardContent>
           </Card>
 
           {/* Recent Gigs */}
-          <Card className="lg:col-span-2 bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-gold-500/20 backdrop-blur-xl shadow-2xl">
-            <CardHeader className="bg-gradient-to-r from-gold-500/10 to-primary-500/10 border-b border-gold-500/20">
+          <Card className="lg:col-span-2 bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-gold-500/25 hover:border-gold-400/40 transition-shadow backdrop-blur-xl shadow-2xl">
+            <CardHeader className="relative overflow-hidden border-b border-gold-500/25 bg-gradient-to-r from-gold-500/15 via-gold-500/10 to-primary-500/10">
+              <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-gold-500/20 blur-2xl" />
+              <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-primary-500/10 blur-3xl" />
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="flex items-center gap-2 text-xl text-white">
+                  <CardTitle className="relative z-10 flex items-center gap-2 text-lg font-extrabold text-white">
                     <div className="w-8 h-8 bg-gradient-to-br from-gold-500/20 to-gold-600/20 border border-gold-500/30 rounded-lg flex items-center justify-center">
                       <Calendar className="h-4 w-4 text-gold-400" />
                     </div>
-                    Recent Gigs
+                    <span className="bg-gradient-to-r from-amber-100 to-yellow-50 bg-clip-text text-transparent">Recent Gigs</span>
                   </CardTitle>
-                  <CardDescription className="mt-1 text-dark-300">
+                  <CardDescription className="relative z-10 mt-1 text-slate-300">
                     Your latest event postings and their current status
                   </CardDescription>
                 </div>
                 <Link href="/dashboard/gigs">
-                  <Button variant="outline" size="sm" className="bg-dark-700/30 border-gold-500/30 text-white hover:bg-gold-500/10 hover:border-gold-400/50">
+                  <Button variant="outline" size="sm" className="relative z-10 bg-dark-800/40 border-gold-500/30 text-white hover:bg-gold-500/10 hover:border-gold-400/50">
                     View All
                     <ArrowUpRight className="h-3 w-3 ml-1" />
                   </Button>
@@ -376,82 +397,71 @@ const DashboardPage = () => {
               </div>
             </CardHeader>
             <CardContent className="p-6">
-              <div className="space-y-4">
-                {recentGigs.map((gig) => (
-                  <div key={gig.gigId} className="bg-gradient-to-br from-dark-700/50 to-dark-800/50 border border-gold-500/20 rounded-xl p-6 hover:shadow-xl transition-all duration-200 hover:border-gold-500/40 backdrop-blur-sm">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-gold-500/20 to-primary-500/20 border border-gold-500/30 rounded-lg flex items-center justify-center">
-                            <Briefcase className="h-5 w-5 text-gold-400" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-white text-lg">{gig.title}</h3>
-                            <p className="text-sm text-dark-300">{gig.locationCity}</p>
-                          </div>
-                          <Badge className={`${getStatusColor(gig.status)} shadow-sm`}>
-                            {gig.status}
-                          </Badge>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-                          <div className="flex items-center gap-2 text-sm text-dark-300">
-                            <div className="w-6 h-6 bg-gold-500/20 border border-gold-500/30 rounded-full flex items-center justify-center">
-                              <Calendar className="h-3 w-3 text-gold-400" />
+              {recentGigs.length > 0 ? (
+                <Table className="text-slate-200">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-slate-300">Title</TableHead>
+                      <TableHead className="text-slate-300">Location</TableHead>
+                      <TableHead className="text-slate-300">Date</TableHead>
+                      <TableHead className="text-slate-300">Applications</TableHead>
+                      <TableHead className="text-slate-300">Price</TableHead>
+                      <TableHead className="text-right text-slate-300">Status</TableHead>
+                      <TableHead className="text-right text-slate-300">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {recentGigs.map((gig) => (
+                      <TableRow key={gig.gigId}>
+                        <TableCell className="max-w-[220px] truncate">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 bg-gradient-to-br from-gold-500/20 to-primary-500/20 border border-gold-500/30 rounded-md flex items-center justify-center">
+                              <Briefcase className="h-4 w-4 text-gold-400" />
                             </div>
-                            <span>{new Date(gig.eventDate).toLocaleDateString('en-US', {
-                              month: 'short',
-                              day: 'numeric'
-                            })}</span>
+                            <span className="font-medium text-white">{gig.title}</span>
                           </div>
-                          
-                          <div className="flex items-center gap-2 text-sm text-dark-300">
-                            <div className="w-6 h-6 bg-secondary-500/20 border border-secondary-500/30 rounded-full flex items-center justify-center">
-                              <Users className="h-3 w-3 text-secondary-400" />
-                            </div>
-                            <span>{gig.applicationsCount} applications</span>
-                          </div>
-                          
-                          <div className="flex items-center gap-2 text-sm text-dark-300">
-                            <div className="w-6 h-6 bg-primary-500/20 border border-primary-500/30 rounded-full flex items-center justify-center">
-                              <DollarSign className="h-3 w-3 text-primary-400" />
-                            </div>
-                            <span className="font-medium">€{gig.pricing.amountInEuros}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="ml-6">
-                        <Link href={`/dashboard/gigs/${gig.gigId}`}>
-                          <Button size="sm" className="shadow-sm">
-                            View Details
-                            <ArrowUpRight className="h-3 w-3 ml-1" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
+                        </TableCell>
+                        <TableCell className="text-slate-300">{gig.locationCity || '-'}
+                        </TableCell>
+                        <TableCell className="text-slate-300">
+                          {new Date(gig.eventDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        </TableCell>
+                        <TableCell className="text-slate-300">{gig.applicationsCount}</TableCell>
+                        <TableCell className="text-slate-300">€{gig.pricing.amountInEuros}</TableCell>
+                        <TableCell className="text-right">
+                          <Badge className={`${getStatusColor(gig.status)} shadow-sm`}>{gig.status}</Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Link href={`/dashboard/gigs/${gig.gigId}`}>
+                            <Button size="sm" variant="outline" className="bg-dark-700/30 border-gold-500/30 text-white hover:bg-gold-500/10 hover:border-gold-400/50">
+                              View
+                              <ArrowUpRight className="h-3 w-3 ml-1" />
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                  <TableCaption className="text-slate-400">Showing your latest {recentGigs.length} gigs</TableCaption>
+                </Table>
+              ) : (
+                <div className="text-center py-16">
+                  <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gold-500/20 to-primary-500/20 border-2 border-gold-500/30 rounded-full flex items-center justify-center">
+                    <Briefcase className="h-10 w-10 text-gold-400" />
                   </div>
-                ))}
-                
-                {recentGigs.length === 0 && (
-                  <div className="text-center py-16">
-                    <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gold-500/20 to-primary-500/20 border-2 border-gold-500/30 rounded-full flex items-center justify-center">
-                      <Briefcase className="h-10 w-10 text-gold-400" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-2"><span className="gradient-text">Ready to Create Your First Gig?</span></h3>
-                    <p className="text-dark-300 mb-6 max-w-md mx-auto">
-                      Start by posting your first event and connect with talented performers in your area.
-                    </p>
-                    <Link href="/dashboard/gigs/create">
-                      <Button size="lg">
-                        <Plus className="h-5 w-5 mr-2" />
-                        Create Your First Gig
-                        <Sparkles className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
+                  <h3 className="text-xl font-semibold text-white mb-2"><span className="gradient-text">Ready to Create Your First Gig?</span></h3>
+                  <p className="text-dark-300 mb-6 max-w-md mx-auto">
+                    Start by posting your first event and connect with talented performers in your area.
+                  </p>
+                  <Link href="/dashboard/gigs/create">
+                    <Button size="lg">
+                      <Plus className="h-5 w-5 mr-2" />
+                      Create Your First Gig
+                      <Sparkles className="h-4 w-4 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

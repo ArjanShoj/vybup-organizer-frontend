@@ -241,7 +241,7 @@ const ApplicationsPage = () => {
       'Unknown Performer';
     
     return (
-      <Card className="hover:shadow-md transition-shadow border border-purple-500/20 bg-slate-900/60 text-white">
+      <Card className="hover:shadow-lg transition-shadow bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl text-white">
         <CardContent className="pt-6">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
             <div className="flex-1">
@@ -294,8 +294,8 @@ const ApplicationsPage = () => {
                     </div>
                   )}
                   
-                  {application.applicationMessage && (
-                    <div className="bg-slate-800/60 border border-purple-500/20 p-3 rounded-lg">
+                   {application.applicationMessage && (
+                    <div className="bg-dark-800/60 border border-purple-500/20 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white mb-1">Application Message:</p>
                       <p className="text-sm text-slate-200">{application.applicationMessage}</p>
                     </div>
@@ -454,7 +454,7 @@ const ApplicationsPage = () => {
           </div>
 
           {/* Filters */}
-          <Card className="border border-purple-500/20 bg-slate-900/60 text-white">
+          <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl text-white">
             <CardContent className="pt-6">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1">
@@ -488,7 +488,7 @@ const ApplicationsPage = () => {
 
           {/* Applications Tabs */}
           <Tabs defaultValue="pending" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 bg-slate-900/60 border border-purple-500/20">
+            <TabsList className="grid w-full grid-cols-3 bg-dark-900/50 border border-purple-500/20 backdrop-blur">
               <TabsTrigger value="pending" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-slate-300">
                 Pending ({pendingApplications.length})
               </TabsTrigger>

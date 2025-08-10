@@ -74,8 +74,8 @@ const ChatItem = ({
       onClick={onClick}
       className={`p-4 border rounded-xl cursor-pointer transition-all duration-200 ${
         isSelected 
-          ? 'bg-slate-800/60 border-purple-500/40 ring-1 ring-purple-500/30 shadow-md' 
-          : 'bg-slate-900/40 border-purple-500/20 hover:border-purple-500/30'
+          ? 'bg-gradient-to-br from-dark-700/60 to-dark-800/60 border-purple-500/40 ring-1 ring-purple-500/30 shadow-lg'
+          : 'bg-gradient-to-br from-dark-700/40 to-dark-800/40 border-purple-500/20 hover:border-purple-400/40 hover:shadow-md'
       }`}
     >
       <div className="flex items-start gap-4">
@@ -224,7 +224,7 @@ const ChatView = ({
   return (
     <div className="h-full flex flex-col">
       {/* Chat Header */}
-      <div className="p-4 border-b border-purple-500/20 bg-slate-900/60 text-white">
+      <div className="p-4 border-b border-purple-500/20 bg-gradient-to-r from-purple-500/10 to-purple-600/10 text-white">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={onBack} className="lg:hidden">
             <ArrowLeft className="h-4 w-4" />
@@ -248,11 +248,11 @@ const ChatView = ({
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="text-white hover:bg-slate-800">
+              <Button variant="ghost" size="sm" className="text-white hover:bg-dark-800/60">
                 <MoreVertical className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="border-purple-500/20 bg-slate-900 text-slate-200">
+            <DropdownMenuContent align="end" className="border-purple-500/20 bg-dark-900/90 text-slate-200">
               <DropdownMenuItem className="focus:bg-slate-800">
                 <Archive className="h-4 w-4 mr-2" />
                 Archive Chat
@@ -263,7 +263,7 @@ const ChatView = ({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900/40">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-transparent">
         {messages.length === 0 ? (
           <div className="text-center py-12">
             <MessageSquare className="h-12 w-12 mx-auto mb-4 text-slate-500" />
@@ -429,10 +429,10 @@ const MessagesPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-200px)]">
             {/* Chat List */}
             <div className={`${selectedChatId ? 'hidden lg:block' : 'block'} lg:col-span-1`}>
-              <Card className="h-full border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
-                <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
+              <Card className="h-full bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl text-white shadow-2xl">
+                <CardHeader className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border-b border-purple-500/20">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 text-white">
+                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-200">
                       <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
                         <MessageSquare className="h-4 w-4 text-purple-400" />
                       </div>
@@ -488,7 +488,7 @@ const MessagesPage = () => {
 
             {/* Chat View */}
             <div className={`${selectedChatId ? 'block' : 'hidden lg:block'} lg:col-span-2`}>
-              <Card className="h-full border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
+              <Card className="h-full bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl text-white shadow-2xl">
                 {selectedChatId ? (
                   <ChatView 
                     chatId={selectedChatId} 
