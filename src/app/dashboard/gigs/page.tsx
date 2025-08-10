@@ -242,10 +242,10 @@ const GigsPage = () => {
         </div>
 
         {/* Filters */}
-        <Card className="search-container">
+          <Card className="search-container">
           <CardHeader className="bg-transparent border-b border-gold-500/20 pb-6">
             <CardTitle className="flex items-center gap-2 text-xl text-white">
-              <div className="icon-container icon-primary">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
                 <Search className="h-4 w-4" />
               </div>
               Search & Filter
@@ -259,7 +259,7 @@ const GigsPage = () => {
               <div className="flex-1">
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                    <Search className="text-dark-400 h-5 w-5" />
+                    <Search className="text-purple-400 h-5 w-5" />
                   </div>
                   <Input
                     placeholder="Search gigs by title, location, or category..."

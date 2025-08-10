@@ -272,8 +272,8 @@ const DashboardPage = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Quick Actions */}
-          <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-gold-500/20 backdrop-blur-xl shadow-2xl">
-            <CardHeader className="bg-gradient-to-r from-gold-500/10 to-primary-500/10 border-b border-gold-500/20">
+          <Card className="bg-gradient-to-br from-dark-800/90 to-dark-900/90 border border-purple-500/20 backdrop-blur-xl shadow-2xl">
+            <CardHeader className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border-b border-purple-500/20">
               <CardTitle className="flex items-center gap-2 text-xl text-white">
                 <div className="w-8 h-8 bg-gradient-to-br from-secondary-500/20 to-secondary-600/20 border border-secondary-500/30 rounded-lg flex items-center justify-center">
                   <Zap className="h-4 w-4 text-secondary-400" />
@@ -288,15 +288,15 @@ const DashboardPage = () => {
               <Link href="/dashboard/gigs/create" className="block">
                 <Button variant="outline" className="w-full justify-start h-12 text-left bg-dark-700/30 border-gold-500/30 text-white hover:bg-gold-500/10 hover:border-gold-400/50 transition-all duration-200 group">
                   <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-gold-500/20 to-gold-600/20 border border-gold-500/30 rounded-lg flex items-center justify-center mr-3 group-hover:border-gold-400/50 transition-colors">
-                      <Plus className="h-4 w-4 text-gold-400" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center mr-3 group-hover:border-purple-400/50 transition-colors">
+                      <Plus className="h-4 w-4 text-purple-400" />
                     </div>
                     <div>
                       <div className="font-medium text-white">Create New Gig</div>
                       <div className="text-xs text-dark-300">Post a new event for performers</div>
                     </div>
                   </div>
-                  <ArrowUpRight className="h-4 w-4 ml-auto text-dark-400 group-hover:text-gold-400" />
+                  <ArrowUpRight className="h-4 w-4 ml-auto text-dark-400 group-hover:text-purple-400" />
                 </Button>
               </Link>
               
@@ -339,7 +339,7 @@ const DashboardPage = () => {
 
               <div className="pt-4 border-t">
                 <Link href="/dashboard/gigs" className="block">
-                  <Button variant="ghost" className="w-full justify-start text-sm text-dark-300 hover:text-gold-400 hover:bg-gold-500/10">
+                  <Button variant="ghost" className="w-full justify-start text-sm text-dark-300 hover:text-purple-400 hover:bg-purple-500/10">
                     <Eye className="h-4 w-4 mr-2" />
                     View All Gigs
                   </Button>

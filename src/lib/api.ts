@@ -1,4 +1,5 @@
 // API Client configuration
+import { toUtcIsoString } from './utils';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8010';
 
 export class ApiError extends Error {
@@ -118,16 +119,28 @@ class ApiClient {
   }
 
   async createGig(data: any) {
+    // Ensure timestamps are posted as UTC ISO strings without milliseconds
+    const payload = {
+      ...data,
+      eventDate: toUtcIsoString(data?.eventDate) ?? data?.eventDate,
+      applicationDeadline: toUtcIsoString(data?.applicationDeadline) ?? data?.applicationDeadline,
+    };
     return this.request('/api/organizer/gigs', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   }
 
   async updateGig(gigId: string, data: any) {
+    // Ensure timestamps are posted as UTC ISO strings without milliseconds
+    const payload = {
+      ...data,
+      eventDate: toUtcIsoString(data?.eventDate) ?? data?.eventDate,
+      applicationDeadline: toUtcIsoString(data?.applicationDeadline) ?? data?.applicationDeadline,
+    };
     return this.request(`/api/organizer/gigs/${gigId}`, {
       method: 'PUT',
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   }
 

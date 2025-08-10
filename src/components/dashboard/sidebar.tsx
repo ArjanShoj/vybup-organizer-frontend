@@ -262,7 +262,7 @@ const Sidebar = ({ className }: SidebarProps) => {
             </div>
           </div>
         ) : (
-          <div className="bg-dark-800/50 rounded-xl p-4 shadow-lg border border-gold-500/20 backdrop-blur-sm">
+          <div className="bg-dark-800/50 rounded-xl p-4 shadow-lg border border-purple-500/20 backdrop-blur-sm">
             <div className="flex items-center space-x-3">
               <div className="h-12 w-12 bg-dark-700 rounded-full flex items-center justify-center">
                 <User className="h-6 w-6 text-dark-400" />
@@ -302,7 +302,7 @@ const Sidebar = ({ className }: SidebarProps) => {
 
       {/* Desktop sidebar */}
       <div className={cn(
-        'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 border-r border-gold-500/20 shadow-2xl',
+        'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 border-r border-purple-500/20 shadow-2xl',
         className
       )}>
         <SidebarContent />
@@ -310,7 +310,7 @@ const Sidebar = ({ className }: SidebarProps) => {
 
       {/* Mobile sidebar */}
       <div className={cn(
-        'lg:hidden fixed inset-y-0 left-0 z-50 w-64 border-r border-gold-500/20 shadow-2xl transform transition-transform duration-300 ease-in-out',
+        'lg:hidden fixed inset-y-0 left-0 z-50 w-64 border-r border-purple-500/20 shadow-2xl transform transition-transform duration-300 ease-in-out',
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       )}>
         <SidebarContent />
