@@ -175,21 +175,21 @@ const GigDetailPage = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'DRAFT': return 'bg-gray-100 text-gray-800 border-gray-300';
-      case 'OPEN': return 'bg-green-100 text-green-800 border-green-300';
-      case 'BOOKED': return 'bg-blue-100 text-blue-800 border-blue-300';
-      case 'COMPLETED': return 'bg-purple-100 text-purple-800 border-purple-300';
-      case 'CANCELLED': return 'bg-red-100 text-red-800 border-red-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+      case 'DRAFT': return 'bg-slate-500/20 text-slate-300 border border-slate-500/30';
+      case 'OPEN': return 'bg-green-500/20 text-green-400 border border-green-500/30';
+      case 'BOOKED': return 'bg-purple-500/20 text-purple-400 border border-purple-500/30';
+      case 'COMPLETED': return 'bg-purple-600/20 text-purple-400 border border-purple-600/30';
+      case 'CANCELLED': return 'bg-red-500/20 text-red-400 border border-red-500/30';
+      default: return 'bg-slate-500/20 text-slate-300 border border-slate-500/30';
     }
   };
 
   const getApplicationStatusColor = (status: string) => {
     switch (status) {
-      case 'PENDING': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-      case 'ACCEPTED': return 'bg-green-100 text-green-800 border-green-300';
-      case 'REJECTED': return 'bg-red-100 text-red-800 border-red-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+      case 'PENDING': return 'bg-purple-500/20 text-purple-400 border border-purple-500/30';
+      case 'ACCEPTED': return 'bg-green-500/20 text-green-400 border border-green-500/30';
+      case 'REJECTED': return 'bg-red-500/20 text-red-400 border border-red-500/30';
+      default: return 'bg-slate-500/20 text-slate-300 border border-slate-500/30';
     }
   };
 
@@ -201,8 +201,8 @@ const GigDetailPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen">
+        <div className="max-w-7xl mx-auto px-6 py-8 ">
           <div className="animate-pulse space-y-8">
             {/* Header skeleton */}
             <div className="flex items-center justify-between">
@@ -214,7 +214,7 @@ const GigDetailPage = () => {
             </div>
             
             {/* Hero skeleton */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
+            <div className="content-card p-8 ">
               <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
               <div className="h-4 bg-gray-200 rounded w-1/2 mb-6"></div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -227,10 +227,10 @@ const GigDetailPage = () => {
             {/* Content skeleton */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
-                <div className="h-64 bg-gray-200 rounded-xl"></div>
+                <div className="h-64 content-card"></div>
               </div>
               <div className="space-y-6">
-                <div className="h-48 bg-gray-200 rounded-xl"></div>
+                <div className="h-48 content-card"></div>
               </div>
             </div>
           </div>
@@ -241,23 +241,23 @@ const GigDetailPage = () => {
 
   if (error && !gig) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen">
+        <div className="max-w-7xl mx-auto px-6 py-8">
           <Link href="/dashboard/gigs">
-            <Button variant="ghost" className="mb-6 hover:bg-white/80">
+            <Button variant="outline" className="mb-6">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Gigs
             </Button>
           </Link>
-          <Card className="border-0 shadow-lg">
+          <Card className="luxury-card">
             <CardContent className="pt-6">
               <div className="text-center py-12">
-                <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
-                  <XCircle className="h-8 w-8 text-red-600" />
+                <div className="w-16 h-16 mx-auto mb-4 bg-red-500/10 border border-red-500/30 rounded-full flex items-center justify-center">
+                  <XCircle className="h-8 w-8 text-red-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Failed to Load Gig</h3>
-                <p className="text-gray-600 mb-6">{error}</p>
-                <Button onClick={fetchGigDetails} className="bg-blue-600 hover:bg-blue-700">
+                <h3 className="text-lg font-semibold text-white mb-2">Failed to Load Gig</h3>
+                <p className="text-slate-300 mb-6">{error}</p>
+                <Button onClick={fetchGigDetails}>
                   Try Again
                 </Button>
               </div>
@@ -273,12 +273,12 @@ const GigDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <Link href="/dashboard/gigs">
-            <Button variant="ghost" className="hover:bg-white/80 shadow-sm">
+            <Button variant="outline" className="shadow-sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Gigs
             </Button>
@@ -317,7 +317,7 @@ const GigDetailPage = () => {
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="bg-white hover:bg-gray-50 shadow-sm">
+                <Button variant="outline" size="sm" className="shadow-sm">
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -348,17 +348,17 @@ const GigDetailPage = () => {
 
         {/* Error Display */}
         {error && (
-          <Card className="mb-8 border-red-200 bg-red-50 shadow-sm">
+          <Card className="mb-8 border border-red-500/30 bg-red-500/10 text-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                  <XCircle className="h-4 w-4 text-red-600" />
+                <div className="w-8 h-8 bg-red-500/20 border border-red-500/30 rounded-full flex items-center justify-center">
+                  <XCircle className="h-4 w-4 text-red-400" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-red-800 font-medium">Error</p>
-                  <p className="text-red-700 text-sm">{error}</p>
+                  <p className="text-white font-medium">Error</p>
+                  <p className="text-red-200 text-sm">{error}</p>
                 </div>
-                <Button onClick={() => setError(null)} variant="ghost" size="sm" className="text-red-700 hover:bg-red-100">
+                <Button onClick={() => setError(null)} variant="ghost" size="sm" className="text-red-300 hover:bg-red-500/20">
                   Dismiss
                 </Button>
               </div>
@@ -367,7 +367,7 @@ const GigDetailPage = () => {
         )}
 
         {/* Hero Section */}
-        <Card className="mb-8 border-0 shadow-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white overflow-hidden">
+        <Card className="mb-8 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-purple-500/20 text-white backdrop-blur-xl shadow-2xl overflow-hidden">
           <CardContent className="p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div className="flex-1">
@@ -377,31 +377,31 @@ const GigDetailPage = () => {
                     {gig.status}
                   </Badge>
                 </div>
-                <p className="text-blue-100 text-lg mb-6 leading-relaxed">
+                <p className="text-slate-300 text-lg mb-6 leading-relaxed">
                   {gig.description}
                 </p>
                 
                 {/* Key Stats */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                  <div className="bg-slate-800/60 border border-purple-500/20 rounded-lg p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                        <Users className="h-5 w-5" />
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                        <Users className="h-5 w-5 text-purple-400" />
                       </div>
                       <div>
-                        <p className="text-sm text-blue-100">Applications</p>
+                        <p className="text-sm text-purple-300">Applications</p>
                         <p className="text-xl font-bold">{gig.applicationsCount}</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                  <div className="bg-slate-800/60 border border-purple-500/20 rounded-lg p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                        <DollarSign className="h-5 w-5" />
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                        <DollarSign className="h-5 w-5 text-purple-400" />
                       </div>
                       <div>
-                        <p className="text-sm text-blue-100">Payment</p>
+                        <p className="text-sm text-purple-300">Payment</p>
                         <p className="text-xl font-bold">
                           {gig.pricing.currency} {gig.pricing.amountInEuros}
                         </p>
@@ -409,13 +409,13 @@ const GigDetailPage = () => {
                     </div>
                   </div>
                   
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                  <div className="bg-slate-800/60 border border-purple-500/20 rounded-lg p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                        <Calendar className="h-5 w-5" />
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                        <Calendar className="h-5 w-5 text-purple-400" />
                       </div>
                       <div>
-                        <p className="text-sm text-blue-100">Event Date</p>
+                        <p className="text-sm text-purple-300">Event Date</p>
                         <p className="text-lg font-bold">
                           {new Date(gig.eventDate).toLocaleDateString('en-US', {
                             month: 'short',
@@ -437,17 +437,17 @@ const GigDetailPage = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Applications */}
             {gig.applicationsCount > 0 ? (
-              <Card className="border-0 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+              <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
+                <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle className="flex items-center gap-2 text-xl">
-                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <Users className="h-4 w-4 text-blue-600" />
+                      <CardTitle className="flex items-center gap-2 text-xl text-white">
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                          <Users className="h-4 w-4 text-purple-400" />
                         </div>
                         Applications ({applications.length})
                       </CardTitle>
-                      <CardDescription className="mt-1">
+                      <CardDescription className="mt-1 text-slate-300">
                         Review and manage performer applications for this gig
                       </CardDescription>
                     </div>
@@ -457,13 +457,13 @@ const GigDetailPage = () => {
                   {applicationsLoading ? (
                     <div className="animate-pulse space-y-4">
                       {[...Array(3)].map((_, i) => (
-                        <div key={i} className="bg-gray-100 rounded-xl p-6">
+                        <div key={i} className="bg-slate-800/60 border border-purple-500/20 rounded-xl p-6">
                           <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
+                            <div className="w-12 h-12 bg-slate-700 rounded-full"></div>
                             <div className="flex-1">
-                              <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
-                              <div className="h-3 bg-gray-200 rounded w-1/2 mb-3"></div>
-                              <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                              <div className="h-4 bg-slate-700 rounded w-1/3 mb-2"></div>
+                              <div className="h-3 bg-slate-700 rounded w-1/2 mb-3"></div>
+                              <div className="h-3 bg-slate-700 rounded w-3/4"></div>
                             </div>
                           </div>
                         </div>
@@ -477,21 +477,21 @@ const GigDetailPage = () => {
                         
                         if (!hasPerformerData) {
                           return (
-                            <div key={application.id} className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                              <div className="text-center py-8 text-gray-500">
-                                <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                                <p>Performer information not available</p>
+                            <div key={application.id} className="bg-slate-800/60 rounded-xl p-6 border border-purple-500/20">
+                              <div className="text-center py-8 text-slate-400">
+                                <Users className="h-8 w-8 mx-auto mb-2 text-purple-400/60" />
+                                <p className="text-slate-300">Performer information not available</p>
                               </div>
                             </div>
                           );
                         }
                         
                         return (
-                          <div key={application.id} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+                          <div key={application.id} className="bg-slate-800/60 border border-purple-500/20 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
                             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
                               <div className="flex items-start gap-4 flex-1">
                                 <div className="relative">
-                                  <Avatar className="h-16 w-16 border-2 border-white shadow-lg">
+                                  <Avatar className="h-16 w-16 border-2 border-slate-900 shadow-lg">
                                     {application.performerAvatarUrl ? (
                                       <img 
                                         src={application.performerAvatarUrl} 
@@ -499,13 +499,13 @@ const GigDetailPage = () => {
                                         className="h-full w-full object-cover"
                                       />
                                     ) : (
-                                      <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
+                                      <div className="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
                                         {(application.performerFirstName?.[0] || '?')}{(application.performerLastName?.[0] || '?')}
                                       </div>
                                     )}
                                   </Avatar>
                                   {application.performerRating != null && application.performerRating >= 4.5 && (
-                                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
                                       <Star className="h-3 w-3 text-white fill-current" />
                                     </div>
                                   )}
@@ -513,7 +513,7 @@ const GigDetailPage = () => {
                                 
                                 <div className="flex-1">
                                   <div className="flex items-center gap-3 mb-2">
-                                    <h4 className="text-lg font-bold text-gray-900">
+                                    <h4 className="text-lg font-bold text-white">
                                       {application.performerDisplayName || 
                                        `${application.performerFirstName || ''} ${application.performerLastName || ''}`.trim() || 'Unknown Performer'}
                                     </h4>
@@ -522,14 +522,14 @@ const GigDetailPage = () => {
                                     </Badge>
                                   </div>
                                   
-                                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                                  <div className="flex items-center gap-4 text-sm text-slate-300 mb-3">
                                     {application.performerRating != null && application.performerRating > 0 && (
                                       <span className="flex items-center gap-1">
-                                        <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                                        <span className="font-medium text-gray-900">
+                                        <Star className="h-3 w-3 text-purple-400 fill-current" />
+                                        <span className="font-medium text-white">
                                           {application.performerRating.toFixed(1)}
                                         </span>
-                                        <span className="text-gray-500">
+                                        <span className="text-slate-400">
                                           ({application.performerReviewCount || 0} reviews)
                                         </span>
                                       </span>
@@ -539,12 +539,12 @@ const GigDetailPage = () => {
                                   {application.performerGenres && application.performerGenres.length > 0 && (
                                     <div className="flex flex-wrap gap-1 mb-4">
                                       {application.performerGenres.slice(0, 3).map((genre) => (
-                                        <Badge key={genre} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                                        <Badge key={genre} variant="outline" className="text-xs bg-purple-500/10 text-purple-300 border-purple-500/30">
                                           {genre}
                                         </Badge>
                                       ))}
                                       {application.performerGenres.length > 3 && (
-                                        <Badge variant="outline" className="text-xs bg-gray-50 text-gray-600">
+                                        <Badge variant="outline" className="text-xs bg-slate-700 text-slate-300">
                                           +{application.performerGenres.length - 3}
                                         </Badge>
                                       )}
@@ -552,13 +552,13 @@ const GigDetailPage = () => {
                                   )}
                                   
                                   {application.applicationMessage && (
-                                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-                                      <p className="text-xs font-medium text-blue-800 mb-1">Application Message</p>
-                                      <p className="text-sm text-blue-700 leading-relaxed">{application.applicationMessage}</p>
+                                    <div className="bg-slate-800/60 border border-purple-500/20 rounded-lg p-3 mb-4">
+                                      <p className="text-xs font-medium text-purple-300 mb-1">Application Message</p>
+                                      <p className="text-sm text-slate-200 leading-relaxed">{application.applicationMessage}</p>
                                     </div>
                                   )}
                                   
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-xs text-slate-400">
                                     Applied on {new Date(application.appliedAt).toLocaleDateString('en-US', {
                                       weekday: 'short',
                                       year: 'numeric',
@@ -592,7 +592,7 @@ const GigDetailPage = () => {
                                         setRejectDialogOpen(true);
                                       }}
                                       disabled={actionLoading[`reject-${application.id}`]}
-                                      className="border-red-200 text-red-700 hover:bg-red-50 shadow-sm"
+                                      className="border-red-500/30 text-red-400 hover:bg-red-500/10 shadow-sm"
                                     >
                                       <XCircle className="h-4 w-4 mr-2" />
                                       Reject
@@ -602,7 +602,7 @@ const GigDetailPage = () => {
                                 
                                 {application.status === 'ACCEPTED' && (
                                   <Link href={`/dashboard/messages?gigId=${gigId}`}>
-                                    <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700 shadow-sm">
+                                    <Button size="sm" className="w-full bg-purple-600 hover:bg-purple-700 shadow-sm">
                                       <MessageSquare className="h-4 w-4 mr-2" />
                                       Chat
                                     </Button>
@@ -618,18 +618,18 @@ const GigDetailPage = () => {
                 </CardContent>
               </Card>
             ) : (
-              <Card className="border-0 shadow-lg">
+              <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
                 <CardContent className="pt-6">
                   <div className="text-center py-16">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                      <Users className="h-8 w-8 text-gray-400" />
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-full flex items-center justify-center">
+                      <Users className="h-8 w-8 text-purple-400" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No Applications Yet</h3>
-                    <p className="text-gray-600 mb-6">
+                    <h3 className="text-lg font-semibold text-white mb-2">No Applications Yet</h3>
+                    <p className="text-slate-300 mb-6">
                       Your gig hasn't received any applications yet. Make sure it's published and promoted to attract performers.
                     </p>
                     {gig.status === 'DRAFT' && (
-                      <Button onClick={handlePublishGig} disabled={actionLoading.publish} className="bg-blue-600 hover:bg-blue-700">
+                      <Button onClick={handlePublishGig} disabled={actionLoading.publish} className="bg-purple-600 hover:bg-purple-700">
                         {actionLoading.publish ? 'Publishing...' : 'Publish Gig'}
                       </Button>
                     )}
@@ -642,23 +642,23 @@ const GigDetailPage = () => {
           {/* Right Column - Gig Details */}
           <div className="space-y-6">
             {/* Event Details */}
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+            <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
+              <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
                 <CardTitle className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Calendar className="h-3 w-3 text-blue-600" />
+                  <div className="w-6 h-6 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                    <Calendar className="h-3 w-3 text-purple-400" />
                   </div>
-                  Event Details
+                  <span className="text-white">Event Details</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-6 space-y-4 text-white">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Calendar className="h-5 w-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                    <Calendar className="h-5 w-5 text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Event Date & Time</p>
-                    <p className="font-semibold text-gray-900">
+                    <p className="text-sm text-slate-300">Event Date & Time</p>
+                    <p className="font-semibold text-white">
                       {new Date(gig.eventDate).toLocaleDateString('en-US', {
                         weekday: 'long',
                         year: 'numeric',
@@ -666,7 +666,7 @@ const GigDetailPage = () => {
                         day: 'numeric',
                       })}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-slate-300">
                       {new Date(gig.eventDate).toLocaleTimeString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit',
@@ -678,40 +678,40 @@ const GigDetailPage = () => {
                 <Separator />
 
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <MapPin className="h-5 w-5 text-green-600" />
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                    <MapPin className="h-5 w-5 text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Location</p>
-                    <p className="font-semibold text-gray-900">{gig.locationCity || 'Not specified'}</p>
-                    <p className="text-sm text-gray-600">{gig.category}</p>
+                    <p className="text-sm text-slate-300">Location</p>
+                    <p className="font-semibold text-white">{gig.locationCity || 'Not specified'}</p>
+                    <p className="text-sm text-slate-300">{gig.category}</p>
                   </div>
                 </div>
 
                 <Separator />
 
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <DollarSign className="h-5 w-5 text-yellow-600" />
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                    <DollarSign className="h-5 w-5 text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Payment</p>
-                    <p className="font-bold text-xl text-gray-900">
+                    <p className="text-sm text-slate-300">Payment</p>
+                    <p className="font-bold text-xl text-white">
                       {gig.pricing.currency} {gig.pricing.amountInEuros}
                     </p>
-                    <p className="text-sm text-gray-600">Per performance</p>
+                    <p className="text-sm text-slate-300">Per performance</p>
                   </div>
                 </div>
 
                 <Separator />
 
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-purple-600" />
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Duration</p>
-                    <p className="font-semibold text-gray-900">
+                    <p className="text-sm text-slate-300">Duration</p>
+                    <p className="font-semibold text-white">
                       Not specified
                     </p>
                   </div>
@@ -721,19 +721,19 @@ const GigDetailPage = () => {
 
             {/* Genres */}
             {gig.genres.length > 0 && (
-              <Card className="border-0 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+              <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
+                <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
                   <CardTitle className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Music className="h-3 w-3 text-purple-600" />
+                    <div className="w-6 h-6 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                      <Music className="h-3 w-3 text-purple-400" />
                     </div>
-                    Genres
+                    <span className="text-white">Genres</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="flex flex-wrap gap-2">
                     {gig.genres.map((genre) => (
-                      <Badge key={genre} className="bg-purple-100 text-purple-800 border-purple-200 hover:bg-purple-200 transition-colors">
+                      <Badge key={genre} className="bg-purple-500/10 text-purple-300 border border-purple-500/30 hover:bg-purple-500/20 transition-colors">
                         {genre}
                       </Badge>
                     ))}
@@ -743,19 +743,19 @@ const GigDetailPage = () => {
             )}
 
             {/* Gig Info */}
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+            <Card className="border border-purple-500/20 bg-slate-900/60 text-white shadow-xl">
+              <CardHeader className="bg-slate-900/40 border-b border-purple-500/20">
                 <CardTitle className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <Target className="h-3 w-3 text-gray-600" />
+                  <div className="w-6 h-6 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center">
+                    <Target className="h-3 w-3 text-purple-400" />
                   </div>
-                  Gig Information
+                  <span className="text-white">Gig Information</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-6 space-y-4 text-white">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Created</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-slate-300">Created</span>
+                  <span className="font-medium text-white">
                     {new Date(gig.createdAt).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric',
@@ -767,8 +767,8 @@ const GigDetailPage = () => {
                 <Separator />
                 
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Public ID</span>
-                  <code className="px-2 py-1 bg-gray-100 rounded text-xs font-mono text-gray-700">
+                  <span className="text-slate-300">Public ID</span>
+                  <code className="px-2 py-1 bg-slate-800 border border-purple-500/20 rounded text-xs font-mono text-slate-200">
                     {gig.publicId}
                   </code>
                 </div>
@@ -776,8 +776,8 @@ const GigDetailPage = () => {
                 <Separator />
                 
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Category</span>
-                  <Badge variant="outline" className="bg-gray-50 text-gray-700">
+                  <span className="text-slate-300">Category</span>
+                  <Badge variant="outline" className="bg-purple-500/10 text-purple-300 border-purple-500/30">
                     {gig.category}
                   </Badge>
                 </div>
