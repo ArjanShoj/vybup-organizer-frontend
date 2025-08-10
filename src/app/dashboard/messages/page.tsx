@@ -228,41 +228,46 @@ const ChatView = ({
   return (
     <div className="h-full flex flex-col">
       {/* Chat Header */}
-      <div className="p-4 border-b border-purple-500/20 bg-gradient-to-r from-purple-500/10 to-purple-600/10 text-white">
-        <div className="flex items-center gap-3">
-          <Button variant="ghost" size="sm" onClick={onBack} className="lg:hidden">
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          
-          <Avatar className="h-10 w-10 border-2 border-slate-900 shadow-sm">
-            <div className="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold">
-              P
-            </div>
-          </Avatar>
-          
-          <div className="flex-1">
-            <h3 className="font-semibold text-white">Performer Chat</h3>
-            {gigDetails && (
-              <div className="flex items-center gap-2 text-sm text-slate-300">
-                <Music className="h-3 w-3 text-purple-400" />
-                <span className="truncate">{gigDetails.title}</span>
-              </div>
-            )}
-          </div>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="text-white hover:bg-dark-800/60">
-                <MoreVertical className="h-4 w-4" />
+      <div className="relative overflow-hidden border-b border-purple-500/25 bg-gradient-to-r from-purple-600/15 via-purple-500/10 to-fuchsia-500/10 text-white -mt-6 rounded-t-2xl px-6 pt-6 pb-4 md:pb-6">
+        <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
+        <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
+        <div className="relative z-10">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <Button variant="ghost" size="sm" onClick={onBack} className="lg:hidden">
+                <ArrowLeft className="h-4 w-4" />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="border-purple-500/20 bg-dark-900/90 text-slate-200">
-              <DropdownMenuItem className="focus:bg-slate-800">
-                <Archive className="h-4 w-4 mr-2" />
-                Archive Chat
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center shrink-0">
+                  <MessageSquare className="h-4 w-4 text-purple-400" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-lg font-extrabold leading-tight">
+                    <span className="inline-block bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent py-0.5">Performer Chat</span>
+                  </div>
+                  {gigDetails && (
+                    <div className="mt-1 flex items-center gap-2 text-sm text-slate-300 min-w-0">
+                      <Music className="h-3 w-3 text-purple-400 shrink-0" />
+                      <span className="truncate">{gigDetails.title}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="text-white hover:bg-dark-800/60">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="border-purple-500/20 bg-dark-900/90 text-slate-200">
+                <DropdownMenuItem className="focus:bg-slate-800">
+                  <Archive className="h-4 w-4 mr-2" />
+                  Archive Chat
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
 
