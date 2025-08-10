@@ -812,11 +812,7 @@ const GigDetailPage = () => {
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setAcceptDialogOpen(false)}
-                className="bg-white text-slate-900 border border-slate-200 hover:bg-slate-100 hover:border-slate-300"
-              >
+              <Button onClick={() => setAcceptDialogOpen(false)}>
                 Cancel
               </Button>
               <Button 
@@ -853,11 +849,7 @@ const GigDetailPage = () => {
               />
             </div>
             <DialogFooter className="gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setRejectDialogOpen(false)}
-                className="bg-white text-slate-900 border border-slate-200 hover:bg-slate-100 hover:border-slate-300"
-              >
+              <Button onClick={() => setRejectDialogOpen(false)}>
                 Cancel
               </Button>
               <Button 
