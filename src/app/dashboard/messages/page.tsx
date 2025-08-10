@@ -30,8 +30,19 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { apiClient } from '@/lib/api';
-import { ChatSummaryDto, PageResponse, MessageDto, GigResponse } from '@/types/api';
+import { ChatSummaryDto, PageResponse, MessageDto, GigResponse, ChatDto } from '@/types/api';
 import { toast } from 'sonner';
+
+// Local participant types (mirrors swagger additions)
+type ChatPerson = {
+  id: string;
+  displayName?: string;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
+};
+type ChatSummaryWithPerson = ChatSummaryDto & { performer?: ChatPerson; organizer?: ChatPerson };
+type ChatWithPerson = ChatDto & { performer?: ChatPerson; organizer?: ChatPerson };
 
 // Individual chat item component
 const ChatItem = ({ 
@@ -69,6 +80,10 @@ const ChatItem = ({
     }
   };
 
+  const performer = (chat as ChatSummaryWithPerson).performer as ChatPerson | undefined;
+  const performerDisplayName = performer?.displayName || [performer?.firstName, performer?.lastName].filter(Boolean).join(' ') || 'Performer Chat';
+  const performerInitials = (performer?.firstName?.[0] || performer?.displayName?.[0] || 'P') + (performer?.lastName?.[0] || '');
+
   return (
     <div
       onClick={onClick}
@@ -81,9 +96,14 @@ const ChatItem = ({
       <div className="flex items-start gap-4">
         <div className="relative">
           <Avatar className="h-12 w-12 border-2 border-slate-900 shadow-lg">
-            <div className="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
-              P
-            </div>
+            {performer?.avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={performer.avatarUrl} alt={performerDisplayName} className="h-full w-full object-cover" />
+            ) : (
+              <div className="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                {performerInitials}
+              </div>
+            )}
           </Avatar>
           {chat.unreadCount > 0 && (
             <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center ring-2 ring-slate-900">
@@ -100,7 +120,7 @@ const ChatItem = ({
               <h3 className={`font-semibold truncate ${
                 chat.unreadCount > 0 ? 'text-white' : 'text-slate-300'
               }`}>
-                Performer Chat
+                {performerDisplayName}
               </h3>
               {!chat.isActive && (
                 <Badge variant="outline" className="text-xs bg-slate-800 text-slate-300 border-slate-600">
@@ -146,6 +166,7 @@ const ChatView = ({
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [gigDetails, setGigDetails] = useState<GigResponse | null>(null);
+  const [performerInfo, setPerformerInfo] = useState<ChatPerson | null>(null);
   const [chatOrganizerId, setChatOrganizerId] = useState<string | null>(null);
 
   const fetchMessages = async () => {
@@ -162,11 +183,14 @@ const ChatView = ({
       }
 
       if (chatResponse.status === 'fulfilled') {
-        const chatData = chatResponse.value as any;
+        const chatData = chatResponse.value as ChatWithPerson as any;
         if (chatData?.organizerId) {
           setChatOrganizerId(chatData.organizerId as string);
         }
-        if (chatData.gigId) {
+        if (chatData?.performer) {
+          setPerformerInfo(chatData.performer as ChatPerson);
+        }
+        if (chatData?.gigId) {
           try {
             const gigResponse = await apiClient.getGigDetails(chatData.gigId) as GigResponse;
             setGigDetails(gigResponse);
@@ -238,12 +262,19 @@ const ChatView = ({
                 <ArrowLeft className="h-4 w-4" />
               </Button>
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg flex items-center justify-center shrink-0">
-                  <MessageSquare className="h-4 w-4 text-purple-400" />
-                </div>
+                <Avatar className="h-9 w-9 border border-purple-500/30 shrink-0">
+                  {performerInfo?.avatarUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={performerInfo.avatarUrl} alt={performerInfo.displayName || ''} className="h-full w-full object-cover" />
+                  ) : (
+                    <div className="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold">
+                      {(performerInfo?.displayName?.[0] || performerInfo?.firstName?.[0] || 'P')}
+                    </div>
+                  )}
+                </Avatar>
                 <div className="min-w-0">
                   <div className="text-lg font-extrabold leading-tight">
-                    <span className="inline-block bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent py-0.5">Performer Chat</span>
+                    <span className="inline-block bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent py-0.5">{performerInfo?.displayName || [performerInfo?.firstName, performerInfo?.lastName].filter(Boolean).join(' ') || 'Performer Chat'}</span>
                   </div>
                   {gigDetails && (
                     <div className="mt-1 flex items-center gap-2 text-sm text-slate-300 min-w-0">

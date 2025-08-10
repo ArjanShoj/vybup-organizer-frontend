@@ -133,6 +133,8 @@ export interface ChatSummaryDto {
   gigId: string;
   organizerId: string;
   performerId: string;
+  organizer?: ChatParticipantInfo;
+  performer?: ChatParticipantInfo;
   lastMessageContent?: string;
   lastMessageAt?: string;
   unreadCount: number;
@@ -145,6 +147,8 @@ export interface ChatDto {
   gigId: string;
   organizerId: string;
   performerId: string;
+  organizer?: ChatParticipantInfo;
+  performer?: ChatParticipantInfo;
   isActive: boolean;
   createdAt: string;
   archivedAt?: string;
@@ -158,6 +162,7 @@ export interface MessageDto {
   id: string;
   chatId: string;
   senderId: string;
+  sender?: ChatParticipantInfo;
   content: string;
   messageType: 'TEXT' | 'SYSTEM' | 'IMAGE' | 'FILE';
   status: 'SENT' | 'DELIVERED' | 'READ';
@@ -240,4 +245,13 @@ export interface PaymentDto {
   timeoutAt?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+// Added based on swagger: participant info for chats/messages
+export interface ChatParticipantInfo {
+  id: string;
+  displayName?: string;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
 }
