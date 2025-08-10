@@ -138,7 +138,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         <Button
           variant="ghost"
           size="sm"
-          className="lg:hidden absolute top-6 right-6 text-amber-400 hover:text-amber-300 hover:bg-amber-500/20"
+          className="lg:hidden absolute top-6 right-6 text-purple-400 hover:text-purple-300 hover:bg-purple-500/20"
           onClick={toggleMobileMenu}
         >
           <X className="h-5 w-5" />
@@ -189,7 +189,7 @@ const Sidebar = ({ className }: SidebarProps) => {
       </nav>
 
       {/* Profile Section */}
-      <div className="p-4 border-t border-amber-500/20 bg-slate-800/90">
+      <div className="p-4 border-t border-purple-500/20 bg-slate-800/90">
         {isProfileLoading ? (
           <div className="animate-pulse">
             <div className="flex items-center space-x-3 px-3 py-3">
@@ -201,11 +201,11 @@ const Sidebar = ({ className }: SidebarProps) => {
             </div>
           </div>
         ) : profile ? (
-          <div className="bg-slate-800/80 rounded-xl p-4 shadow-lg border border-amber-500/20 backdrop-blur-sm">
+          <div className="bg-slate-800/80 rounded-xl p-4 shadow-lg border border-purple-500/20 backdrop-blur-sm">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <Avatar className="h-12 w-12 border-2 border-amber-400 shadow-lg">
-                  <div className="h-full w-full bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center text-black font-bold text-lg rounded-full ring-2 ring-amber-400/20">
+                <Avatar className="h-12 w-12 border-2 border-purple-400 shadow-lg">
+                  <div className="h-full w-full bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center text-black font-bold text-lg rounded-full ring-2 ring-purple-400/20">
                     {profile.firstName?.[0] || profile.displayName?.[0] || 'U'}
                     {profile.lastName?.[0] || ''}
                   </div>
@@ -286,7 +286,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           variant="outline"
           size="sm"
           onClick={toggleMobileMenu}
-          className="bg-slate-800/90 backdrop-blur-sm shadow-lg border border-amber-500/30 hover:border-amber-400/50 text-amber-400 hover:text-amber-300"
+          className="bg-slate-800/90 backdrop-blur-sm shadow-lg border border-purple-500/30 hover:border-purple-400/50 text-purple-400 hover:text-purple-300"
         >
           <Menu className="h-5 w-5" />
         </Button>

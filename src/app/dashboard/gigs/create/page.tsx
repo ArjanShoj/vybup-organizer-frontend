@@ -96,10 +96,10 @@ const FormSection = ({
   completed?: boolean;
 }) => (
   <Card className="border-0 shadow-lg">
-    <CardHeader className="bg-transparent border-b border-amber-500/20">
+    <CardHeader className="bg-transparent border-b border-purple-500/20">
       <div className="flex items-center gap-3">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-          completed ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-amber-500/20 border border-amber-500/30 text-amber-400'
+          completed ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-purple-500/20 border border-purple-500/30 text-purple-400'
         }`}>
           {completed ? <CheckCircle className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
         </div>

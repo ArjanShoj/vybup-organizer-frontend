@@ -18,9 +18,9 @@
   --accent-foreground: #000000;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(251, 191, 36, 0.2);
-  --input: rgba(251, 191, 36, 0.15);
-  --ring: #fcd34d;
+  --border: rgba(168, 85, 247, 0.2);
+  --input: rgba(168, 85, 247, 0.15);
+  --ring: #a855f7;
 }
 
 .dark {
@@ -40,9 +40,9 @@
   --accent-foreground: #000000;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(251, 191, 36, 0.2);
-  --input: rgba(251, 191, 36, 0.15);
-  --ring: #fcd34d;
+  --border: rgba(168, 85, 247, 0.2);
+  --input: rgba(168, 85, 247, 0.15);
+  --ring: #a855f7;
 }
 
 /* Reset border color to our CSS var without hsl() wrapper */
