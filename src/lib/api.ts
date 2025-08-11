@@ -277,6 +277,14 @@ class ApiClient {
   async getPerformerProfile(performerId: string) {
     return this.request(`/api/organizer/performers/${performerId}`);
   }
+
+  // Auth utilities
+  logout() {
+    this.clearToken();
+    if (typeof window !== 'undefined') {
+      window.location.href = '/auth/signin';
+    }
+  }
 }
 
 export const apiClient = new ApiClient();

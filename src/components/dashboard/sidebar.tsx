@@ -23,7 +23,8 @@ import {
   Crown,
   Shield,
   Building2,
-  Sparkles
+  Sparkles,
+  LogOut
 } from 'lucide-react';
 import { apiClient } from '@/lib/api';
 import { OrganizerProfileDto } from '@/types/api';
@@ -86,6 +87,10 @@ const Sidebar = ({ className }: SidebarProps) => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    apiClient.logout();
   };
 
   const getOrganizerTypeIcon = (type?: string) => {
@@ -270,6 +275,19 @@ const Sidebar = ({ className }: SidebarProps) => {
             </div>
           </div>
         )}
+        
+        {/* Logout Button */}
+        <div className="mt-4">
+          <Button
+            onClick={handleLogout}
+            variant="outline"
+            className="w-full bg-slate-700/50 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 hover:border-red-400/50 transition-all duration-200"
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            <span className="hidden lg:inline">Sign Out</span>
+            <span className="lg:hidden">Out</span>
+          </Button>
+        </div>
       </div>
     </div>
   );

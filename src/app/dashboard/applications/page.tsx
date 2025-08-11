@@ -20,7 +20,8 @@ import {
   Eye,
   User,
   Clock,
-  Briefcase
+  Briefcase,
+  Music
 } from 'lucide-react';
 import { 
   Dialog,
@@ -52,7 +53,7 @@ const ApplicationsPage = () => {
       setHasError(false);
       
       // First, fetch all gigs for the organizer
-      const gigsResponse: PageResponse<GigResponse> = await apiClient.getGigs(0, 100); // Fetch up to 100 gigs
+      const gigsResponse = await apiClient.getGigs(0, 100) as PageResponse<GigResponse>; // Fetch up to 100 gigs
       const gigs = gigsResponse.content;
       
       if (gigs.length === 0) {
@@ -65,7 +66,7 @@ const ApplicationsPage = () => {
       
       for (const gig of gigs) {
         try {
-          const applicationsResponse: PageResponse<GigApplicationResponse> = await apiClient.getGigApplications(gig.gigId, 0, 100);
+          const applicationsResponse = await apiClient.getGigApplications(gig.gigId, 0, 100) as PageResponse<GigApplicationResponse>;
           allApplications.push(...applicationsResponse.content);
         } catch (error) {
           console.warn(`Failed to fetch applications for gig ${gig.gigId}:`, error);
@@ -304,6 +305,14 @@ const ApplicationsPage = () => {
                 <Button variant="outline" size="sm" className="w-full border-purple-500/30 text-slate-200 hover:bg-purple-500/10">
                   <Eye className="h-4 w-4 mr-2" />
                   View Profile
+                </Button>
+              </Link>
+
+              {/* View Gig Button */}
+              <Link href={`/dashboard/gigs/${application.gigId}`}>
+                <Button variant="outline" size="sm" className="w-full border-purple-500/30 text-slate-200 hover:bg-purple-500/10">
+                  <Music className="h-4 w-4 mr-2" />
+                  View Gig
                 </Button>
               </Link>
 
