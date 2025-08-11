@@ -26,6 +26,10 @@
             "description": "User authentication endpoints"
         },
         {
+            "name": "Organizer Performer Access",
+            "description": "Endpoints for organizers to view performer profiles"
+        },
+        {
             "name": "Organizer Profile",
             "description": "Organizer profile management endpoints"
         },
@@ -1765,6 +1769,44 @@
                 ]
             }
         },
+        "/api/organizer/performers/{performerId}": {
+            "get": {
+                "tags": [
+                    "Organizer Performer Access"
+                ],
+                "summary": "View performer profile",
+                "description": "Get public view of performer profile for organizers",
+                "operationId": "getPerformerProfile",
+                "parameters": [
+                    {
+                        "name": "performerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicPerformerProfileDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer Authentication": []
+                    }
+                ]
+            }
+        },
         "/api/organizer/payments/{paymentId}": {
             "get": {
                 "tags": [
@@ -2415,14 +2457,14 @@
                     "number": {
                         "type": "string"
                     },
-                    "formattedNumber": {
-                        "type": "string"
-                    },
                     "countryName": {
                         "type": "string"
                     },
                     "isValidFormat": {
                         "type": "boolean"
+                    },
+                    "formattedNumber": {
+                        "type": "string"
                     }
                 }
             },
@@ -3554,13 +3596,13 @@
             "PageReviewDto": {
                 "type": "object",
                 "properties": {
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "totalPages": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "first": {
                         "type": "boolean"
@@ -3585,12 +3627,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "empty": {
                         "type": "boolean"
@@ -3607,6 +3649,9 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "unpaged": {
+                        "type": "boolean"
+                    },
                     "paged": {
                         "type": "boolean"
                     },
@@ -3617,9 +3662,6 @@
                     "pageSize": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "unpaged": {
-                        "type": "boolean"
                     }
                 }
             },
@@ -3732,16 +3774,66 @@
                     }
                 }
             },
+            "PublicPerformerProfileDto": {
+                "required": [
+                    "genres",
+                    "id",
+                    "isAvailable",
+                    "skills",
+                    "totalReviews"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "bio": {
+                        "type": "string"
+                    },
+                    "locationCity": {
+                        "type": "string"
+                    },
+                    "genres": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "skills": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "portfolioLink": {
+                        "type": "string"
+                    },
+                    "averageRating": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "totalReviews": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "isAvailable": {
+                        "type": "boolean"
+                    }
+                }
+            },
             "PagePaymentDto": {
                 "type": "object",
                 "properties": {
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "totalPages": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "first": {
                         "type": "boolean"
@@ -3766,12 +3858,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "empty": {
                         "type": "boolean"
@@ -3869,13 +3961,13 @@
             "PageGigResponse": {
                 "type": "object",
                 "properties": {
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "totalPages": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "first": {
                         "type": "boolean"
@@ -3900,12 +3992,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "empty": {
                         "type": "boolean"
@@ -3915,13 +4007,13 @@
             "PageGigApplicationResponse": {
                 "type": "object",
                 "properties": {
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "totalPages": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "first": {
                         "type": "boolean"
@@ -3946,12 +4038,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "empty": {
                         "type": "boolean"
@@ -4017,13 +4109,13 @@
             "PageChatSummaryDto": {
                 "type": "object",
                 "properties": {
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "totalPages": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "first": {
                         "type": "boolean"
@@ -4048,12 +4140,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "empty": {
                         "type": "boolean"
@@ -4126,13 +4218,13 @@
             "PageMessageDto": {
                 "type": "object",
                 "properties": {
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "totalPages": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "first": {
                         "type": "boolean"
@@ -4157,12 +4249,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "empty": {
                         "type": "boolean"
