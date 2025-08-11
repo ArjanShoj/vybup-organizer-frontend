@@ -272,6 +272,11 @@ class ApiClient {
   async getTotalUnreadCount() {
     return this.request('/api/organizer/chats/unread-count');
   }
+
+  // Performers
+  async getPerformerProfile(performerId: string) {
+    return this.request(`/api/organizer/performers/${performerId}`);
+  }
 }
 
 export const apiClient = new ApiClient();

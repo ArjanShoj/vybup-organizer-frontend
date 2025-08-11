@@ -255,3 +255,16 @@ export interface ChatParticipantInfo {
   lastName?: string;
   avatarUrl?: string;
 }
+
+export interface PublicPerformerProfileDto {
+  id: string;
+  displayName?: string;
+  bio?: string;
+  locationCity?: string;
+  genres: string[];
+  skills: string[];
+  portfolioLink?: string;
+  averageRating?: number;
+  totalReviews: number;
+  isAvailable: boolean;
+}
