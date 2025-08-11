@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,7 +22,9 @@ import {
   Calendar,
   MapPin,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  User,
+  ExternalLink
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -256,7 +259,7 @@ const ChatView = ({
         <span className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 rounded-full bg-purple-500/20 blur-2xl" />
         <span className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-fuchsia-500/10 blur-3xl" />
         <div className="relative z-10">
-          <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
               <Button variant="ghost" size="sm" onClick={onBack} className="lg:hidden">
                 <ArrowLeft className="h-4 w-4" />
@@ -285,19 +288,56 @@ const ChatView = ({
                 </div>
               </div>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-dark-800/60">
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="border-purple-500/20 bg-dark-900/90 text-slate-200">
-                <DropdownMenuItem className="focus:bg-slate-800">
-                  <Archive className="h-4 w-4 mr-2" />
-                  Archive Chat
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center gap-2">
+              {/* Quick access buttons for desktop */}
+              <div className="hidden md:flex items-center gap-2">
+                {performerInfo && (
+                  <Link href={`/dashboard/performers/${performerInfo.id}`}>
+                    <Button variant="ghost" size="sm" className="text-purple-200 hover:bg-purple-500/10 hover:text-purple-100">
+                      <User className="h-4 w-4 mr-1" />
+                      Profile
+                    </Button>
+                  </Link>
+                )}
+                {gigDetails && (
+                  <Link href={`/dashboard/gigs/${gigDetails.gigId}`}>
+                    <Button variant="ghost" size="sm" className="text-purple-200 hover:bg-purple-500/10 hover:text-purple-100">
+                      <Music className="h-4 w-4 mr-1" />
+                      Gig
+                    </Button>
+                  </Link>
+                )}
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="text-white hover:bg-dark-800/60">
+                    <MoreVertical className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="border-purple-500/20 bg-dark-900/90 text-slate-200">
+                  {performerInfo && (
+                    <DropdownMenuItem className="focus:bg-slate-800" asChild>
+                      <Link href={`/dashboard/performers/${performerInfo.id}`}>
+                        <User className="h-4 w-4 mr-2" />
+                        View Performer Profile
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  {gigDetails && (
+                    <DropdownMenuItem className="focus:bg-slate-800" asChild>
+                      <Link href={`/dashboard/gigs/${gigDetails.gigId}`}>
+                        <Music className="h-4 w-4 mr-2" />
+                        View Gig Details
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem className="focus:bg-slate-800">
+                    <Archive className="h-4 w-4 mr-2" />
+                    Archive Chat
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
       </div>
