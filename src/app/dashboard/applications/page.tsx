@@ -15,7 +15,6 @@ import {
   Calendar,
   MapPin,
   Star,
-  MessageSquare,
   Check,
   X,
   Eye,
@@ -367,14 +366,7 @@ const ApplicationsPage = () => {
                 </>
               )}
               
-              {application.status === 'ACCEPTED' && (
-                <Link href={`/dashboard/messages`}>
-                  <Button size="sm" className="w-full bg-purple-600 hover:bg-purple-700">
-                    <MessageSquare className="h-4 w-4 mr-2" />
-                    Message
-                  </Button>
-                </Link>
-              )}
+
             </div>
           </div>
         </CardContent>

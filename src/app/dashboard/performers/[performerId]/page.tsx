@@ -2,19 +2,13 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, MessageSquare } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import PerformerProfile from '@/components/dashboard/performer-profile';
 
 const PerformerProfilePage = () => {
   const params = useParams();
   const router = useRouter();
   const performerId = params.performerId as string;
-
-  const handleMessage = () => {
-    // Navigate to messages page - could be enhanced to open specific chat
-    router.push('/dashboard/messages');
-  };
 
   const handleBackClick = () => {
     router.back();
@@ -55,8 +49,7 @@ const PerformerProfilePage = () => {
           {performerId && (
             <PerformerProfile 
               performerId={performerId}
-              showActions={true}
-              onMessage={handleMessage}
+              showActions={false}
             />
           )}
         </div>
